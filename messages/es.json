@@ -1,0 +1,174 @@
+{
+  "nav": {
+    "menu": "Menú",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "brand": "Casa Madre",
+    "descriptor": "Properties and Lifestyle",
+    "claim": "Where living begins",
+    "subtext": "Casa Madre acompaña la compra, venta, alquiler e inversión de propiedades en Barcelona desde una mirada cercana, estratégica y estética.",
+    "cta": "Cuéntanos qué buscas"
+  },
+  "about": {
+    "kicker": "Qué es Casa Madre",
+    "headlinePart1": "Antes de encontrar tu casa, queremos que te sientas ",
+    "headlineEmphasis": "en casa",
+    "headlinePart2": ".",
+    "body": "Casa Madre nace del origen y de la intención. Del lugar donde empieza todo. Y también de esa sensación que queremos que te acompañe desde el primer momento: que estés en buenas manos.",
+    "cta": "Conócenos"
+  },
+  "nosotras": {
+    "kicker": "Nosotras",
+    "headline": "Dos miradas. Una misma forma de entender el hogar.",
+    "body": "Nos conocimos en una casa. Una desde la publicidad internacional, otra desde el interiorismo. Casa Madre nace de esa manera compartida de entender cómo se vive un espacio."
+  },
+  "servicios": {
+    "kicker": "Servicios",
+    "items": [
+      {
+        "title": "Compraventa",
+        "description": "Acompañamos cada operación con estrategia, valoración y sensibilidad.",
+        "cta": "Quiero comprar o vender"
+      },
+      {
+        "title": "Alquileres",
+        "description": "Viviendas para cada momento: temporada y larga estancia.",
+        "cta": "Buscar o alquilar vivienda"
+      },
+      {
+        "title": "Personal Shopper",
+        "description": "Buscamos por ti. Entendemos, filtramos y encontramos.",
+        "cta": "Buscar por mí"
+      },
+      {
+        "title": "Reformas & Home Staging",
+        "description": "Transformamos espacios para que cuenten su mejor versión.",
+        "cta": "Transformar mi vivienda"
+      },
+      {
+        "title": "Inversión",
+        "description": "Analizamos, valoramos y te ayudamos a tomar decisiones acertadas.",
+        "cta": "Analizar una inversión"
+      },
+      {
+        "title": "Jurídico & Financiero",
+        "description": "Procesos legales y financieros con transparencia y rigor.",
+        "cta": "Resolver mi operación"
+      }
+    ]
+  },
+  "metodo": {
+    "kicker": "Método Casa Madre",
+    "intro": "Entender primero. Buscar después.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Te conocemos",
+        "description": "Entendemos quién eres, qué buscas y en qué momento de vida estás."
+      },
+      {
+        "number": "02",
+        "title": "Damos sentido",
+        "description": "Acompañamos tu decisión desde la claridad y la experiencia."
+      },
+      {
+        "number": "03",
+        "title": "Valoramos",
+        "description": "La valoración correcta es clave para que una propiedad se mueva y tenga éxito."
+      },
+      {
+        "number": "04",
+        "title": "Menos, pero mejor",
+        "description": "Trabajamos pocas propiedades, en exclusiva, para darles todo nuestro foco."
+      },
+      {
+        "number": "05",
+        "title": "Se convierte en método",
+        "description": "La experiencia, la repetición y los resultados construyen nuestro método."
+      }
+    ]
+  },
+  "barrios": {
+    "kicker": "Barrios",
+    "intro": "Una ciudad no se entiende cuando se visita. Se entiende cuando empieza a formar parte de tu vida.",
+    "items": [
+      {
+        "name": "Sarrià",
+        "description": "Residencial, elegante y familiar."
+      },
+      {
+        "name": "Sant Gervasi",
+        "description": "Sofisticado, entre la ciudad y la calma."
+      },
+      {
+        "name": "Turó Park",
+        "description": "Uno de los enclaves más exclusivos de Barcelona."
+      },
+      {
+        "name": "Eixample",
+        "description": "Arquitectura emblemática y vida urbana."
+      },
+      {
+        "name": "Gràcia",
+        "description": "Creativo, auténtico y mediterráneo."
+      },
+      {
+        "name": "Pedralbes",
+        "description": "Exclusividad, privacidad y grandes viviendas."
+      }
+    ]
+  },
+  "propiedades": {
+    "kicker": "Propiedades",
+    "intro": "Pocas propiedades, cuidadosamente seleccionadas.",
+    "filters": {
+      "operation": "Operación",
+      "sale": "Venta",
+      "rent": "Alquiler",
+      "all": "Todas",
+      "zone": "Zona",
+      "type": "Tipo",
+      "price": "Precio",
+      "bedrooms": "Habitaciones"
+    },
+    "card": {
+      "surface": "Superficie",
+      "bedrooms": "Habitaciones",
+      "bathrooms": "Baños",
+      "cta": "Solicitar información"
+    }
+  },
+  "contacto": {
+    "kicker": "Contacto",
+    "headline": "Cuéntanos cómo quieres vivir Barcelona.",
+    "form": {
+      "name": "Nombre",
+      "email": "Email",
+      "phone": "Teléfono",
+      "interest": "Quiero…",
+      "interestOptions": {
+        "buy": "Comprar",
+        "sell": "Vender",
+        "rent": "Alquilar",
+        "invest": "Invertir"
+      },
+      "budget": "Presupuesto",
+      "area": "Zona preferida",
+      "message": "Mensaje",
+      "consent": "He leído y acepto la política de privacidad.",
+      "submit": "Enviar"
+    },
+    "whatsapp": "Escríbenos por WhatsApp",
+    "emailLabel": "Email"
+  },
+  "footer": {
+    "tagline": "Casa Madre · Barcelona · Properties and Lifestyle",
+    "legal": {
+      "notice": "Aviso legal",
+      "privacy": "Política de privacidad",
+      "cookies": "Política de cookies"
+    },
+    "rights": "Todos los derechos reservados."
+  }
+}
