@@ -22,7 +22,7 @@ export function Section({
     <section
       id={id}
       className={cn(
-        "px-6 py-20 sm:px-10 lg:px-12 lg:py-[5.75rem]",
+        "scroll-mt-24 px-6 py-20 sm:px-10 lg:px-12 lg:py-[5.75rem]",
         className,
       )}
       {...rest}

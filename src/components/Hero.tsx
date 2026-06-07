@@ -52,6 +52,7 @@ export function Hero() {
 
   return (
     <section
+      id="hero"
       ref={ref}
       className="relative flex min-h-svh items-center justify-center overflow-hidden text-center text-cream"
     >

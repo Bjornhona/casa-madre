@@ -6,6 +6,9 @@ import { Nosotras } from "@/components/Nosotras";
 import { Servicios } from "@/components/Servicios";
 import { Metodo } from "@/components/Metodo";
 import { Barrios } from "@/components/Barrios";
+import { Propiedades } from "@/components/Propiedades";
+import { Contacto } from "@/components/Contacto";
+import { Footer } from "@/components/Footer";
 
 export default async function Home({
   params,
@@ -25,7 +28,10 @@ export default async function Home({
         <Servicios />
         <Metodo />
         <Barrios />
+        <Propiedades />
+        <Contacto />
       </main>
+      <Footer />
     </>
   );
 }

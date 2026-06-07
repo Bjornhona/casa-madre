@@ -29,7 +29,7 @@ export function AboutIntro() {
       };
 
   return (
-    <Section id="que-es-casa-madre" aria-labelledby="que-es-casa-madre-kicker">
+    <Section id="about" aria-labelledby="about-kicker">
       <div className="grid items-center gap-12 md:grid-cols-2 md:gap-[70px]">
         <motion.div
           variants={container}
@@ -38,7 +38,7 @@ export function AboutIntro() {
           viewport={{ once: true, amount: 0.3 }}
         >
           <motion.div variants={item}>
-            <Kicker id="que-es-casa-madre-kicker">{t("kicker")}</Kicker>
+            <Kicker id="about-kicker">{t("kicker")}</Kicker>
           </motion.div>
           <motion.div variants={item}>
             <SerifHeading
