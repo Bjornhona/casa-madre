@@ -89,7 +89,7 @@ export function Hero() {
       >
         <motion.div
           variants={item}
-          className="font-serif text-[72px] leading-[0.75] tracking-[-0.14em] text-clay sm:text-[92px]"
+          className="font-serif text-[72px] leading-[0.75] tracking-[-0.14em] text-sand sm:text-[92px]"
         >
           CM
         </motion.div>
@@ -107,7 +107,7 @@ export function Hero() {
         </motion.p>
         <motion.p
           variants={item}
-          className="mt-12 text-[15px] uppercase tracking-[0.42em] text-clay"
+          className="mt-12 text-[15px] uppercase tracking-[0.42em] text-sand"
         >
           {t("claim")}
         </motion.p>
