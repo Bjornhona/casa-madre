@@ -19,7 +19,7 @@ export function Nosotras() {
   const item = fadeUp(reduce);
 
   return (
-    <Section id="nosotras" aria-labelledby="nosotras-kicker">
+    <Section id="nosotras" aria-labelledby="nosotras-kicker" className="bg-cream border-line border-b-1">
       <div className="grid items-center gap-12 md:grid-cols-2 md:gap-[70px]">
         {/* Portrait first on desktop, but after the heading in the source for reading order. */}
         <motion.div

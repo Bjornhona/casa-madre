@@ -8,6 +8,6 @@ export default createMiddleware(routing);
 // so they are not redirected through the locale prefix.
 export const config = {
   matcher: [
-    "/((?!api|_next|_vercel|apple-icon|icon|opengraph-image|sitemap|robots|manifest|.*\\..*).*)",
+    "/((?!api|_next|_vercel|apple-icon|icon|opengraph-image|sitemap|robots|manifest|studio|.*\\..*).*)",
   ],
 };

@@ -9,14 +9,31 @@ import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { CTALink } from "@/components/ui/CTALink";
 import { fadeUp, staggerContainer } from "@/lib/motion";
-import { properties, type Operation } from "@/data/properties";
+import { urlFor } from "@/sanity/lib/image";
+import type { PROPERTIES_QUERY_RESULT } from "@/sanity/types.gen";
 
+type Operation = "venta" | "alquiler";
 type OperationFilter = Operation | "all";
 type BedroomsFilter = number | "all";
 
 const BEDROOM_OPTIONS: BedroomsFilter[] = ["all", 1, 2, 3, 4];
 
-export function Propiedades() {
+// Interior placeholders, used only until a property has its own gallery in
+// Sanity (brief §9 allows interim imagery). Assigned by index for variety.
+const FALLBACK_POOL = [
+  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1000&q=85",
+  "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1000&q=85",
+];
+
+export function Propiedades({
+  properties,
+}: {
+  properties: PROPERTIES_QUERY_RESULT;
+}) {
   const t = useTranslations("propiedades");
   const tf = useTranslations("propiedades.filters");
   const tc = useTranslations("propiedades.card");
@@ -27,12 +44,21 @@ export function Propiedades() {
 
   const zones = useMemo(
     () => Array.from(new Set(properties.map((p) => p.neighbourhood))),
-    [],
+    [properties],
   );
   const priceCeiling = useMemo(
-    () => Math.max(...properties.map((p) => p.price)),
-    [],
+    () => (properties.length ? Math.max(...properties.map((p) => p.price)) : 0),
+    [properties],
   );
+
+  // Stable _id → fallback image, by the property's position in the full set.
+  const fallbackFor = useMemo(() => {
+    const map = new Map<string, string>();
+    properties.forEach((p, i) =>
+      map.set(p._id, FALLBACK_POOL[i % FALLBACK_POOL.length]),
+    );
+    return map;
+  }, [properties]);
 
   const [operation, setOperation] = useState<OperationFilter>("all");
   const [zone, setZone] = useState<string>("all");
@@ -54,7 +80,8 @@ export function Propiedades() {
     if (zone !== "all" && p.neighbourhood !== zone) return false;
     if (p.price > maxPrice) return false;
     if (bedrooms !== "all") {
-      if (bedrooms === 4 ? p.bedrooms < 4 : p.bedrooms !== bedrooms) return false;
+      const beds = p.bedrooms ?? 0;
+      if (bedrooms === 4 ? beds < 4 : beds !== bedrooms) return false;
     }
     return true;
   });
@@ -71,7 +98,7 @@ export function Propiedades() {
   ];
 
   return (
-    <Section id="propiedades" aria-labelledby="propiedades-kicker">
+    <Section id="propiedades" aria-labelledby="propiedades-kicker" className="border-line border-b-1">
       <Kicker id="propiedades-kicker">{t("kicker")}</Kicker>
       <p className="mt-6 max-w-[46rem] font-serif text-[24px] leading-[1.2] text-deep sm:text-[29px]">
         {t("intro")}
@@ -163,7 +190,7 @@ export function Propiedades() {
       </div>
 
       <motion.ul
-        key={visible.map((p) => p.id).join("-")}
+        key={visible.map((p) => p._id).join("-")}
         variants={container}
         initial="hidden"
         whileInView="show"
@@ -171,69 +198,83 @@ export function Propiedades() {
         aria-live="polite"
         className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {visible.map((p) => (
-          <motion.li
-            key={p.id}
-            variants={item}
-            className="flex flex-col overflow-hidden rounded-card border border-line bg-cream"
-          >
-            <div className="relative aspect-[4/3] w-full overflow-hidden">
-              <Image
-                src={p.image}
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover"
-              />
-              <span className="absolute left-4 top-4 rounded-card bg-cream/90 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-brown backdrop-blur-sm">
-                {p.neighbourhood}
-              </span>
-            </div>
+        {visible.map((p) => {
+          const src = p.image?.asset
+            ? urlFor(p.image).width(1000).height(750).fit("crop").url()
+            : (fallbackFor.get(p._id) ?? FALLBACK_POOL[0]);
 
-            <div className="flex flex-1 flex-col gap-4 p-6">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.16em] text-clay">
-                  {p.operation === "venta" ? tf("sale") : tf("rent")}
-                </p>
-                <p className="mt-1 font-serif text-[26px] leading-none text-brown">
-                  {currency.format(p.price)}
-                </p>
+          return (
+            <motion.li
+              key={p._id}
+              variants={item}
+              className="flex flex-col overflow-hidden rounded-card border border-line bg-cream"
+            >
+              <div className="relative aspect-[4/3] w-full overflow-hidden">
+                <Image
+                  src={src}
+                  alt={p.image?.alt ?? ""}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover"
+                />
+                <span className="absolute left-4 top-4 rounded-card bg-cream/90 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-brown backdrop-blur-sm">
+                  {p.neighbourhood}
+                </span>
               </div>
 
-              <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-deep/75">
-                <li
-                  className="flex items-center gap-1.5"
-                  aria-label={`${tc("surface")}: ${p.surface} m²`}
-                >
-                  <Maximize2 className="h-4 w-4 text-muted" strokeWidth={1.5} aria-hidden />
-                  {p.surface} m²
-                </li>
-                <li
-                  className="flex items-center gap-1.5"
-                  aria-label={`${tc("bedrooms")}: ${p.bedrooms}`}
-                >
-                  <BedDouble className="h-4 w-4 text-muted" strokeWidth={1.5} aria-hidden />
-                  {p.bedrooms}
-                </li>
-                <li
-                  className="flex items-center gap-1.5"
-                  aria-label={`${tc("bathrooms")}: ${p.bathrooms}`}
-                >
-                  <Bath className="h-4 w-4 text-muted" strokeWidth={1.5} aria-hidden />
-                  {p.bathrooms}
-                </li>
-              </ul>
+              <div className="flex flex-1 flex-col gap-4 p-6">
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.16em] text-clay">
+                    {p.operation === "venta" ? tf("sale") : tf("rent")}
+                  </p>
+                  <p className="mt-1 font-serif text-[26px] leading-none text-brown">
+                    {currency.format(p.price)}
+                  </p>
+                </div>
 
-              <p className="text-[14px] leading-[1.55] text-deep/80">
-                {p.description[locale === "en" ? "en" : "es"]}
-              </p>
+                <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-deep/75">
+                  {p.surface != null && (
+                    <li
+                      className="flex items-center gap-1.5"
+                      aria-label={`${tc("surface")}: ${p.surface} m²`}
+                    >
+                      <Maximize2 className="h-4 w-4 text-muted" strokeWidth={1.5} aria-hidden />
+                      {p.surface} m²
+                    </li>
+                  )}
+                  {p.bedrooms != null && (
+                    <li
+                      className="flex items-center gap-1.5"
+                      aria-label={`${tc("bedrooms")}: ${p.bedrooms}`}
+                    >
+                      <BedDouble className="h-4 w-4 text-muted" strokeWidth={1.5} aria-hidden />
+                      {p.bedrooms}
+                    </li>
+                  )}
+                  {p.bathrooms != null && (
+                    <li
+                      className="flex items-center gap-1.5"
+                      aria-label={`${tc("bathrooms")}: ${p.bathrooms}`}
+                    >
+                      <Bath className="h-4 w-4 text-muted" strokeWidth={1.5} aria-hidden />
+                      {p.bathrooms}
+                    </li>
+                  )}
+                </ul>
 
-              <CTALink href="#contacto" className="mt-auto self-start">
-                {tc("cta")}
-              </CTALink>
-            </div>
-          </motion.li>
-        ))}
+                {p.description && (
+                  <p className="text-[14px] leading-[1.55] text-deep/80">
+                    {p.description}
+                  </p>
+                )}
+
+                <CTALink href="#contacto" className="mt-auto self-start">
+                  {tc("cta")}
+                </CTALink>
+              </div>
+            </motion.li>
+          );
+        })}
       </motion.ul>
     </Section>
   );

@@ -29,7 +29,7 @@ export function AboutIntro() {
       };
 
   return (
-    <Section id="about" aria-labelledby="about-kicker">
+    <Section id="about" aria-labelledby="about-kicker" className="border-line border-b-1">
       <div className="grid items-center gap-12 md:grid-cols-2 md:gap-[70px]">
         <motion.div
           variants={container}

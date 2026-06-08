@@ -9,6 +9,8 @@ import { Barrios } from "@/components/Barrios";
 import { Propiedades } from "@/components/Propiedades";
 import { Contacto } from "@/components/Contacto";
 import { Footer } from "@/components/Footer";
+import { sanityFetch } from "@/sanity/lib/live";
+import { NEIGHBOURHOODS_QUERY, PROPERTIES_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home({
   params,
@@ -17,6 +19,11 @@ export default async function Home({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const [{ data: properties }, { data: neighbourhoods }] = await Promise.all([
+    sanityFetch({ query: PROPERTIES_QUERY, params: { locale } }),
+    sanityFetch({ query: NEIGHBOURHOODS_QUERY, params: { locale } }),
+  ]);
 
   return (
     <>
@@ -27,8 +34,8 @@ export default async function Home({
         <Nosotras />
         <Servicios />
         <Metodo />
-        <Barrios />
-        <Propiedades />
+        <Barrios neighbourhoods={neighbourhoods} />
+        <Propiedades properties={properties} />
         <Contacto />
       </main>
       <Footer />
