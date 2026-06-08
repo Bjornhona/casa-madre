@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { LegalPlaceholder } from "@/components/LegalPlaceholder";
+
+export const metadata: Metadata = {
+  title: "Privacidad / Privacy",
+};
 
 export default async function PrivacidadPage({
   params,
