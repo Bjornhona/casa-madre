@@ -198,7 +198,7 @@ export function Propiedades({
         aria-live="polite"
         className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {visible.map((p) => {
+        {visible.map((p) => {          
           const src = p.image?.asset
             ? urlFor(p.image).width(1000).height(750).fit("crop").url()
             : (fallbackFor.get(p._id) ?? FALLBACK_POOL[0]);

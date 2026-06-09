@@ -1,7 +1,16 @@
 {
   "nav": {
     "menu": "Menu",
-    "contact": "Contact"
+    "close": "Close",
+    "contact": "Contact",
+    "items": {
+      "nosotras": { "label": "About", "subtitle": "The brand" },
+      "servicios": { "label": "Services", "subtitle": "How we help" },
+      "metodo": { "label": "Method", "subtitle": "How we work" },
+      "barrios": { "label": "Neighbourhoods", "subtitle": "Where to live" },
+      "propiedades": { "label": "Properties", "subtitle": "Current selection" },
+      "contacto": { "label": "Contact", "subtitle": "Let's talk" }
+    }
   },
   "hero": {
     "brand": "Casa Madre",

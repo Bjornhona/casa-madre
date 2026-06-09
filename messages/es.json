@@ -1,7 +1,16 @@
 {
   "nav": {
     "menu": "Menú",
-    "contact": "Contacto"
+    "close": "Cerrar",
+    "contact": "Contacto",
+    "items": {
+      "nosotras": { "label": "Nosotras", "subtitle": "La marca" },
+      "servicios": { "label": "Servicios", "subtitle": "Cómo ayudamos" },
+      "metodo": { "label": "Método", "subtitle": "Cómo trabajamos" },
+      "barrios": { "label": "Barrios", "subtitle": "Dónde vivir" },
+      "propiedades": { "label": "Propiedades", "subtitle": "Selección actual" },
+      "contacto": { "label": "Contacto", "subtitle": "Hablemos" }
+    }
   },
   "hero": {
     "brand": "Casa Madre",

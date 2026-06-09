@@ -35,8 +35,6 @@ export function Barrios({
   const container = staggerContainer(reduce, 0.1);
   const item = fadeUp(reduce);
 
-  console.log(neighbourhoods);
-
   return (
     <Section id="barrios" aria-labelledby="barrios-kicker" className="border-line border-b-1">
       <Kicker id="barrios-kicker">{t("kicker")}</Kicker>
