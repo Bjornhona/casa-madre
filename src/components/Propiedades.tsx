@@ -37,6 +37,7 @@ export function Propiedades({
   const t = useTranslations("propiedades");
   const tf = useTranslations("propiedades.filters");
   const tc = useTranslations("propiedades.card");
+  const tp = useTranslations("propertyPage");
   const locale = useLocale();
   const reduce = useReducedMotion();
   const container = staggerContainer(reduce, 0.1);
@@ -268,9 +269,19 @@ export function Propiedades({
                   </p>
                 )}
 
-                <CTALink href="#contacto" className="mt-auto self-start">
-                  {tc("cta")}
-                </CTALink>
+                <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
+                  {p.slug && (
+                    <CTALink href={`/${locale}/propiedades/${p.slug}`}>
+                      {tp("cardViewLabel")}
+                    </CTALink>
+                  )}
+                  <a
+                    href="#contacto"
+                    className="text-[11px] uppercase tracking-[0.16em] text-brown/70 underline-offset-4 transition-colors duration-300 hover:text-brown hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+                  >
+                    {tc("cta")}
+                  </a>
+                </div>
               </div>
             </motion.li>
           );

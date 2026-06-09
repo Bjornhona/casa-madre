@@ -148,6 +148,34 @@
       "cta": "Request information"
     }
   },
+  "propertyPage": {
+    "backLink": "Properties",
+    "specsLabels": {
+      "surface": "Surface",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "operation": "Operation"
+    },
+    "operationLabels": {
+      "venta": "Sale",
+      "alquiler": "Rent"
+    },
+    "typeLabels": {
+      "piso": "Apartment",
+      "atico": "Penthouse",
+      "casa": "House",
+      "duplex": "Duplex",
+      "estudio": "Studio",
+      "local": "Commercial"
+    },
+    "featuresLabel": "Features",
+    "ctaKicker": "Contact",
+    "ctaHeadline": "Interested in this property?",
+    "ctaBody": "Tell us what you're looking for and we'll guide you every step of the way.",
+    "ctaPrimary": "Request information",
+    "ctaWhatsapp": "Contact on WhatsApp",
+    "cardViewLabel": "View property"
+  },
   "contacto": {
     "kicker": "Contact",
     "headline": "Tell us how you want to live Barcelona.",

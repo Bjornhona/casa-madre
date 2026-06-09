@@ -148,6 +148,34 @@
       "cta": "Solicitar información"
     }
   },
+  "propertyPage": {
+    "backLink": "Propiedades",
+    "specsLabels": {
+      "surface": "Superficie",
+      "bedrooms": "Habitaciones",
+      "bathrooms": "Baños",
+      "operation": "Operación"
+    },
+    "operationLabels": {
+      "venta": "Venta",
+      "alquiler": "Alquiler"
+    },
+    "typeLabels": {
+      "piso": "Piso",
+      "atico": "Ático",
+      "casa": "Casa",
+      "duplex": "Dúplex",
+      "estudio": "Estudio",
+      "local": "Local"
+    },
+    "featuresLabel": "Características",
+    "ctaKicker": "Contacto",
+    "ctaHeadline": "¿Te interesa esta propiedad?",
+    "ctaBody": "Cuéntanos qué buscas y te acompañamos en cada paso del camino.",
+    "ctaPrimary": "Solicitar información",
+    "ctaWhatsapp": "Contactar por WhatsApp",
+    "cardViewLabel": "Ver propiedad"
+  },
   "contacto": {
     "kicker": "Contacto",
     "headline": "Cuéntanos cómo quieres vivir Barcelona.",

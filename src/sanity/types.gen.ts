@@ -256,10 +256,11 @@ export type AllSanitySchemaTypes =
 
 // Source: src/sanity/lib/queries.ts
 // Variable: PROPERTIES_QUERY
-// Query: *[_type == "property" && isPublic == true] | order(price desc) {    _id,    title,    operation,    propertyType,    "neighbourhood": neighbourhood->name,    price,    surface,    bedrooms,    bathrooms,    "description": coalesce(      description[language == $locale][0].value,      description[language == "es"][0].value    ),    highlights,    "image": gallery[0]  }
+// Query: *[_type == "property" && isPublic == true] | order(price desc) {    _id,    title,    "slug": slug.current,    operation,    propertyType,    "neighbourhood": neighbourhood->name,    price,    surface,    bedrooms,    bathrooms,    "description": coalesce(      description[language == $locale][0].value,      description[language == "es"][0].value    ),    highlights,    "image": gallery[0]  }
 export type PROPERTIES_QUERY_RESULT = Array<{
   _id: string;
   title: string;
+  slug: string;
   operation: "alquiler" | "venta";
   propertyType: "atico" | "casa" | "duplex" | "estudio" | "local" | "piso";
   neighbourhood: string;
@@ -298,11 +299,48 @@ export type NEIGHBOURHOODS_QUERY_RESULT = Array<{
   } | null;
 }>;
 
+// Source: src/sanity/lib/queries.ts
+// Variable: PROPERTY_SLUGS_QUERY
+// Query: *[_type == "property" && isPublic == true && defined(slug.current)] {    "slug": slug.current  }
+export type PROPERTY_SLUGS_QUERY_RESULT = Array<{
+  slug: string;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: PROPERTY_BY_SLUG_QUERY
+// Query: *[_type == "property" && slug.current == $slug && isPublic == true][0] {    _id,    title,    "slug": slug.current,    price,    operation,    propertyType,    "neighbourhood": neighbourhood->name,    surface,    bedrooms,    bathrooms,    "description": coalesce(      description[language == $locale][0].value,      description[language == "es"][0].value    ),    highlights,    gallery[]{ ... },    isPublic  }
+export type PROPERTY_BY_SLUG_QUERY_RESULT = {
+  _id: string;
+  title: string;
+  slug: string;
+  price: number;
+  operation: "alquiler" | "venta";
+  propertyType: "atico" | "casa" | "duplex" | "estudio" | "local" | "piso";
+  neighbourhood: string;
+  surface: number | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  description: string | null;
+  highlights: Array<string> | null;
+  gallery: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  isPublic: boolean | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "property" && isPublic == true] | order(price desc) {\n    _id,\n    title,\n    operation,\n    propertyType,\n    "neighbourhood": neighbourhood->name,\n    price,\n    surface,\n    bedrooms,\n    bathrooms,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    "image": gallery[0]\n  }\n': PROPERTIES_QUERY_RESULT;
+    '\n  *[_type == "property" && isPublic == true] | order(price desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    operation,\n    propertyType,\n    "neighbourhood": neighbourhood->name,\n    price,\n    surface,\n    bedrooms,\n    bathrooms,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    "image": gallery[0]\n  }\n': PROPERTIES_QUERY_RESULT;
     '\n  *[_type == "neighbourhood"] | order(order asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    "blurb": coalesce(\n      blurb[language == $locale][0].value,\n      blurb[language == "es"][0].value\n    ),\n    image\n  }\n': NEIGHBOURHOODS_QUERY_RESULT;
+    '\n  *[_type == "property" && isPublic == true && defined(slug.current)] {\n    "slug": slug.current\n  }\n': PROPERTY_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "property" && slug.current == $slug && isPublic == true][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    price,\n    operation,\n    propertyType,\n    "neighbourhood": neighbourhood->name,\n    surface,\n    bedrooms,\n    bathrooms,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    gallery[]{ ... },\n    isPublic\n  }\n': PROPERTY_BY_SLUG_QUERY_RESULT;
   }
 }

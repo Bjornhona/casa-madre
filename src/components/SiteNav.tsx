@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { LocaleSwitch } from "@/components/LocaleSwitch";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
@@ -25,6 +25,7 @@ const SECTIONS = [
 
 export function SiteNav() {
   const t = useTranslations("nav");
+  const locale = useLocale();
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -61,16 +62,27 @@ export function SiteNav() {
     if (open) panelRef.current?.focus();
   }, [open]);
 
-  // Close the overlay, then smooth-scroll to the section. The brief's sections
-  // carry `scroll-mt-24`, so the fixed bar never overlaps the heading. The
-  // timeout lets the body-scroll lock release before scrolling.
-  function goTo(id: string) {
-    setOpen(false);
+  // Anchor links point at `/${locale}#${id}` so they work from any page. On the
+  // home page the target exists, so we intercept and smooth-scroll (the brief's
+  // sections carry `scroll-mt-24`, so the fixed bar never overlaps the heading);
+  // the timeout lets the body-scroll lock release first. On a sub-page the
+  // target is absent, so we let the browser navigate home and scroll there.
+  function handleNavClick(e: React.MouseEvent, id: string) {
     const el = document.getElementById(id);
-    window.setTimeout(
-      () => el?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }),
-      reduce ? 0 : 60,
-    );
+    if (el) {
+      e.preventDefault();
+      setOpen(false);
+      window.setTimeout(
+        () =>
+          el.scrollIntoView({
+            behavior: reduce ? "auto" : "smooth",
+            block: "start",
+          }),
+        reduce ? 0 : 60,
+      );
+    } else {
+      setOpen(false);
+    }
   }
 
   return (
@@ -83,7 +95,7 @@ export function SiteNav() {
       >
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(rgba(43,33,27,0.5),rgba(43,33,27,0))]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(rgba(43,33,27,0.8),rgba(43,33,27,0))]"
         />
 
         <button
@@ -105,7 +117,7 @@ export function SiteNav() {
         <div className="flex items-center gap-5">
           <LocaleSwitch />
           <a
-            href="#contacto"
+            href={`/${locale}#contacto`}
             className="hidden border border-cream/70 px-6 py-3 text-[11px] uppercase tracking-[0.16em] transition-colors duration-500 hover:bg-cream hover:text-deep focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cream/70 sm:inline-block"
           >
             {t("contact")}
@@ -142,11 +154,8 @@ export function SiteNav() {
                   {SECTIONS.map(({ key, id }) => (
                     <motion.li key={key} variants={item}>
                       <a
-                        href={`#${id}`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          goTo(id);
-                        }}
+                        href={`/${locale}#${id}`}
+                        onClick={(e) => handleNavClick(e, id)}
                         className="group flex w-fit items-baseline gap-4 py-2 outline-none sm:gap-6"
                       >
                         <span className="font-serif text-[24px] sm:text-[36px] lg:text-[48px] leading-[1.04] tracking-[-0.025em] text-cream/85 decoration-1 decoration-cream/30 underline-offset-[10px] transition-all duration-500 group-hover:text-cream group-hover:underline group-focus-visible:text-cream group-focus-visible:underline">
