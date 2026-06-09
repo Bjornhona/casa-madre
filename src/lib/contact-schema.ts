@@ -15,6 +15,11 @@ export const contactSchema = z.object({
   area: z.string().trim().optional().or(z.literal("")),
   message: z.string().trim().min(10),
   consent: z.literal(true),
+  // Optional CTA context, carried through hidden fields so the notification
+  // email can reference the property or service the enquiry came from.
+  referencia: z.string().trim().optional().or(z.literal("")),
+  propiedad: z.string().trim().optional().or(z.literal("")),
+  servicioRef: z.string().trim().optional().or(z.literal("")),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;

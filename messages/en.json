@@ -197,7 +197,14 @@
       "submit": "Send"
     },
     "whatsapp": "Message us on WhatsApp",
-    "emailLabel": "Email"
+    "emailLabel": "Email",
+    "referencia": {
+      "pill": "Regarding",
+      "zona": "Area of interest",
+      "dismiss": "✕",
+      "dismissLabel": "Remove reference",
+      "messageDefault": "Hello, I'm interested in [titulo]. I'd like to find out more."
+    }
   },
   "footer": {
     "tagline": "Casa Madre · Barcelona · Properties and Lifestyle",

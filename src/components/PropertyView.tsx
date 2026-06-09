@@ -7,6 +7,7 @@ import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
 import { CTALink } from "@/components/ui/CTALink";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
+import { contactoHref } from "@/lib/contacto-href";
 import { urlFor } from "@/sanity/lib/image";
 import { fallbackImagesFor } from "@/lib/property-fallback-images";
 import type { PROPERTY_BY_SLUG_QUERY_RESULT } from "@/sanity/types.gen";
@@ -236,7 +237,14 @@ export function PropertyView({ property }: { property: Property }) {
             {t("ctaBody")}
           </p>
           <div className="mt-9 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-8">
-            <CTALink href={`/${locale}#contacto`} variant="onDark">
+            <CTALink
+              href={contactoHref(locale, {
+                propiedad: property.slug,
+                titulo: property.title,
+                interes: property.operation === "venta" ? "buy" : "rent",
+              })}
+              variant="onDark"
+            >
               {t("ctaPrimary")}
             </CTALink>
             {WHATSAPP && (

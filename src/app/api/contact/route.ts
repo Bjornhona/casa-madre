@@ -46,7 +46,21 @@ export async function POST(request: Request) {
   }
 
   const resend = new Resend(apiKey);
+
+  // CTA context (property/service the enquiry came from), surfaced at the top of
+  // the email and in the subject line.
+  const referenceLabel = data.referencia || data.servicioRef || "";
+  const contexto: string[] = [];
+  if (data.referencia) {
+    contexto.push(
+      `Propiedad: ${data.referencia}${data.propiedad ? ` (${data.propiedad})` : ""}`,
+    );
+  } else if (data.servicioRef) {
+    contexto.push(`Servicio: ${data.servicioRef}`);
+  }
+
   const lines = [
+    ...(contexto.length ? ["Contexto", ...contexto, ""] : []),
     `Nombre: ${data.name}`,
     `Email: ${data.email}`,
     `Teléfono: ${data.phone}`,
@@ -57,12 +71,16 @@ export async function POST(request: Request) {
     data.message,
   ].filter(Boolean);
 
+  const subject = referenceLabel
+    ? `Nueva consulta — ${referenceLabel} · Casa Madre`
+    : "Nueva consulta · Casa Madre";
+
   try {
     const { error } = await resend.emails.send({
       from: "Casa Madre <onboarding@resend.dev>",
       to: [to],
       replyTo: data.email,
-      subject: `Casa Madre · nuevo contacto — ${data.name}`,
+      subject,
       text: lines.join("\n"),
     });
     if (error) {

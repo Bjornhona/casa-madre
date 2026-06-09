@@ -9,6 +9,7 @@ import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { CTALink } from "@/components/ui/CTALink";
 import { fadeUp, staggerContainer } from "@/lib/motion";
+import { contactoHref } from "@/lib/contacto-href";
 import { urlFor } from "@/sanity/lib/image";
 import type { PROPERTIES_QUERY_RESULT } from "@/sanity/types.gen";
 
@@ -276,7 +277,11 @@ export function Propiedades({
                     </CTALink>
                   )}
                   <a
-                    href="#contacto"
+                    href={contactoHref(locale, {
+                      propiedad: p.slug,
+                      titulo: p.title,
+                      interes: p.operation === "venta" ? "buy" : "rent",
+                    })}
                     className="text-[11px] uppercase tracking-[0.16em] text-brown/70 underline-offset-4 transition-colors duration-300 hover:text-brown hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
                   >
                     {tc("cta")}

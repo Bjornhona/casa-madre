@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   KeyRound,
   House,
@@ -15,6 +15,7 @@ import {
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { fadeUp, staggerContainer } from "@/lib/motion";
+import { contactoHref } from "@/lib/contacto-href";
 
 type ServiceItem = { title: string; description: string; cta: string };
 
@@ -28,9 +29,21 @@ const ICONS: LucideIcon[] = [
   Scale, // Jurídico & Financiero
 ];
 
+// CTA context per service (index-aligned). `interes` pre-selects the form's
+// interest dropdown; services with no obvious interest just carry the servicio.
+const SERVICE_PARAMS: { servicio: string; interes?: string }[] = [
+  { servicio: "compraventa", interes: "buy" },
+  { servicio: "alquileres", interes: "rent" },
+  { servicio: "personal-shopper", interes: "buy" },
+  { servicio: "reformas" },
+  { servicio: "inversion", interes: "invest" },
+  { servicio: "juridico" },
+];
+
 export function Servicios() {
   const t = useTranslations("servicios");
   const items = t.raw("items") as ServiceItem[];
+  const locale = useLocale();
   const reduce = useReducedMotion();
   const container = staggerContainer(reduce, 0.1);
   const item = fadeUp(reduce);
@@ -48,10 +61,11 @@ export function Servicios() {
       >
         {items.map((service, index) => {
           const Icon = ICONS[index] ?? KeyRound;
+          const params = SERVICE_PARAMS[index] ?? {};
           return (
             <motion.li key={service.title} variants={item} className="bg-cream">
               <a
-                href="#contacto"
+                href={contactoHref(locale, params)}
                 className="group flex h-full flex-col gap-5 p-9 transition-colors duration-500 hover:bg-ivory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brown lg:p-10"
               >
                 <Icon
