@@ -34,6 +34,7 @@
   },
   "servicios": {
     "kicker": "Services",
+    "viewAll": "View all services",
     "items": [
       {
         "title": "Buying & Selling",
@@ -70,6 +71,7 @@
   "metodo": {
     "kicker": "The Casa Madre Method",
     "intro": "Understand first. Search second.",
+    "teaserCta": "Discover the method",
     "steps": [
       {
         "number": "01",
@@ -101,6 +103,7 @@
   "barrios": {
     "kicker": "Neighbourhoods",
     "intro": "A city isn't understood when you visit it. It's understood when it becomes part of your life.",
+    "viewAll": "Explore neighbourhoods",
     "items": [
       {
         "name": "Sarrià",
@@ -131,6 +134,7 @@
   "propiedades": {
     "kicker": "Properties",
     "intro": "A few properties, carefully selected.",
+    "viewAll": "View all properties",
     "filters": {
       "operation": "Operation",
       "sale": "For sale",
@@ -179,6 +183,7 @@
   "contacto": {
     "kicker": "Contact",
     "headline": "Tell us how you want to live Barcelona.",
+    "teaserCta": "Tell us what you're looking for",
     "form": {
       "name": "Name",
       "email": "Email",
@@ -204,6 +209,33 @@
       "dismiss": "✕",
       "dismissLabel": "Remove reference",
       "messageDefault": "Hello, I'm interested in [titulo]. I'd like to find out more."
+    }
+  },
+  "pages": {
+    "nosotras": {
+      "kicker": "About",
+      "title": "Who we are and how we understand home",
+      "intro": "Two perspectives —advertising and interior design— joined by one shared way of understanding how a space is lived."
+    },
+    "servicios": {
+      "kicker": "Services",
+      "title": "How we guide you",
+      "intro": "Six ways to support every decision about your home in Barcelona."
+    },
+    "barrios": {
+      "kicker": "Neighbourhoods",
+      "title": "Where to live in Barcelona",
+      "intro": "The neighbourhoods whose life, light and rhythm we know best."
+    },
+    "propiedades": {
+      "kicker": "Properties",
+      "title": "Current selection",
+      "intro": "A few properties, carefully selected and handled exclusively."
+    },
+    "contacto": {
+      "kicker": "Contact",
+      "title": "Let's talk",
+      "intro": "Tell us how you want to live Barcelona, and we'll be with you from the very first moment."
     }
   },
   "footer": {

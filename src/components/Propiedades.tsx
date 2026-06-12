@@ -32,9 +32,12 @@ const FALLBACK_POOL = [
 
 export function Propiedades({
   properties,
+  variant = "page",
 }: {
   properties: PROPERTIES_QUERY_RESULT;
+  variant?: "home" | "page";
 }) {
+  const isHome = variant === "home";
   const t = useTranslations("propiedades");
   const tf = useTranslations("propiedades.filters");
   const tc = useTranslations("propiedades.card");
@@ -88,6 +91,9 @@ export function Propiedades({
     return true;
   });
 
+  // The home teaser shows the first three properties without the filter bar.
+  const displayed = isHome ? properties.slice(0, 3) : visible;
+
   const pillBase =
     "border px-4 py-2 text-[11px] uppercase tracking-[0.14em] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brown focus-visible:ring-offset-ivory";
   const pillOn = "border-brown bg-brown text-cream";
@@ -107,6 +113,7 @@ export function Propiedades({
       </p>
 
       {/* Filter bar — restrained pills + a thin price slider, not a portal UI. */}
+      {!isHome && (
       <div className="mt-12 flex flex-col gap-8 border-y border-line py-8 lg:flex-row lg:flex-wrap lg:items-end lg:gap-x-14 lg:gap-y-8">
         <fieldset className="flex flex-col gap-3">
           <legend className="mb-3 text-[11px] uppercase tracking-[0.18em] text-brown">
@@ -190,9 +197,10 @@ export function Propiedades({
           />
         </div>
       </div>
+      )}
 
       <motion.ul
-        key={visible.map((p) => p._id).join("-")}
+        key={displayed.map((p) => p._id).join("-")}
         variants={container}
         initial="hidden"
         whileInView="show"
@@ -200,7 +208,7 @@ export function Propiedades({
         aria-live="polite"
         className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {visible.map((p) => {          
+        {displayed.map((p) => {
           const src = p.image?.asset
             ? urlFor(p.image).width(1000).height(750).fit("crop").url()
             : (fallbackFor.get(p._id) ?? FALLBACK_POOL[0]);
@@ -292,6 +300,12 @@ export function Propiedades({
           );
         })}
       </motion.ul>
+
+      {isHome && (
+        <div className="mt-12">
+          <CTALink href={`/${locale}/propiedades`}>{t("viewAll")}</CTALink>
+        </div>
+      )}
     </Section>
   );
 }

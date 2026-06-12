@@ -34,6 +34,7 @@
   },
   "servicios": {
     "kicker": "Servicios",
+    "viewAll": "Ver todos los servicios",
     "items": [
       {
         "title": "Compraventa",
@@ -70,6 +71,7 @@
   "metodo": {
     "kicker": "Método Casa Madre",
     "intro": "Entender primero. Buscar después.",
+    "teaserCta": "Descubrir el método",
     "steps": [
       {
         "number": "01",
@@ -101,6 +103,7 @@
   "barrios": {
     "kicker": "Barrios",
     "intro": "Una ciudad no se entiende cuando se visita. Se entiende cuando empieza a formar parte de tu vida.",
+    "viewAll": "Explorar barrios",
     "items": [
       {
         "name": "Sarrià",
@@ -131,6 +134,7 @@
   "propiedades": {
     "kicker": "Propiedades",
     "intro": "Pocas propiedades, cuidadosamente seleccionadas.",
+    "viewAll": "Ver todas las propiedades",
     "filters": {
       "operation": "Operación",
       "sale": "Venta",
@@ -179,6 +183,7 @@
   "contacto": {
     "kicker": "Contacto",
     "headline": "Cuéntanos cómo quieres vivir Barcelona.",
+    "teaserCta": "Cuéntanos qué buscas",
     "form": {
       "name": "Nombre",
       "email": "Email",
@@ -204,6 +209,33 @@
       "dismiss": "✕",
       "dismissLabel": "Quitar referencia",
       "messageDefault": "Hola, me interesa [titulo]. Me gustaría obtener más información."
+    }
+  },
+  "pages": {
+    "nosotras": {
+      "kicker": "Nosotras",
+      "title": "Quiénes somos y cómo entendemos el hogar",
+      "intro": "Dos miradas —la publicidad y el interiorismo— unidas por una misma forma de entender cómo se vive un espacio."
+    },
+    "servicios": {
+      "kicker": "Servicios",
+      "title": "Cómo te acompañamos",
+      "intro": "Seis formas de acompañarte en cada decisión sobre tu vivienda en Barcelona."
+    },
+    "barrios": {
+      "kicker": "Barrios",
+      "title": "Dónde vivir en Barcelona",
+      "intro": "Los barrios donde mejor conocemos la vida, la luz y el ritmo de cada calle."
+    },
+    "propiedades": {
+      "kicker": "Propiedades",
+      "title": "Selección actual",
+      "intro": "Pocas propiedades, cuidadosamente seleccionadas y trabajadas en exclusiva."
+    },
+    "contacto": {
+      "kicker": "Contacto",
+      "title": "Hablemos",
+      "intro": "Cuéntanos cómo quieres vivir Barcelona y te acompañamos desde el primer momento."
     }
   },
   "footer": {

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
@@ -15,6 +15,7 @@ const ABOUT_IMAGE =
 
 export function AboutIntro() {
   const t = useTranslations("about");
+  const locale = useLocale();
   const reduce = useReducedMotion();
 
   const container: Variants = {
@@ -57,7 +58,7 @@ export function AboutIntro() {
             {t("body")}
           </motion.p>
           <motion.div variants={item} className="mt-7">
-            <CTALink href="#nosotras">{t("cta")}</CTALink>
+            <CTALink href={`/${locale}/nosotras`}>{t("cta")}</CTALink>
           </motion.div>
         </motion.div>
 

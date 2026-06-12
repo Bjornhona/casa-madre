@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
+import { CTALink } from "@/components/ui/CTALink";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 import { contactoHref } from "@/lib/contacto-href";
 
@@ -40,13 +41,16 @@ const SERVICE_PARAMS: { servicio: string; interes?: string }[] = [
   { servicio: "juridico" },
 ];
 
-export function Servicios() {
+// On the dedicated /servicios page each card is an anchor target (#compraventa,
+// #alquileres, …). On the home teaser the cards link to those anchors instead.
+export function Servicios({ variant = "page" }: { variant?: "home" | "page" }) {
   const t = useTranslations("servicios");
   const items = t.raw("items") as ServiceItem[];
   const locale = useLocale();
   const reduce = useReducedMotion();
   const container = staggerContainer(reduce, 0.1);
   const item = fadeUp(reduce);
+  const isHome = variant === "home";
 
   return (
     <Section id="servicios" aria-labelledby="servicios-kicker">
@@ -62,10 +66,21 @@ export function Servicios() {
         {items.map((service, index) => {
           const Icon = ICONS[index] ?? KeyRound;
           const params = SERVICE_PARAMS[index] ?? {};
+          const anchor = params.servicio;
+          // Home: link to the service's section on /servicios. Page: pre-fill
+          // the contact form with this service's context.
+          const href = isHome
+            ? `/${locale}/servicios#${anchor}`
+            : contactoHref(locale, params);
           return (
-            <motion.li key={service.title} variants={item} className="bg-cream">
+            <motion.li
+              key={service.title}
+              id={isHome ? undefined : anchor}
+              variants={item}
+              className="scroll-mt-28 bg-cream"
+            >
               <a
-                href={contactoHref(locale, params)}
+                href={href}
                 className="group flex h-full flex-col gap-5 p-9 transition-colors duration-500 hover:bg-ivory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brown lg:p-10"
               >
                 <Icon
@@ -92,6 +107,12 @@ export function Servicios() {
           );
         })}
       </motion.ul>
+
+      {isHome && (
+        <div className="mt-12">
+          <CTALink href={`/${locale}/servicios`}>{t("viewAll")}</CTALink>
+        </div>
+      )}
     </Section>
   );
 }

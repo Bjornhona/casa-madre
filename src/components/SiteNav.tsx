@@ -2,30 +2,31 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
+import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleSwitch } from "@/components/LocaleSwitch";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 
 /**
- * Fixed top navigation over the hero, plus a full-screen overlay menu.
- * The ES/EN switch and Contacto link stay visible in the bar at all times;
- * the Menú button toggles a dark-brown overlay with the section anchors.
+ * Fixed top navigation, plus a full-screen overlay menu. The wordmark (home),
+ * ES/EN switch and Contacto link stay visible in the bar at all times; the Menú
+ * button toggles a dark-brown overlay listing the site's real routes.
  */
 
-// Section anchors, in scroll order. Labels/subtitles come from `nav.items.*`.
-const SECTIONS = [
-  { key: "nosotras", id: "nosotras" },
-  { key: "servicios", id: "servicios" },
-  { key: "metodo", id: "metodo" },
-  { key: "barrios", id: "barrios" },
-  { key: "propiedades", id: "propiedades" },
-  { key: "contacto", id: "contacto" },
+// Menu items, in order. Labels/subtitles come from `nav.items.*`; `href` is the
+// locale-agnostic path handed to next-intl's <Link>, which adds the locale.
+const ROUTES = [
+  { key: "nosotras", href: "/nosotras" },
+  { key: "servicios", href: "/servicios" },
+  { key: "barrios", href: "/barrios" },
+  { key: "propiedades", href: "/propiedades" },
+  { key: "contacto", href: "/contacto" },
 ] as const;
 
 export function SiteNav() {
   const t = useTranslations("nav");
-  const locale = useLocale();
+  const pathname = usePathname();
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -33,6 +34,11 @@ export function SiteNav() {
 
   const container = staggerContainer(reduce, 0.05);
   const item = fadeUp(reduce, { y: 18, duration: 0.55 });
+
+  // A route is active when the pathname (locale already stripped by next-intl)
+  // matches the item, or sits beneath it (e.g. /propiedades/[slug]).
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`);
 
   // Lock body scroll while the overlay is open; restore the previous value.
   useEffect(() => {
@@ -61,29 +67,6 @@ export function SiteNav() {
   useEffect(() => {
     if (open) panelRef.current?.focus();
   }, [open]);
-
-  // Anchor links point at `/${locale}#${id}` so they work from any page. On the
-  // home page the target exists, so we intercept and smooth-scroll (the brief's
-  // sections carry `scroll-mt-24`, so the fixed bar never overlaps the heading);
-  // the timeout lets the body-scroll lock release first. On a sub-page the
-  // target is absent, so we let the browser navigate home and scroll there.
-  function handleNavClick(e: React.MouseEvent, id: string) {
-    const el = document.getElementById(id);
-    if (el) {
-      e.preventDefault();
-      setOpen(false);
-      window.setTimeout(
-        () =>
-          el.scrollIntoView({
-            behavior: reduce ? "auto" : "smooth",
-            block: "start",
-          }),
-        reduce ? 0 : 60,
-      );
-    } else {
-      setOpen(false);
-    }
-  }
 
   return (
     <>
@@ -114,14 +97,23 @@ export function SiteNav() {
           <span className="hidden sm:inline">{open ? t("close") : t("menu")}</span>
         </button>
 
+        {/* Wordmark — returns to the home page from any route. */}
+        <Link
+          href="/"
+          onClick={() => setOpen(false)}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[15px] uppercase tracking-[0.3em] text-cream transition-opacity duration-300 hover:opacity-80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cream/70"
+        >
+          Casa Madre
+        </Link>
+
         <div className="flex items-center gap-5">
           <LocaleSwitch />
-          <a
-            href={`/${locale}#contacto`}
+          <Link
+            href="/contacto"
             className="hidden border border-cream/70 px-6 py-3 text-[11px] uppercase tracking-[0.16em] transition-colors duration-500 hover:bg-cream hover:text-deep focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cream/70 sm:inline-block"
           >
             {t("contact")}
-          </a>
+          </Link>
         </div>
       </motion.header>
 
@@ -151,22 +143,32 @@ export function SiteNav() {
                   animate="show"
                   className="flex flex-col gap-1 sm:gap-2"
                 >
-                  {SECTIONS.map(({ key, id }) => (
-                    <motion.li key={key} variants={item}>
-                      <a
-                        href={`/${locale}#${id}`}
-                        onClick={(e) => handleNavClick(e, id)}
-                        className="group flex w-fit items-baseline gap-4 py-2 outline-none sm:gap-6"
-                      >
-                        <span className="font-serif text-[24px] sm:text-[36px] lg:text-[48px] leading-[1.04] tracking-[-0.025em] text-cream/85 decoration-1 decoration-cream/30 underline-offset-[10px] transition-all duration-500 group-hover:text-cream group-hover:underline group-focus-visible:text-cream group-focus-visible:underline">
-                          {t(`items.${key}.label`)}
-                        </span>
-                        <span className="hidden text-[11px] uppercase tracking-[0.2em] text-cream/40 transition-colors duration-500 group-hover:text-cream/65 sm:inline">
-                          {t(`items.${key}.subtitle`)}
-                        </span>
-                      </a>
-                    </motion.li>
-                  ))}
+                  {ROUTES.map(({ key, href }) => {
+                    const active = isActive(href);
+                    return (
+                      <motion.li key={key} variants={item}>
+                        <Link
+                          href={href}
+                          onClick={() => setOpen(false)}
+                          aria-current={active ? "page" : undefined}
+                          className="group flex w-fit items-baseline gap-4 py-2 outline-none sm:gap-6"
+                        >
+                          <span
+                            className={`font-serif text-[24px] leading-[1.04] tracking-[-0.025em] decoration-1 underline-offset-[10px] transition-all duration-500 sm:text-[36px] lg:text-[48px] ${
+                              active
+                                ? "text-cream underline decoration-clay"
+                                : "text-cream/85 decoration-cream/30 group-hover:text-cream group-hover:underline group-focus-visible:text-cream group-focus-visible:underline"
+                            }`}
+                          >
+                            {t(`items.${key}.label`)}
+                          </span>
+                          <span className="hidden text-[11px] uppercase tracking-[0.2em] text-cream/40 transition-colors duration-500 group-hover:text-cream/65 sm:inline">
+                            {t(`items.${key}.subtitle`)}
+                          </span>
+                        </Link>
+                      </motion.li>
+                    );
+                  })}
                 </motion.ul>
               </nav>
 

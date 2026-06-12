@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
+import { CTALink } from "@/components/ui/CTALink";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 import { urlFor } from "@/sanity/lib/image";
 import type { NEIGHBOURHOODS_QUERY_RESULT } from "@/sanity/types.gen";
@@ -27,13 +28,17 @@ const GENERIC_FALLBACK =
 
 export function Barrios({
   neighbourhoods,
+  variant = "page",
 }: {
   neighbourhoods: NEIGHBOURHOODS_QUERY_RESULT;
+  variant?: "home" | "page";
 }) {
   const t = useTranslations("barrios");
+  const locale = useLocale();
   const reduce = useReducedMotion();
   const container = staggerContainer(reduce, 0.1);
   const item = fadeUp(reduce);
+  const isHome = variant === "home";
 
   return (
     <Section id="barrios" aria-labelledby="barrios-kicker" className="border-line border-b-1">
@@ -83,6 +88,12 @@ export function Barrios({
           );
         })}
       </motion.ul>
+
+      {isHome && (
+        <div className="mt-12">
+          <CTALink href={`/${locale}/barrios`}>{t("viewAll")}</CTALink>
+        </div>
+      )}
     </Section>
   );
 }

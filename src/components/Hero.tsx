@@ -9,7 +9,7 @@ import {
   useTransform,
   type Variants,
 } from "motion/react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 import { CTALink } from "@/components/ui/CTALink";
 import { EASE } from "@/lib/motion";
@@ -20,6 +20,7 @@ const HERO_IMAGE =
 
 export function Hero() {
   const t = useTranslations("hero");
+  const locale = useLocale();
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
 
@@ -112,7 +113,7 @@ export function Hero() {
           {t("claim")}
         </motion.p>
         <motion.div variants={item} className="mt-10">
-          <CTALink href="#contacto" variant="onDark">
+          <CTALink href={`/${locale}/contacto`} variant="onDark">
             {t("cta")}
           </CTALink>
         </motion.div>
