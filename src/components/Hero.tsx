@@ -16,7 +16,8 @@ import { EASE } from "@/lib/motion";
 
 // Tasteful warm-Mediterranean placeholder (matches the approved concept).
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=2000&q=85";
+  // "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=2000&q=85";
+  "/mediterranean-seaview.webp";
 
 export function Hero() {
   const t = useTranslations("hero");
@@ -61,7 +62,6 @@ export function Hero() {
         style={{ y, scale }}
         className="absolute inset-0 will-change-transform"
       >
-        {/* Decorative full-bleed background; all meaning is carried by the text. */}
         <Image
           src={HERO_IMAGE}
           alt=""
@@ -72,48 +72,59 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* Legibility scrim + soft centre vignette. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[linear-gradient(rgba(43,33,27,0.45),rgba(43,33,27,0.32))]"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(43,33,27,0)_30%,rgba(43,33,27,0.45)_100%)]"
-      />
-
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 max-w-[920px] px-6 [text-shadow:0_2px_30px_rgba(43,33,27,0.55)]"
+        className="relative z-10 max-w-[920px] px-6"
       >
-        <motion.div
+        <motion.img
           variants={item}
-          className="font-serif text-[72px] leading-[0.75] tracking-[-0.14em] text-sand sm:text-[92px]"
-        >
-          CM
-        </motion.div>
+          src="/casa-madre-logo.png"
+          alt="Casa Madre"
+          width={100}
+          height={100}
+          className="w-auto h-[150px] object-contain mx-auto"
+        />
         <motion.h1
           variants={item}
-          className="mt-7 pl-[0.22em] font-serif text-[36px] uppercase tracking-[0.22em] sm:text-[55px]"
+          className="mt-[-0.25em] pl-[0.22em] font-serif text-[36px] text-deep uppercase tracking-[0.22em] sm:text-[55px]"
         >
           {t("brand")}
         </motion.h1>
+
+        <motion.div
+          className={`flex items-center gap-4 w-full`}
+          initial={{ opacity: 0, scaleX: 0.2 }}
+          whileInView={{ opacity: 1, scaleX: 1 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div
+            className="flex-1 h-px bg-deep/90"
+            style={{ maskImage: "linear-gradient(to right, transparent, black)" }}
+          />
+          <span className="w-2 h-2 bg-deep/90 rounded-full" />
+          <div
+            className="flex-1 h-px bg-deep/90"
+            style={{ maskImage: "linear-gradient(to left, transparent, black)" }}
+          />
+        </motion.div>
+
         <motion.p
           variants={item}
-          className="mt-3.5 text-[12px] uppercase tracking-[0.42em] text-cream/90"
+          className="mt-3.5 text-[12px] uppercase tracking-[0.42em] text-deep/90"
         >
           {t("descriptor")}
         </motion.p>
         <motion.p
           variants={item}
-          className="mt-12 text-[15px] uppercase tracking-[0.42em] text-sand"
+          className="mt-12 text-[15px] uppercase tracking-[0.42em] text-clay"
         >
           {t("claim")}
         </motion.p>
         <motion.div variants={item} className="mt-10">
-          <CTALink href={`/${locale}/contacto`} variant="onDark">
+          <CTALink href={`/${locale}/contacto`} variant="onLight">
             {t("cta")}
           </CTALink>
         </motion.div>
