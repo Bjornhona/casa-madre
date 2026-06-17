@@ -13,11 +13,10 @@ import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 import { CTALink } from "@/components/ui/CTALink";
 import { EASE } from "@/lib/motion";
+// import { OceanSound } from "./OceanSound";
 
-// Tasteful warm-Mediterranean placeholder (matches the approved concept).
-const HERO_IMAGE =
-  // "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=2000&q=85";
-  "/mediterranean-seaview.webp";
+const HERO_IMAGE = "/mediterranean-seaview.webp";
+// const HERO_VIDEO = "/casa-madre-video.mp4";
 
 export function Hero() {
   const t = useTranslations("hero");
@@ -35,7 +34,6 @@ export function Hero() {
   const y = reduce ? undefined : yRaw;
   const scale = reduce ? undefined : scaleRaw;
 
-  // Mount: stagger monogram → wordmark → descriptor → claim → CTA.
   const container: Variants = {
     hidden: {},
     show: {
@@ -58,6 +56,7 @@ export function Hero() {
       ref={ref}
       className="relative flex min-h-svh items-center justify-center overflow-hidden text-center text-cream"
     >
+      {/* <OceanSound /> */}
       <motion.div
         style={{ y, scale }}
         className="absolute inset-0 will-change-transform"
@@ -70,6 +69,18 @@ export function Hero() {
           sizes="100vw"
           className="object-cover"
         />
+        {/* <video
+          autoPlay
+          muted={true}
+          loop={false}
+          playsInline={true}
+          poster={HERO_IMAGE}
+          className="object-cover w-full h-full"
+          width={1000}
+          height={1000}
+        >
+          <source src={HERO_VIDEO} type="video/mp4" />
+        </video> */}
       </motion.div>
 
       <motion.div
@@ -80,7 +91,7 @@ export function Hero() {
       >
         <motion.img
           variants={item}
-          src="/casa-madre-logo.png"
+          src="/casa-madre-logo-red.png"
           alt="Casa Madre"
           width={100}
           height={100}
@@ -102,12 +113,16 @@ export function Hero() {
         >
           <div
             className="flex-1 h-px bg-deep/90"
-            style={{ maskImage: "linear-gradient(to right, transparent, black)" }}
+            style={{
+              maskImage: "linear-gradient(to right, transparent, black)",
+            }}
           />
           <span className="w-2 h-2 bg-deep/90 rounded-full" />
           <div
             className="flex-1 h-px bg-deep/90"
-            style={{ maskImage: "linear-gradient(to left, transparent, black)" }}
+            style={{
+              maskImage: "linear-gradient(to left, transparent, black)",
+            }}
           />
         </motion.div>
 
@@ -132,7 +147,7 @@ export function Hero() {
 
       <motion.div
         aria-hidden
-        className="absolute bottom-7 left-1/2 -translate-x-1/2 text-cream/80"
+        className="absolute bottom-7 left-1/2 -translate-x-1/2 text-deep/80"
         animate={reduce ? undefined : { y: [0, 8, 0] }}
         transition={
           reduce
