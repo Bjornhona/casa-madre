@@ -12,7 +12,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 import { CTALink } from "@/components/ui/CTALink";
 import { heroScaleAnimation, itemAnimation, staggerContainer } from "@/lib/motion";
-// import { OceanSound } from "./OceanSound";
+import { OceanSound } from "./OceanSound";
 
 const HERO_IMAGE = "/mediterranean-seaview.webp";
 // const HERO_VIDEO = "/casa-madre-video.mp4";
@@ -43,7 +43,7 @@ export function Hero() {
       ref={ref}
       className="relative flex min-h-svh items-center justify-center overflow-hidden text-center text-cream"
     >
-      {/* <OceanSound /> */}
+      <OceanSound />
       <motion.div
         style={{ y, scale }}
         variants={heroScale}
