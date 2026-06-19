@@ -21,6 +21,7 @@ const ROUTES = [
   { key: "servicios", href: "/servicios" },
   { key: "barrios", href: "/barrios" },
   { key: "propiedades", href: "/propiedades" },
+  { key: "journal", href: "/journal" },
   { key: "contacto", href: "/contacto" },
 ] as const;
 

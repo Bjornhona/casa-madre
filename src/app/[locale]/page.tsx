@@ -6,10 +6,15 @@ import { Servicios } from "@/components/Servicios";
 import { MetodoTeaser } from "@/components/MetodoTeaser";
 import { Barrios } from "@/components/Barrios";
 import { Propiedades } from "@/components/Propiedades";
+import { JournalTeaser } from "@/components/JournalTeaser";
 import { ContactoTeaser } from "@/components/ContactoTeaser";
 import { Footer } from "@/components/Footer";
 import { sanityFetch } from "@/sanity/lib/live";
-import { NEIGHBOURHOODS_QUERY, PROPERTIES_QUERY } from "@/sanity/lib/queries";
+import {
+  NEIGHBOURHOODS_QUERY,
+  PROPERTIES_QUERY,
+  RECENT_JOURNAL_POSTS_QUERY,
+} from "@/sanity/lib/queries";
 
 // Condensed narrative overview: each band teases a section and links to its
 // dedicated page. Full versions live on /nosotras, /servicios, /barrios,
@@ -22,10 +27,12 @@ export default async function Home({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [{ data: properties }, { data: neighbourhoods }] = await Promise.all([
-    sanityFetch({ query: PROPERTIES_QUERY, params: { locale } }),
-    sanityFetch({ query: NEIGHBOURHOODS_QUERY, params: { locale } }),
-  ]);
+  const [{ data: properties }, { data: neighbourhoods }, { data: journalPosts }] =
+    await Promise.all([
+      sanityFetch({ query: PROPERTIES_QUERY, params: { locale } }),
+      sanityFetch({ query: NEIGHBOURHOODS_QUERY, params: { locale } }),
+      sanityFetch({ query: RECENT_JOURNAL_POSTS_QUERY, params: { locale } }),
+    ]);
 
   return (
     <>
@@ -37,6 +44,7 @@ export default async function Home({
         <MetodoTeaser />
         <Propiedades properties={properties} variant="home" />
         <Barrios neighbourhoods={neighbourhoods} variant="home" />
+        <JournalTeaser posts={journalPosts} />
         <ContactoTeaser />
       </main>
       <Footer />

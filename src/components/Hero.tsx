@@ -6,13 +6,12 @@ import {
   motion,
   useReducedMotion,
   useScroll,
-  useTransform,
-  type Variants,
+  useTransform
 } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 import { CTALink } from "@/components/ui/CTALink";
-import { EASE } from "@/lib/motion";
+import { heroScaleAnimation, itemAnimation, staggerContainer } from "@/lib/motion";
 // import { OceanSound } from "./OceanSound";
 
 const HERO_IMAGE = "/mediterranean-seaview.webp";
@@ -34,21 +33,9 @@ export function Hero() {
   const y = reduce ? undefined : yRaw;
   const scale = reduce ? undefined : scaleRaw;
 
-  const container: Variants = {
-    hidden: {},
-    show: {
-      transition: {
-        staggerChildren: reduce ? 0 : 0.22,
-        delayChildren: reduce ? 0 : 0.15,
-      },
-    },
-  };
-  const item: Variants = reduce
-    ? { hidden: { opacity: 1 }, show: { opacity: 1 } }
-    : {
-        hidden: { opacity: 0, y: 22 },
-        show: { opacity: 1, y: 0, transition: { duration: 1, ease: EASE } },
-      };
+  const container = staggerContainer(reduce, 0.22);
+  const heroScale = heroScaleAnimation(reduce);
+  const item = itemAnimation(reduce);
 
   return (
     <section
@@ -59,6 +46,9 @@ export function Hero() {
       {/* <OceanSound /> */}
       <motion.div
         style={{ y, scale }}
+        variants={heroScale}
+        initial="hidden"
+        animate="show"
         className="absolute inset-0 will-change-transform"
       >
         <Image

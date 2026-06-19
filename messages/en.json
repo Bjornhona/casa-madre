@@ -9,6 +9,7 @@
       "metodo": { "label": "Method", "subtitle": "How we work" },
       "barrios": { "label": "Neighbourhoods", "subtitle": "Where to live" },
       "propiedades": { "label": "Properties", "subtitle": "Current selection" },
+      "journal": { "label": "Journal", "subtitle": "Stories and guides" },
       "contacto": { "label": "Contact", "subtitle": "Let's talk" }
     }
   },
@@ -180,6 +181,24 @@
     "ctaWhatsapp": "Contact on WhatsApp",
     "cardViewLabel": "View property"
   },
+  "journal": {
+    "kicker": "Journal",
+    "readMore": "Read more",
+    "viewAll": "Read the Journal",
+    "backLink": "Journal",
+    "by": "by",
+    "dateLocale": "en-GB",
+    "empty": "Soon we'll be sharing stories, guides and perspectives on living in Barcelona.",
+    "teaserTitle": "Journal",
+    "teaserIntro": "Stories, guides and a close-up look at life in Barcelona.",
+    "categories": {
+      "barrios": "Neighbourhoods",
+      "lifestyle": "Lifestyle",
+      "inversion": "Investment",
+      "interiorismo": "Interior design",
+      "guias": "Guides"
+    }
+  },
   "contacto": {
     "kicker": "Contact",
     "headline": "Tell us how you want to live Barcelona.",
@@ -231,6 +250,11 @@
       "kicker": "Properties",
       "title": "Current selection",
       "intro": "A few properties, carefully selected and handled exclusively."
+    },
+    "journal": {
+      "kicker": "Journal",
+      "title": "Stories, guides and a look at Barcelona",
+      "intro": "Neighbourhoods, lifestyle, investment and interior design: our way of understanding how the city is lived."
     },
     "contacto": {
       "kicker": "Contact",

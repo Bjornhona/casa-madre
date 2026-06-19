@@ -73,3 +73,85 @@ export const PROPERTY_BY_SLUG_QUERY = defineQuery(`
     isPublic
   }
 `)
+
+/**
+ * Journal — bilingual editorial articles. As with properties, the localized
+ * fields (title, excerpt) resolve via a coalesce fallback to Spanish, and the
+ * Portable Text body picks the locale-specific field (bodyEn / bodyEs) with a
+ * fallback to Spanish so a missing translation never renders blank.
+ */
+
+// Published articles for the Journal index grid, newest first.
+export const JOURNAL_POSTS_QUERY = defineQuery(`
+  *[_type == "journalPost" && isPublished == true && defined(slug.current)]
+    | order(publishedAt desc) {
+    _id,
+    "slug": slug.current,
+    category,
+    publishedAt,
+    author,
+    coverImage,
+    "title": coalesce(
+      title[language == $locale][0].value,
+      title[language == "es"][0].value
+    ),
+    "excerpt": coalesce(
+      excerpt[language == $locale][0].value,
+      excerpt[language == "es"][0].value
+    )
+  }
+`)
+
+// A few recent articles for the home-page Journal teaser.
+export const RECENT_JOURNAL_POSTS_QUERY = defineQuery(`
+  *[_type == "journalPost" && isPublished == true && defined(slug.current)]
+    | order(publishedAt desc)[0...3] {
+    _id,
+    "slug": slug.current,
+    category,
+    publishedAt,
+    coverImage,
+    "title": coalesce(
+      title[language == $locale][0].value,
+      title[language == "es"][0].value
+    ),
+    "excerpt": coalesce(
+      excerpt[language == $locale][0].value,
+      excerpt[language == "es"][0].value
+    )
+  }
+`)
+
+// Slugs of every published article — used by generateStaticParams and sitemap.
+export const JOURNAL_SLUGS_QUERY = defineQuery(`
+  *[_type == "journalPost" && isPublished == true && defined(slug.current)] {
+    "slug": slug.current
+  }
+`)
+
+// A single published article by slug, with the locale-aware Portable Text body.
+// Filtering isPublished here means an unpublished/missing slug resolves to null,
+// which the page turns into a 404.
+export const JOURNAL_POST_BY_SLUG_QUERY = defineQuery(`
+  *[_type == "journalPost" && slug.current == $slug && isPublished == true][0] {
+    _id,
+    "slug": slug.current,
+    category,
+    publishedAt,
+    author,
+    coverImage,
+    "title": coalesce(
+      title[language == $locale][0].value,
+      title[language == "es"][0].value
+    ),
+    "excerpt": coalesce(
+      excerpt[language == $locale][0].value,
+      excerpt[language == "es"][0].value
+    ),
+    "body": select(
+      $locale == "en" && defined(bodyEn) => bodyEn,
+      bodyEs
+    ),
+    isPublished
+  }
+`)

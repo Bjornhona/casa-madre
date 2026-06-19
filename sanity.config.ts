@@ -13,6 +13,7 @@ import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {apiVersion, dataset, projectId} from './src/sanity/env'
 import {schema} from './src/sanity/schemaTypes'
 import {structure} from './src/sanity/structure'
+import {generateDraftAction} from './src/sanity/actions/generateDraftAction'
 
 export default defineConfig({
   basePath: '/studio',
@@ -20,6 +21,13 @@ export default defineConfig({
   dataset,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
+  document: {
+    // The "✦ Generar borrador con IA" action is only offered on Journal posts.
+    actions: (prev, context) =>
+      context.schemaType === 'journalPost'
+        ? [...prev, generateDraftAction]
+        : prev,
+  },
   plugins: [
     structureTool({structure}),
     // Field-level localization (ES primary, EN adaptation) for content fields

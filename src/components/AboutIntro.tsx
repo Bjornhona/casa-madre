@@ -1,33 +1,27 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
 import { CTALink } from "@/components/ui/CTALink";
-import { EASE } from "@/lib/motion";
+import { EASE, staggerContainer } from "@/lib/motion";
+import { itemAnimation } from "@/lib/motion";
 
 // Editorial placeholder image, warm-graded to sit with the hero.
 const ABOUT_IMAGE =
-  "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=85";
+  // "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=85";
+  "/casa-madre-table.webp";
 
 export function AboutIntro() {
   const t = useTranslations("about");
   const locale = useLocale();
   const reduce = useReducedMotion();
 
-  const container: Variants = {
-    hidden: {},
-    show: { transition: { staggerChildren: reduce ? 0 : 0.12 } },
-  };
-  const item: Variants = reduce
-    ? { hidden: { opacity: 1 }, show: { opacity: 1 } }
-    : {
-        hidden: { opacity: 0, y: 24 },
-        show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
-      };
+  const container = staggerContainer(reduce);
+  const item = itemAnimation(reduce);
 
   return (
     <Section id="about" aria-labelledby="about-kicker" className="border-line border-b-1">

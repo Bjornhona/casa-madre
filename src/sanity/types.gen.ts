@@ -15,6 +15,144 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type JournalPost = {
+  _id: string;
+  _type: "journalPost";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: InternationalizedArrayString;
+  slug: Slug;
+  excerpt?: InternationalizedArrayText;
+  category: "barrios" | "lifestyle" | "inversion" | "interiorismo" | "guias";
+  coverImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  bodyEs?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }
+  >;
+  bodyEn?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }
+  >;
+  author?: string;
+  publishedAt?: string;
+  isPublished?: boolean;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
+export type InternationalizedArrayText = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayTextValue
+>;
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
+export type InternationalizedArrayString = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayStringValue
+>;
+
 export type Testimonial = {
   _id: string;
   _type: "testimonial";
@@ -26,24 +164,11 @@ export type Testimonial = {
   isPublished?: boolean;
 };
 
-export type InternationalizedArrayText = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayTextValue
->;
-
 export type NeighbourhoodReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "neighbourhood";
-};
-
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
 export type Property = {
@@ -75,22 +200,6 @@ export type Property = {
   isPublic?: boolean;
 };
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
-};
-
 export type Neighbourhood = {
   _id: string;
   _type: "neighbourhood";
@@ -111,12 +220,6 @@ export type Neighbourhood = {
   order?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
 export type InternationalizedArrayTextValue = {
   _type: "internationalizedArrayTextValue";
   value?: string;
@@ -128,12 +231,6 @@ export type InternationalizedArrayStringValue = {
   value?: string;
   language: string;
 };
-
-export type InternationalizedArrayString = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayStringValue
->;
 
 export type SanityImagePaletteSwatch = {
   _type: "sanity.imagePaletteSwatch";
@@ -233,18 +330,19 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
-  | Testimonial
-  | InternationalizedArrayText
-  | NeighbourhoodReference
   | SanityImageAssetReference
-  | Property
+  | JournalPost
   | SanityImageCrop
   | SanityImageHotspot
-  | Neighbourhood
+  | InternationalizedArrayText
   | Slug
+  | InternationalizedArrayString
+  | Testimonial
+  | NeighbourhoodReference
+  | Property
+  | Neighbourhood
   | InternationalizedArrayTextValue
   | InternationalizedArrayStringValue
-  | InternationalizedArrayString
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -334,6 +432,113 @@ export type PROPERTY_BY_SLUG_QUERY_RESULT = {
   isPublic: boolean | null;
 } | null;
 
+// Source: src/sanity/lib/queries.ts
+// Variable: JOURNAL_POSTS_QUERY
+// Query: *[_type == "journalPost" && isPublished == true && defined(slug.current)]    | order(publishedAt desc) {    _id,    "slug": slug.current,    category,    publishedAt,    author,    coverImage,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    "excerpt": coalesce(      excerpt[language == $locale][0].value,      excerpt[language == "es"][0].value    )  }
+export type JOURNAL_POSTS_QUERY_RESULT = Array<{
+  _id: string;
+  slug: string;
+  category: "barrios" | "guias" | "interiorismo" | "inversion" | "lifestyle";
+  publishedAt: string | null;
+  author: string | null;
+  coverImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  title: string | null;
+  excerpt: string | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: RECENT_JOURNAL_POSTS_QUERY
+// Query: *[_type == "journalPost" && isPublished == true && defined(slug.current)]    | order(publishedAt desc)[0...3] {    _id,    "slug": slug.current,    category,    publishedAt,    coverImage,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    "excerpt": coalesce(      excerpt[language == $locale][0].value,      excerpt[language == "es"][0].value    )  }
+export type RECENT_JOURNAL_POSTS_QUERY_RESULT = Array<{
+  _id: string;
+  slug: string;
+  category: "barrios" | "guias" | "interiorismo" | "inversion" | "lifestyle";
+  publishedAt: string | null;
+  coverImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  title: string | null;
+  excerpt: string | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: JOURNAL_SLUGS_QUERY
+// Query: *[_type == "journalPost" && isPublished == true && defined(slug.current)] {    "slug": slug.current  }
+export type JOURNAL_SLUGS_QUERY_RESULT = Array<{
+  slug: string;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: JOURNAL_POST_BY_SLUG_QUERY
+// Query: *[_type == "journalPost" && slug.current == $slug && isPublished == true][0] {    _id,    "slug": slug.current,    category,    publishedAt,    author,    coverImage,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    "excerpt": coalesce(      excerpt[language == $locale][0].value,      excerpt[language == "es"][0].value    ),    "body": select(      $locale == "en" && defined(bodyEn) => bodyEn,      bodyEs    ),    isPublished  }
+export type JOURNAL_POST_BY_SLUG_QUERY_RESULT = {
+  _id: string;
+  slug: string;
+  category: "barrios" | "guias" | "interiorismo" | "inversion" | "lifestyle";
+  publishedAt: string | null;
+  author: string | null;
+  coverImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  title: string | null;
+  excerpt: string | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "blockquote"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }
+  > | null;
+  isPublished: boolean | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -342,5 +547,9 @@ declare module "@sanity/client" {
     '\n  *[_type == "neighbourhood"] | order(order asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    "blurb": coalesce(\n      blurb[language == $locale][0].value,\n      blurb[language == "es"][0].value\n    ),\n    image\n  }\n': NEIGHBOURHOODS_QUERY_RESULT;
     '\n  *[_type == "property" && isPublic == true && defined(slug.current)] {\n    "slug": slug.current\n  }\n': PROPERTY_SLUGS_QUERY_RESULT;
     '\n  *[_type == "property" && slug.current == $slug && isPublic == true][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    price,\n    operation,\n    propertyType,\n    "neighbourhood": neighbourhood->name,\n    surface,\n    bedrooms,\n    bathrooms,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    gallery[]{ ... },\n    isPublic\n  }\n': PROPERTY_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type == "journalPost" && isPublished == true && defined(slug.current)]\n    | order(publishedAt desc) {\n    _id,\n    "slug": slug.current,\n    category,\n    publishedAt,\n    author,\n    coverImage,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "excerpt": coalesce(\n      excerpt[language == $locale][0].value,\n      excerpt[language == "es"][0].value\n    )\n  }\n': JOURNAL_POSTS_QUERY_RESULT;
+    '\n  *[_type == "journalPost" && isPublished == true && defined(slug.current)]\n    | order(publishedAt desc)[0...3] {\n    _id,\n    "slug": slug.current,\n    category,\n    publishedAt,\n    coverImage,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "excerpt": coalesce(\n      excerpt[language == $locale][0].value,\n      excerpt[language == "es"][0].value\n    )\n  }\n': RECENT_JOURNAL_POSTS_QUERY_RESULT;
+    '\n  *[_type == "journalPost" && isPublished == true && defined(slug.current)] {\n    "slug": slug.current\n  }\n': JOURNAL_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "journalPost" && slug.current == $slug && isPublished == true][0] {\n    _id,\n    "slug": slug.current,\n    category,\n    publishedAt,\n    author,\n    coverImage,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "excerpt": coalesce(\n      excerpt[language == $locale][0].value,\n      excerpt[language == "es"][0].value\n    ),\n    "body": select(\n      $locale == "en" && defined(bodyEn) => bodyEn,\n      bodyEs\n    ),\n    isPublished\n  }\n': JOURNAL_POST_BY_SLUG_QUERY_RESULT;
   }
 }

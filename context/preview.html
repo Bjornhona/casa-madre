@@ -1,464 +1,1154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Casa Madre — Properties and Lifestyle</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Casa Madre — Properties and Lifestyle</title>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap");
 
-:root{
-  --ivory:#F4EDE3;
-  --cream:#FBF6EF;
-  --sand:#D7C1A8;
-  --clay:#A06A43;
-  --brown:#6B3E21;
-  --deep:#2B211B;
-  --muted:#6E5C4F;
-  --line:rgba(43,33,27,.14);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  background:var(--ivory);
-  color:var(--deep);
-  font-family:'Inter', sans-serif;
-  font-weight:300;
-  line-height:1.55;
-}
-a{text-decoration:none;color:inherit}
-h1,h2,h3,h4{font-family:'Cormorant Garamond', serif;font-weight:500;margin:0;letter-spacing:-.035em}
-p{margin:0}
+      :root {
+        --ivory: #f4ede3;
+        --cream: #fbf6ef;
+        --sand: #d7c1a8;
+        --clay: #a06a43;
+        --brown: #6b3e21;
+        --deep: #2b211b;
+        --muted: #6e5c4f;
+        --line: rgba(43, 33, 27, 0.14);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--ivory);
+        color: var(--deep);
+        font-family: "Inter", sans-serif;
+        font-weight: 300;
+        line-height: 1.55;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 500;
+        margin: 0;
+        letter-spacing: -0.035em;
+      }
+      p {
+        margin: 0;
+      }
 
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:20;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:26px 42px;
-  color:var(--cream);
-  background:linear-gradient(rgba(43,33,27,.45), rgba(43,33,27,0));
-}
-.nav .left,.nav .right{display:flex;gap:22px;align-items:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase}
-.menu-line{width:24px;height:1px;background:currentColor;display:block;box-shadow:0 7px 0 currentColor,0 -7px 0 currentColor}
-.btn-outline{border:1px solid currentColor;padding:13px 24px}
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 26px 42px;
+        color: var(--cream);
+        background: linear-gradient(
+          rgba(43, 33, 27, 0.45),
+          rgba(43, 33, 27, 0)
+        );
+      }
+      .nav .left,
+      .nav .right {
+        display: flex;
+        gap: 22px;
+        align-items: center;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      .menu-line {
+        width: 24px;
+        height: 1px;
+        background: currentColor;
+        display: block;
+        box-shadow:
+          0 7px 0 currentColor,
+          0 -7px 0 currentColor;
+      }
+      .btn-outline {
+        border: 1px solid currentColor;
+        padding: 13px 24px;
+      }
 
-.hero{
-  min-height:100vh;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  color:var(--cream);
-  background:
-    linear-gradient(rgba(43,33,27,.28),rgba(43,33,27,.18)),
-    url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=85');
-  background-size:cover;
-  background-position:center;
-}
-.hero::after{
-  content:"";
-  position:absolute;inset:0;
-  background:radial-gradient(circle at center, rgba(244,237,227,.18), transparent 45%);
-}
-.hero-inner{position:relative;z-index:1;padding:40px;max-width:920px}
-.monogram{
-  font-family:'Cormorant Garamond',serif;
-  color:#8F532A;
-  font-size:92px;
-  line-height:.75;
-  letter-spacing:-.14em;
-  margin-bottom:30px;
-}
-.logo{
-  font-family:'Cormorant Garamond',serif;
-  font-size:55px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  margin-left:.22em;
-}
-.subtitle{
-  margin-top:14px;
-  font-size:12px;
-  letter-spacing:.42em;
-  text-transform:uppercase;
-}
-.tagline{
-  margin-top:48px;
-  color:#A85E31;
-  letter-spacing:.42em;
-  text-transform:uppercase;
-  font-size:15px;
-}
-.down{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:28px;z-index:2;color:var(--cream)}
+      .hero {
+        min-height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: var(--cream);
+        background:
+          linear-gradient(rgba(43, 33, 27, 0.28), rgba(43, 33, 27, 0.18)),
+          url("https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=85");
+        background-size: cover;
+        background-position: center;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at center,
+          rgba(244, 237, 227, 0.18),
+          transparent 45%
+        );
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        padding: 40px;
+        max-width: 920px;
+      }
+      .monogram {
+        font-family: "Cormorant Garamond", serif;
+        color: #8f532a;
+        font-size: 92px;
+        line-height: 0.75;
+        letter-spacing: -0.14em;
+        margin-bottom: 30px;
+      }
+      .logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 55px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        margin-left: 0.22em;
+      }
+      .subtitle {
+        margin-top: 14px;
+        font-size: 12px;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+      }
+      .tagline {
+        margin-top: 48px;
+        color: #a85e31;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+        font-size: 15px;
+      }
+      .down {
+        position: absolute;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 28px;
+        z-index: 2;
+        color: var(--cream);
+      }
 
-.section{padding:92px 46px;border-bottom:1px solid var(--line)}
-.two{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:70px;
-  align-items:center;
-}
-.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.22em;color:var(--brown);font-weight:500;margin-bottom:20px}
-h2{font-size:56px;line-height:1.02}
-.body p{font-size:18px;color:#4F4036;margin-bottom:18px;max-width:720px}
-.serif-big{font-family:'Cormorant Garamond',serif;font-size:38px;line-height:1.08;color:var(--brown);margin-bottom:32px}
-.img{
-  border-radius:2px;
-  min-height:500px;
-  background-size:cover;
-  background-position:center;
-}
-.img.soft{box-shadow:0 24px 80px rgba(43,33,27,.13)}
-.cta-link{display:inline-block;margin-top:24px;border:1px solid var(--brown);padding:14px 28px;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--brown)}
+      .section {
+        padding: 92px 46px;
+        border-bottom: 1px solid var(--line);
+      }
+      .two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 70px;
+        align-items: center;
+      }
+      .kicker {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        color: var(--brown);
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+      h2 {
+        font-size: 56px;
+        line-height: 1.02;
+      }
+      .body p {
+        font-size: 18px;
+        color: #4f4036;
+        margin-bottom: 18px;
+        max-width: 720px;
+      }
+      .serif-big {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 38px;
+        line-height: 1.08;
+        color: var(--brown);
+        margin-bottom: 32px;
+      }
+      .img {
+        border-radius: 2px;
+        min-height: 500px;
+        background-size: cover;
+        background-position: center;
+      }
+      .img.soft {
+        box-shadow: 0 24px 80px rgba(43, 33, 27, 0.13);
+      }
+      .cta-link {
+        display: inline-block;
+        margin-top: 24px;
+        border: 1px solid var(--brown);
+        padding: 14px 28px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--brown);
+      }
 
-.services-wrap{padding:36px 26px 88px}
-.services{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  border:1px solid var(--line);
-  background:rgba(251,246,239,.55);
-}
-.service{
-  padding:34px 22px;
-  text-align:center;
-  border-right:1px solid var(--line);
-  min-height:210px;
-}
-.service:last-child{border-right:0}
-.icon{font-size:32px;color:var(--brown);height:48px;margin-bottom:18px}
-.service h3{
-  font-family:'Inter',sans-serif;
-  font-size:12px;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  font-weight:600;
-  color:var(--brown);
-  margin-bottom:14px;
-}
-.service p{font-size:13px;color:#4F4036}
+      .services-wrap {
+        padding: 36px 26px 88px;
+      }
+      .services {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        border: 1px solid var(--line);
+        background: rgba(251, 246, 239, 0.55);
+      }
+      .service {
+        padding: 34px 22px;
+        text-align: center;
+        border-right: 1px solid var(--line);
+        min-height: 210px;
+      }
+      .service:last-child {
+        border-right: 0;
+      }
+      .icon {
+        font-size: 32px;
+        color: var(--brown);
+        height: 48px;
+        margin-bottom: 18px;
+      }
+      .service h3 {
+        font-family: "Inter", sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--brown);
+        margin-bottom: 14px;
+      }
+      .service p {
+        font-size: 13px;
+        color: #4f4036;
+      }
 
-.method{
-  background:linear-gradient(90deg,#5A2E16,#8A4C25);
-  color:var(--cream);
-  padding:64px 46px;
-}
-.method-grid{
-  display:grid;grid-template-columns:1.25fr repeat(5,1fr);gap:26px;align-items:start;
-}
-.method h2{font-size:42px}
-.method p{font-size:14px;color:#E9D8C8}
-.step{border-left:1px solid rgba(251,246,239,.28);padding-left:24px;min-height:165px}
-.step-num{font-family:'Cormorant Garamond',serif;font-size:32px;margin-bottom:12px;color:#EBD5BF}
-.step h4{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;color:#fff}
-.step p{font-size:12px}
+      .method {
+        background: linear-gradient(90deg, #5a2e16, #8a4c25);
+        color: var(--cream);
+        padding: 64px 46px;
+      }
+      .method-grid {
+        display: grid;
+        grid-template-columns: 1.25fr repeat(5, 1fr);
+        gap: 26px;
+        align-items: start;
+      }
+      .method h2 {
+        font-size: 42px;
+      }
+      .method p {
+        font-size: 14px;
+        color: #e9d8c8;
+      }
+      .step {
+        border-left: 1px solid rgba(251, 246, 239, 0.28);
+        padding-left: 24px;
+        min-height: 165px;
+      }
+      .step-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 32px;
+        margin-bottom: 12px;
+        color: #ebd5bf;
+      }
+      .step h4 {
+        font-family: "Inter", sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        color: #fff;
+      }
+      .step p {
+        font-size: 12px;
+      }
 
-.detail-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:48px;
-}
-.detail{
-  background:var(--cream);
-  display:grid;grid-template-columns:.9fr 1.1fr;
-  min-height:370px;
-  border:1px solid var(--line);
-}
-.detail-img{background-size:cover;background-position:center}
-.detail-text{padding:38px}
-.detail-text h3{font-size:38px;margin-bottom:16px}
-.detail-text p{font-size:15px;color:#514239;margin-bottom:14px}
-.detail-text .mini{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--brown);font-weight:600;margin-bottom:20px}
+      .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 26px;
+        margin-top: 48px;
+      }
+      .detail {
+        background: var(--cream);
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        min-height: 370px;
+        border: 1px solid var(--line);
+      }
+      .detail-img {
+        background-size: cover;
+        background-position: center;
+      }
+      .detail-text {
+        padding: 38px;
+      }
+      .detail-text h3 {
+        font-size: 38px;
+        margin-bottom: 16px;
+      }
+      .detail-text p {
+        font-size: 15px;
+        color: #514239;
+        margin-bottom: 14px;
+      }
+      .detail-text .mini {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--brown);
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
 
-.journal{background:var(--cream);text-align:center}
-.journal h2{font-size:50px}
-.journal-intro{max-width:720px;margin:14px auto 50px;color:#59483E;font-size:18px}
-.journal-columns{display:grid;grid-template-columns:1fr 1fr;gap:34px;text-align:left}
-.panel{background:#F2E8DD;border:1px solid var(--line);padding:24px}
-.panel-head{display:flex;justify-content:space-between;align-items:start;margin-bottom:18px}
-.panel h3{font-family:'Inter',sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:var(--brown)}
-.panel p{font-size:15px;color:#4F4036}
-.mosaic{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}
-.tile{height:210px;background-size:cover;background-position:center;position:relative;display:flex;align-items:end;padding:16px;color:white}
-.tile::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent,rgba(43,33,27,.72))}
-.tile span{position:relative;z-index:1;font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:600}
-.home-mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px}
-.person{height:260px;background-size:cover;background-position:center;position:relative;display:flex;align-items:end;padding:18px;color:white}
-.person::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent,rgba(43,33,27,.78))}
-.person div{position:relative;z-index:1}
-.person strong{display:block;font-size:13px;letter-spacing:.15em;text-transform:uppercase}
-.person small{display:block;font-size:12px;margin-top:3px}
+      .journal {
+        background: var(--cream);
+        text-align: center;
+      }
+      .journal h2 {
+        font-size: 50px;
+      }
+      .journal-intro {
+        max-width: 720px;
+        margin: 14px auto 50px;
+        color: #59483e;
+        font-size: 18px;
+      }
+      .journal-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 34px;
+        text-align: left;
+      }
+      .panel {
+        background: #f2e8dd;
+        border: 1px solid var(--line);
+        padding: 24px;
+      }
+      .panel-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 18px;
+      }
+      .panel h3 {
+        font-family: "Inter", sans-serif;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--brown);
+      }
+      .panel p {
+        font-size: 15px;
+        color: #4f4036;
+      }
+      .mosaic {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        margin-top: 20px;
+      }
+      .tile {
+        height: 210px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        display: flex;
+        align-items: end;
+        padding: 16px;
+        color: white;
+      }
+      .tile::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(transparent, rgba(43, 33, 27, 0.72));
+      }
+      .tile span {
+        position: relative;
+        z-index: 1;
+        font-size: 12px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      .home-mosaic {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 20px;
+      }
+      .person {
+        height: 260px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        display: flex;
+        align-items: end;
+        padding: 18px;
+        color: white;
+      }
+      .person::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(transparent, rgba(43, 33, 27, 0.78));
+      }
+      .person div {
+        position: relative;
+        z-index: 1;
+      }
+      .person strong {
+        display: block;
+        font-size: 13px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .person small {
+        display: block;
+        font-size: 12px;
+        margin-top: 3px;
+      }
 
-.neighborhood-detail{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:58px;text-align:left;
-}
-.nb-card{background:#F2E8DD;border:1px solid var(--line)}
-.nb-card-img{height:210px;background-size:cover;background-position:center}
-.nb-card-body{padding:24px}
-.nb-card h3{font-size:34px;margin-bottom:14px}
-.nb-card .quote{font-family:'Cormorant Garamond',serif;font-size:25px;line-height:1.08;color:var(--brown);margin-bottom:16px}
-.nb-card p{font-size:14px;color:#4F4036;margin-bottom:12px}
-.micro{font-size:12px!important;color:#746155!important;border-top:1px solid var(--line);padding-top:12px;margin-top:14px}
+      .neighborhood-detail {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-top: 58px;
+        text-align: left;
+      }
+      .nb-card {
+        background: #f2e8dd;
+        border: 1px solid var(--line);
+      }
+      .nb-card-img {
+        height: 210px;
+        background-size: cover;
+        background-position: center;
+      }
+      .nb-card-body {
+        padding: 24px;
+      }
+      .nb-card h3 {
+        font-size: 34px;
+        margin-bottom: 14px;
+      }
+      .nb-card .quote {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 25px;
+        line-height: 1.08;
+        color: var(--brown);
+        margin-bottom: 16px;
+      }
+      .nb-card p {
+        font-size: 14px;
+        color: #4f4036;
+        margin-bottom: 12px;
+      }
+      .micro {
+        font-size: 12px !important;
+        color: #746155 !important;
+        border-top: 1px solid var(--line);
+        padding-top: 12px;
+        margin-top: 14px;
+      }
 
-.final{
-  min-height:540px;
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  background:
-    linear-gradient(rgba(43,33,27,.35),rgba(43,33,27,.38)),
-    url('https://images.unsplash.com/photo-1617103996702-96ff29b1c467?auto=format&fit=crop&w=1800&q=85');
-  background-size:cover;background-position:center;
-  color:var(--cream);
-}
-.final h2{font-size:70px}
-.final p{font-size:20px;margin:22px auto 0;max-width:680px}
-.footer{padding:34px 46px;display:flex;justify-content:space-between;color:#6E5C4F;font-size:13px}
+      .final {
+        min-height: 540px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background:
+          linear-gradient(rgba(43, 33, 27, 0.35), rgba(43, 33, 27, 0.38)),
+          url("https://images.unsplash.com/photo-1617103996702-96ff29b1c467?auto=format&fit=crop&w=1800&q=85");
+        background-size: cover;
+        background-position: center;
+        color: var(--cream);
+      }
+      .final h2 {
+        font-size: 70px;
+      }
+      .final p {
+        font-size: 20px;
+        margin: 22px auto 0;
+        max-width: 680px;
+      }
+      .footer {
+        padding: 34px 46px;
+        display: flex;
+        justify-content: space-between;
+        color: #6e5c4f;
+        font-size: 13px;
+      }
 
-@media(max-width:1100px){
-  .services{grid-template-columns:repeat(3,1fr)}
-  .service:nth-child(3){border-right:0}
-  .service:nth-child(n+4){border-top:1px solid var(--line)}
-  .method-grid,.neighborhood-detail{grid-template-columns:1fr 1fr}
-  .journal-columns,.two,.detail-grid{grid-template-columns:1fr}
-}
-@media(max-width:720px){
-  .nav .right{display:none}
-  .nav{padding:22px}
-  .logo{font-size:36px}
-  .monogram{font-size:72px}
-  .section{padding:70px 22px}
-  h2{font-size:42px}
-  .services{grid-template-columns:1fr}
-  .service{border-right:0;border-bottom:1px solid var(--line)}
-  .method-grid,.neighborhood-detail,.mosaic,.home-mosaic{grid-template-columns:1fr}
-  .detail{grid-template-columns:1fr}
-  .detail-img{height:280px}
-  .footer{display:block}
-}
-</style>
-</head>
+      @media (max-width: 1100px) {
+        .services {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .service:nth-child(3) {
+          border-right: 0;
+        }
+        .service:nth-child(n + 4) {
+          border-top: 1px solid var(--line);
+        }
+        .method-grid,
+        .neighborhood-detail {
+          grid-template-columns: 1fr 1fr;
+        }
+        .journal-columns,
+        .two,
+        .detail-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 720px) {
+        .nav .right {
+          display: none;
+        }
+        .nav {
+          padding: 22px;
+        }
+        .logo {
+          font-size: 36px;
+        }
+        .monogram {
+          font-size: 72px;
+        }
+        .section {
+          padding: 70px 22px;
+        }
+        h2 {
+          font-size: 42px;
+        }
+        .services {
+          grid-template-columns: 1fr;
+        }
+        .service {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .method-grid,
+        .neighborhood-detail,
+        .mosaic,
+        .home-mosaic {
+          grid-template-columns: 1fr;
+        }
+        .detail {
+          grid-template-columns: 1fr;
+        }
+        .detail-img {
+          height: 280px;
+        }
+        .footer {
+          display: block;
+        }
+      }
+    </style>
+  </head>
 
-<body>
-
-<nav class="nav">
-  <div class="left"><span class="menu-line"></span><span>Menu</span></div>
-  <div class="right"><span>ES / EN</span><a class="btn-outline" href="#contacto">Contacto</a></div>
-</nav>
-
-<header class="hero">
-  <div class="hero-inner">
-    <div class="monogram">CM</div>
-    <div class="logo">Casa Madre</div>
-    <div class="subtitle">Properties and Lifestyle</div>
-    <div class="tagline">Where living begins</div>
-  </div>
-  <div class="down">⌄</div>
-</header>
-
-<section class="section" id="origen">
-  <div class="two">
-    <div>
-      <div class="kicker">Qué es Casa Madre</div>
-      <div class="serif-big">Antes de encontrar tu casa, queremos que te sientas <em>en casa</em>.</div>
-      <div class="body">
-        <p>Casa Madre nace del origen. De esa casa que todos recordamos: la casa de la infancia, la casa de la madre, la casa donde aprendimos lo que significaba pertenecer.</p>
-        <p>Pero también nace de una intención nueva: acompañarte desde el primer momento para que la búsqueda, la decisión y la llegada tengan sentido.</p>
-        <p>No es solo encontrar un inmueble. Es empezar una etapa con alguien que entiende la casa, el barrio y todo lo que empieza alrededor.</p>
+  <body>
+    <nav class="nav">
+      <div class="left"><span class="menu-line"></span><span>Menu</span></div>
+      <div class="right">
+        <span>ES / EN</span><a class="btn-outline" href="#contacto">Contacto</a>
       </div>
-      <a class="cta-link" href="#nosotras">Conócenos</a>
-    </div>
-    <div class="img soft" style="background-image:url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85')"></div>
-  </div>
-</section>
+    </nav>
 
-<section class="section" id="nosotras">
-  <div class="two">
-    <div class="img soft" style="background-image:url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=85')"></div>
-    <div>
-      <div class="kicker">Nosotras</div>
-      <h2>Dos miradas. Una misma forma de entender el hogar.</h2>
-      <div class="body" style="margin-top:28px">
-        <p>Nos conocimos cuando una de nosotras llegó a captar el piso de la otra. Lo que parecía una visita más se convirtió en una conversación sobre luz, materiales, espacios y formas de vivir.</p>
-        <p>Una viene del mundo de la publicidad, de empresas internacionales y proyectos reconocidos en festivales como Cannes y San Sebastián. La otra, del interiorismo, con años de experiencia transformando espacios y entendiendo cómo se viven realmente.</p>
-        <p>Casa Madre nace de esa mezcla: estrategia, sensibilidad, creatividad y oficio.</p>
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="monogram">CM</div>
+        <div class="logo">Casa Madre</div>
+        <div class="subtitle">Properties and Lifestyle</div>
+        <div class="tagline">Where living begins</div>
       </div>
-    </div>
-  </div>
-</section>
+      <div class="down">⌄</div>
+    </header>
 
-<div class="services-wrap" id="servicios">
-  <div class="services">
-    <a class="service" href="#compraventa">
-      <div class="icon">⌂</div>
-      <h3>Compraventa</h3>
-      <p>Acompañamos cada operación con estrategia, valoración y sensibilidad.</p>
-    </a>
-    <a class="service" href="#alquileres">
-      <div class="icon">⌁</div>
-      <h3>Alquileres</h3>
-      <p>Viviendas para cada momento: temporada y larga estancia.</p>
-    </a>
-    <a class="service" href="#shopper">
-      <div class="icon">◌</div>
-      <h3>Personal Shopper</h3>
-      <p>Buscamos por ti. Entendemos, filtramos y encontramos.</p>
-    </a>
-    <a class="service" href="#reformas">
-      <div class="icon">□</div>
-      <h3>Reformas & Home Staging</h3>
-      <p>Transformamos espacios para que cuenten su mejor versión.</p>
-    </a>
-    <a class="service" href="#inversion">
-      <div class="icon">↗</div>
-      <h3>Inversión</h3>
-      <p>Analizamos, valoramos y te ayudamos a tomar decisiones acertadas.</p>
-    </a>
-    <a class="service" href="#legal">
-      <div class="icon">⚖</div>
-      <h3>Jurídico & Financiero</h3>
-      <p>Procesos legales y financieros con transparencia y rigor.</p>
-    </a>
-  </div>
-</div>
-
-<section class="method" id="metodo">
-  <div class="method-grid">
-    <div>
-      <div class="kicker" style="color:#EBD5BF">Nuestro método</div>
-      <h2>Entender primero. Buscar después.</h2>
-      <p style="margin-top:18px">Una manera de hacer que pone a las personas en el centro de cada decisión.</p>
-      <a class="cta-link" style="color:#fff;border-color:#fff" href="#contacto">Descubre cómo trabajamos</a>
-    </div>
-    <div class="step"><div class="step-num">01</div><h4>Te conocemos</h4><p>Entendemos quién eres, qué buscas y en qué momento de vida estás.</p></div>
-    <div class="step"><div class="step-num">02</div><h4>Damos sentido</h4><p>Acompañamos tu decisión desde la claridad y la experiencia.</p></div>
-    <div class="step"><div class="step-num">03</div><h4>Valoramos</h4><p>La valoración correcta es clave para que una propiedad se mueva y tenga éxito.</p></div>
-    <div class="step"><div class="step-num">04</div><h4>Menos, pero mejor</h4><p>Trabajamos pocas propiedades, en exclusiva, para darles todo nuestro foco.</p></div>
-    <div class="step"><div class="step-num">05</div><h4>Se convierte en método</h4><p>La experiencia, la repetición y los resultados construyen nuestro método.</p></div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="kicker">Áreas de trabajo</div>
-  <h2>Todo lo que puede formar parte de una casa.</h2>
-
-  <div class="detail-grid">
-    <article class="detail" id="compraventa">
-      <div class="detail-img" style="background-image:url('https://images.unsplash.com/photo-1600607687644-c7171b42498b?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="detail-text"><div class="mini">Compraventa</div><h3>Comprar o vender con sentido.</h3><p>Una operación inmobiliaria es una decisión importante. Valoramos, posicionamos y acompañamos con una estrategia clara desde el primer momento.</p></div>
-    </article>
-
-    <article class="detail" id="alquileres">
-      <div class="detail-img" style="background-image:url('https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="detail-text"><div class="mini">Alquileres</div><h3>Temporada y larga estancia.</h3><p>Seleccionamos viviendas pensadas para distintas etapas: una llegada, un proyecto, una transición o una nueva manera de vivir Barcelona.</p></div>
-    </article>
-
-    <article class="detail" id="shopper">
-      <div class="detail-img" style="background-image:url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="detail-text"><div class="mini">Personal Shopper</div><h3>Buscamos por ti.</h3><p>Antes de buscar, entendemos. Filtramos el mercado para presentarte solo aquello que encaja con tu vida, tu inversión y tu momento.</p></div>
-    </article>
-
-    <article class="detail" id="reformas">
-      <div class="detail-img" style="background-image:url('https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="detail-text"><div class="mini">Reformas & Home Staging</div><h3>Transformar el potencial.</h3><p>Reformas, actualización estética y preparación de viviendas para venta o alquiler. No decoramos por decorar: interpretamos el espacio.</p></div>
-    </article>
-
-    <article class="detail" id="inversion">
-      <div class="detail-img" style="background-image:url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="detail-text"><div class="mini">Inversión</div><h3>Leer más allá del presente.</h3><p>Analizamos rentabilidad, ubicación, potencial de reforma, demanda y valor futuro. Invertir bien es saber mirar antes de que el mercado hable.</p></div>
-    </article>
-
-    <article class="detail" id="legal">
-      <div class="detail-img" style="background-image:url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="detail-text"><div class="mini">Jurídico & Financiero</div><h3>Claridad donde suele haber ruido.</h3><p>Herencias, separaciones, financiación y procesos sensibles. Nuestro equipo acompaña para que todo se gestione con transparencia, orden y tranquilidad.</p></div>
-    </article>
-  </div>
-</section>
-
-<section class="section journal" id="journal">
-  <div class="kicker">Casa Madre Journal</div>
-  <h2>Barcelona, desde dentro.</h2>
-  <p class="journal-intro">Un diario de barrios, casas y personas. Cafés donde empiezan las mañanas, comercios de siempre, colegios, gimnasios, rutinas y pequeñas escenas que explican cómo se vive realmente cada zona.</p>
-
-  <div class="journal-columns">
-    <div class="panel">
-      <div class="panel-head">
+    <section class="section" id="origen">
+      <div class="two">
         <div>
-          <h3>Barrios</h3>
-          <p>Historias, lugares y personas que hacen única a cada zona.</p>
+          <div class="kicker">Qué es Casa Madre</div>
+          <div class="serif-big">
+            Antes de encontrar tu casa, queremos que te sientas
+            <em>en casa</em>.
+          </div>
+          <div class="body">
+            <p>
+              Casa Madre nace del origen. De esa casa que todos recordamos: la
+              casa de la infancia, la casa de la madre, la casa donde aprendimos
+              lo que significaba pertenecer.
+            </p>
+            <p>
+              Pero también nace de una intención nueva: acompañarte desde el
+              primer momento para que la búsqueda, la decisión y la llegada
+              tengan sentido.
+            </p>
+            <p>
+              No es solo encontrar un inmueble. Es empezar una etapa con alguien
+              que entiende la casa, el barrio y todo lo que empieza alrededor.
+            </p>
+          </div>
+          <a class="cta-link" href="#nosotras">Conócenos</a>
         </div>
-        <a style="font-size:11px;letter-spacing:.15em;color:var(--brown);text-transform:uppercase" href="#barrios">Explorar barrios →</a>
+        <div
+          class="img soft"
+          style="
+            background-image: url(&quot;https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85&quot;);
+          "
+        ></div>
       </div>
-      <div class="mosaic">
-        <div class="tile" style="background-image:url('https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=600&q=85')"><span>Gràcia</span></div>
-        <div class="tile" style="background-image:url('https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=600&q=85')"><span>Eixample</span></div>
-        <div class="tile" style="background-image:url('https://images.unsplash.com/photo-1607706189992-eae578626c86?auto=format&fit=crop&w=600&q=85')"><span>Sarrià</span></div>
-        <div class="tile" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85')"><span>Pedralbes</span></div>
-      </div>
-    </div>
+    </section>
 
-    <div class="panel">
-      <div class="panel-head">
+    <section class="section" id="nosotras">
+      <div class="two">
+        <div
+          class="img soft"
+          style="
+            background-image: url(&quot;https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=85&quot;);
+          "
+        ></div>
         <div>
-          <h3>En casa de</h3>
-          <p>Entramos en casas reales para conocer historias que inspiran.</p>
+          <div class="kicker">Nosotras</div>
+          <h2>Dos miradas. Una misma forma de entender el hogar.</h2>
+          <div class="body" style="margin-top: 28px">
+            <p>
+              Nos conocimos cuando una de nosotras llegó a captar el piso de la
+              otra. Lo que parecía una visita más se convirtió en una
+              conversación sobre luz, materiales, espacios y formas de vivir.
+            </p>
+            <p>
+              Una viene del mundo de la publicidad, de empresas internacionales
+              y proyectos reconocidos en festivales como Cannes y San Sebastián.
+              La otra, del interiorismo, con años de experiencia transformando
+              espacios y entendiendo cómo se viven realmente.
+            </p>
+            <p>
+              Casa Madre nace de esa mezcla: estrategia, sensibilidad,
+              creatividad y oficio.
+            </p>
+          </div>
         </div>
-        <a style="font-size:11px;letter-spacing:.15em;color:var(--brown);text-transform:uppercase" href="#encasade">Ver historias →</a>
       </div>
-      <div class="home-mosaic">
-        <div class="person" style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=85')"><div><strong>Nara</strong><small>Peluquera · Turó Park</small></div></div>
-        <div class="person" style="background-image:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=85')"><div><strong>Marta Ortega</strong><small>Fundadora · Eixample</small></div></div>
-        <div class="person" style="background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=85')"><div><strong>Jordi Solé</strong><small>Fotógrafo · Sarrià</small></div></div>
+    </section>
+
+    <div class="services-wrap" id="servicios">
+      <div class="services">
+        <a class="service" href="#compraventa">
+          <div class="icon">⌂</div>
+          <h3>Compraventa</h3>
+          <p>
+            Acompañamos cada operación con estrategia, valoración y
+            sensibilidad.
+          </p>
+        </a>
+        <a class="service" href="#alquileres">
+          <div class="icon">⌁</div>
+          <h3>Alquileres</h3>
+          <p>Viviendas para cada momento: temporada y larga estancia.</p>
+        </a>
+        <a class="service" href="#shopper">
+          <div class="icon">◌</div>
+          <h3>Personal Shopper</h3>
+          <p>Buscamos por ti. Entendemos, filtramos y encontramos.</p>
+        </a>
+        <a class="service" href="#reformas">
+          <div class="icon">□</div>
+          <h3>Reformas & Home Staging</h3>
+          <p>Transformamos espacios para que cuenten su mejor versión.</p>
+        </a>
+        <a class="service" href="#inversion">
+          <div class="icon">↗</div>
+          <h3>Inversión</h3>
+          <p>
+            Analizamos, valoramos y te ayudamos a tomar decisiones acertadas.
+          </p>
+        </a>
+        <a class="service" href="#legal">
+          <div class="icon">⚖</div>
+          <h3>Jurídico & Financiero</h3>
+          <p>Procesos legales y financieros con transparencia y rigor.</p>
+        </a>
       </div>
     </div>
-  </div>
 
-  <div class="neighborhood-detail" id="barrios">
-    <article class="nb-card">
-      <div class="nb-card-img" style="background-image:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="nb-card-body"><h3>Gràcia</h3><div class="quote">Aquí es donde empiezan las mañanas del barrio.</div><p>Un café, una plaza, las mismas caras. Gràcia no se explica: se reconoce.</p><p class="micro">Entrevista: el café donde se junta todo el mundo. ¿Quién llega primero? ¿Qué hace que la gente vuelva?</p></div>
-    </article>
+    <section class="method" id="metodo">
+      <div class="method-grid">
+        <div>
+          <div class="kicker" style="color: #ebd5bf">Nuestro método</div>
+          <h2>Entender primero. Buscar después.</h2>
+          <p style="margin-top: 18px">
+            Una manera de hacer que pone a las personas en el centro de cada
+            decisión.
+          </p>
+          <a
+            class="cta-link"
+            style="color: #fff; border-color: #fff"
+            href="#contacto"
+            >Descubre cómo trabajamos</a
+          >
+        </div>
+        <div class="step">
+          <div class="step-num">01</div>
+          <h4>Te conocemos</h4>
+          <p>
+            Entendemos quién eres, qué buscas y en qué momento de vida estás.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h4>Damos sentido</h4>
+          <p>Acompañamos tu decisión desde la claridad y la experiencia.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h4>Valoramos</h4>
+          <p>
+            La valoración correcta es clave para que una propiedad se mueva y
+            tenga éxito.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h4>Menos, pero mejor</h4>
+          <p>
+            Trabajamos pocas propiedades, en exclusiva, para darles todo nuestro
+            foco.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-num">05</div>
+          <h4>Se convierte en método</h4>
+          <p>
+            La experiencia, la repetición y los resultados construyen nuestro
+            método.
+          </p>
+        </div>
+      </div>
+    </section>
 
-    <article class="nb-card">
-      <div class="nb-card-img" style="background-image:url('https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="nb-card-body"><h3>Eixample</h3><div class="quote">La luz entra ordenada, pero la vida encuentra su forma.</div><p>Colegios, cafés, balcones, portales y una ciudad práctica sin perder elegancia.</p><p class="micro">Vídeo: del balcón al café de la esquina. Entrevista a un comercio local o coworking.</p></div>
-    </article>
+    <section class="section">
+      <div class="kicker">Áreas de trabajo</div>
+      <h2>Todo lo que puede formar parte de una casa.</h2>
 
-    <article class="nb-card">
-      <div class="nb-card-img" style="background-image:url('https://images.unsplash.com/photo-1607706189992-eae578626c86?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="nb-card-body"><h3>Sarrià</h3><div class="quote">Un pueblo dentro de Barcelona.</div><p>Tiendas de siempre, colegios, calma y esa sensación de que cada lugar todavía tiene nombre.</p><p class="micro">Ruta: panadería, floristería, colegio, café y conversación con alguien del barrio.</p></div>
-    </article>
+      <div class="detail-grid">
+        <article class="detail" id="compraventa">
+          <div
+            class="detail-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1600607687644-c7171b42498b?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="detail-text">
+            <div class="mini">Compraventa</div>
+            <h3>Comprar o vender con sentido.</h3>
+            <p>
+              Una operación inmobiliaria es una decisión importante. Valoramos,
+              posicionamos y acompañamos con una estrategia clara desde el
+              primer momento.
+            </p>
+          </div>
+        </article>
 
-    <article class="nb-card">
-      <div class="nb-card-img" style="background-image:url('https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="nb-card-body"><h3>Pedralbes</h3><div class="quote">Aquí la vida ocurre hacia dentro.</div><p>Espacio, privacidad, colegios internacionales, verde y una forma más silenciosa de vivir Barcelona.</p><p class="micro">Entrevista: colegio, club, gimnasio o familia que eligió este barrio.</p></div>
-    </article>
-  </div>
+        <article class="detail" id="alquileres">
+          <div
+            class="detail-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="detail-text">
+            <div class="mini">Alquileres</div>
+            <h3>Temporada y larga estancia.</h3>
+            <p>
+              Seleccionamos viviendas pensadas para distintas etapas: una
+              llegada, un proyecto, una transición o una nueva manera de vivir
+              Barcelona.
+            </p>
+          </div>
+        </article>
 
-  <div class="detail-grid" id="encasade">
-    <article class="detail">
-      <div class="detail-img" style="background-image:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="detail-text"><div class="mini">En casa de Nara</div><h3>Antes de su salón, está su casa.</h3><p>Nara, una de las peluquerías más glamurosas de la zona de Turó Park, nos recibe en su casa para hablar de estética, calma y oficio.</p><p>Nos enseña su rincón favorito y aquello de su casa que también vive en su manera de trabajar.</p></div>
-    </article>
+        <article class="detail" id="shopper">
+          <div
+            class="detail-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="detail-text">
+            <div class="mini">Personal Shopper</div>
+            <h3>Buscamos por ti.</h3>
+            <p>
+              Antes de buscar, entendemos. Filtramos el mercado para presentarte
+              solo aquello que encaja con tu vida, tu inversión y tu momento.
+            </p>
+          </div>
+        </article>
 
-    <article class="detail">
-      <div class="detail-img" style="background-image:url('https://images.unsplash.com/photo-1617103996702-96ff29b1c467?auto=format&fit=crop&w=900&q=85')"></div>
-      <div class="detail-text"><div class="mini">En casa de</div><h3>Antes de lo que hacen, está cómo viven.</h3><p>Entramos en casas de personas con negocios, proyectos y miradas propias. No buscamos escaparates: buscamos espacios reales.</p><p>La casa como origen, refugio y primera forma de expresión.</p></div>
-    </article>
-  </div>
+        <article class="detail" id="reformas">
+          <div
+            class="detail-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="detail-text">
+            <div class="mini">Reformas & Home Staging</div>
+            <h3>Transformar el potencial.</h3>
+            <p>
+              Reformas, actualización estética y preparación de viviendas para
+              venta o alquiler. No decoramos por decorar: interpretamos el
+              espacio.
+            </p>
+          </div>
+        </article>
 
-  <div style="margin-top:70px;font-family:'Cormorant Garamond',serif;font-size:29px;color:var(--deep)">Una ciudad no se entiende cuando se visita.<br>Se entiende cuando empieza a formar parte de tu vida.</div>
-</section>
+        <article class="detail" id="inversion">
+          <div
+            class="detail-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="detail-text">
+            <div class="mini">Inversión</div>
+            <h3>Leer más allá del presente.</h3>
+            <p>
+              Analizamos rentabilidad, ubicación, potencial de reforma, demanda
+              y valor futuro. Invertir bien es saber mirar antes de que el
+              mercado hable.
+            </p>
+          </div>
+        </article>
 
-<section class="final" id="contacto">
-  <div>
-    <h2>Cuéntanos cómo quieres vivir Barcelona.</h2>
-    <p>Casa Madre acompaña la decisión, la casa y todo lo que empieza alrededor.</p>
-    <a class="cta-link" style="color:#fff;border-color:#fff;margin-top:34px" href="mailto:hola@casamadre.com">Contacto</a>
-  </div>
-</section>
+        <article class="detail" id="legal">
+          <div
+            class="detail-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="detail-text">
+            <div class="mini">Jurídico & Financiero</div>
+            <h3>Claridad donde suele haber ruido.</h3>
+            <p>
+              Herencias, separaciones, financiación y procesos sensibles.
+              Nuestro equipo acompaña para que todo se gestione con
+              transparencia, orden y tranquilidad.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
 
-<footer class="footer">
-  <span>Casa Madre · Barcelona</span>
-  <span>Properties and Lifestyle</span>
-</footer>
+    <section class="section journal" id="journal">
+      <div class="kicker">Casa Madre Journal</div>
+      <h2>Barcelona, desde dentro.</h2>
+      <p class="journal-intro">
+        Un diario de barrios, casas y personas. Cafés donde empiezan las
+        mañanas, comercios de siempre, colegios, gimnasios, rutinas y pequeñas
+        escenas que explican cómo se vive realmente cada zona.
+      </p>
 
-</body>
+      <div class="journal-columns">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Barrios</h3>
+              <p>Historias, lugares y personas que hacen única a cada zona.</p>
+            </div>
+            <a
+              style="
+                font-size: 11px;
+                letter-spacing: 0.15em;
+                color: var(--brown);
+                text-transform: uppercase;
+              "
+              href="#barrios"
+              >Explorar barrios →</a
+            >
+          </div>
+          <div class="mosaic">
+            <div
+              class="tile"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=600&q=85&quot;);
+              "
+            >
+              <span>Gràcia</span>
+            </div>
+            <div
+              class="tile"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=600&q=85&quot;);
+              "
+            >
+              <span>Eixample</span>
+            </div>
+            <div
+              class="tile"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1607706189992-eae578626c86?auto=format&fit=crop&w=600&q=85&quot;);
+              "
+            >
+              <span>Sarrià</span>
+            </div>
+            <div
+              class="tile"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=85&quot;);
+              "
+            >
+              <span>Pedralbes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>En casa de</h3>
+              <p>
+                Entramos en casas reales para conocer historias que inspiran.
+              </p>
+            </div>
+            <a
+              style="
+                font-size: 11px;
+                letter-spacing: 0.15em;
+                color: var(--brown);
+                text-transform: uppercase;
+              "
+              href="#encasade"
+              >Ver historias →</a
+            >
+          </div>
+          <div class="home-mosaic">
+            <div
+              class="person"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=85&quot;);
+              "
+            >
+              <div>
+                <strong>Nara</strong><small>Peluquera · Turó Park</small>
+              </div>
+            </div>
+            <div
+              class="person"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=85&quot;);
+              "
+            >
+              <div>
+                <strong>Marta Ortega</strong><small>Fundadora · Eixample</small>
+              </div>
+            </div>
+            <div
+              class="person"
+              style="
+                background-image: url(&quot;https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=85&quot;);
+              "
+            >
+              <div>
+                <strong>Jordi Solé</strong><small>Fotógrafo · Sarrià</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="neighborhood-detail" id="barrios">
+        <article class="nb-card">
+          <div
+            class="nb-card-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="nb-card-body">
+            <h3>Gràcia</h3>
+            <div class="quote">
+              Aquí es donde empiezan las mañanas del barrio.
+            </div>
+            <p>
+              Un café, una plaza, las mismas caras. Gràcia no se explica: se
+              reconoce.
+            </p>
+            <p class="micro">
+              Entrevista: el café donde se junta todo el mundo. ¿Quién llega
+              primero? ¿Qué hace que la gente vuelva?
+            </p>
+          </div>
+        </article>
+
+        <article class="nb-card">
+          <div
+            class="nb-card-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="nb-card-body">
+            <h3>Eixample</h3>
+            <div class="quote">
+              La luz entra ordenada, pero la vida encuentra su forma.
+            </div>
+            <p>
+              Colegios, cafés, balcones, portales y una ciudad práctica sin
+              perder elegancia.
+            </p>
+            <p class="micro">
+              Vídeo: del balcón al café de la esquina. Entrevista a un comercio
+              local o coworking.
+            </p>
+          </div>
+        </article>
+
+        <article class="nb-card">
+          <div
+            class="nb-card-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1607706189992-eae578626c86?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="nb-card-body">
+            <h3>Sarrià</h3>
+            <div class="quote">Un pueblo dentro de Barcelona.</div>
+            <p>
+              Tiendas de siempre, colegios, calma y esa sensación de que cada
+              lugar todavía tiene nombre.
+            </p>
+            <p class="micro">
+              Ruta: panadería, floristería, colegio, café y conversación con
+              alguien del barrio.
+            </p>
+          </div>
+        </article>
+
+        <article class="nb-card">
+          <div
+            class="nb-card-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="nb-card-body">
+            <h3>Pedralbes</h3>
+            <div class="quote">Aquí la vida ocurre hacia dentro.</div>
+            <p>
+              Espacio, privacidad, colegios internacionales, verde y una forma
+              más silenciosa de vivir Barcelona.
+            </p>
+            <p class="micro">
+              Entrevista: colegio, club, gimnasio o familia que eligió este
+              barrio.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="detail-grid" id="encasade">
+        <article class="detail">
+          <div
+            class="detail-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="detail-text">
+            <div class="mini">En casa de Nara</div>
+            <h3>Antes de su salón, está su casa.</h3>
+            <p>
+              Nara, una de las peluquerías más glamurosas de la zona de Turó
+              Park, nos recibe en su casa para hablar de estética, calma y
+              oficio.
+            </p>
+            <p>
+              Nos enseña su rincón favorito y aquello de su casa que también
+              vive en su manera de trabajar.
+            </p>
+          </div>
+        </article>
+
+        <article class="detail">
+          <div
+            class="detail-img"
+            style="
+              background-image: url(&quot;https://images.unsplash.com/photo-1617103996702-96ff29b1c467?auto=format&fit=crop&w=900&q=85&quot;);
+            "
+          ></div>
+          <div class="detail-text">
+            <div class="mini">En casa de</div>
+            <h3>Antes de lo que hacen, está cómo viven.</h3>
+            <p>
+              Entramos en casas de personas con negocios, proyectos y miradas
+              propias. No buscamos escaparates: buscamos espacios reales.
+            </p>
+            <p>La casa como origen, refugio y primera forma de expresión.</p>
+          </div>
+        </article>
+      </div>
+
+      <div
+        style="
+          margin-top: 70px;
+          font-family: &quot;Cormorant Garamond&quot;, serif;
+          font-size: 29px;
+          color: var(--deep);
+        "
+      >
+        Una ciudad no se entiende cuando se visita.<br />Se entiende cuando
+        empieza a formar parte de tu vida.
+      </div>
+    </section>
+
+    <section class="final" id="contacto">
+      <div>
+        <h2>Cuéntanos cómo quieres vivir Barcelona.</h2>
+        <p>
+          Casa Madre acompaña la decisión, la casa y todo lo que empieza
+          alrededor.
+        </p>
+        <a
+          class="cta-link"
+          style="color: #fff; border-color: #fff; margin-top: 34px"
+          href="mailto:hola@casamadre.com"
+          >Contacto</a
+        >
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Casa Madre · Barcelona</span>
+      <span>Properties and Lifestyle</span>
+    </footer>
+  </body>
 </html>

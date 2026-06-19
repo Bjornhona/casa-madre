@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
+import { client } from "@/sanity/lib/client";
+import { JOURNAL_SLUGS_QUERY } from "@/sanity/lib/queries";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const CONTENT_PATHS = [
@@ -7,6 +9,7 @@ const CONTENT_PATHS = [
   "servicios",
   "barrios",
   "propiedades",
+  "journal",
   "contacto",
 ];
 const LEGAL_PATHS = ["legal", "privacidad", "cookies"];
@@ -17,8 +20,23 @@ const altsFor = (path: string) =>
     routing.locales.map((l) => [l, `${SITE_URL}/${l}${path ? `/${path}` : ""}`]),
   );
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
+
+  // Individual Journal articles (published only). Uses the plain client, not
+  // sanityFetch, since sitemap() runs outside a request (no draftMode()).
+  const journalSlugs = await client
+    .withConfig({ perspective: "published", useCdn: false })
+    .fetch(JOURNAL_SLUGS_QUERY);
+
+  const journal: MetadataRoute.Sitemap = routing.locales.flatMap((locale) =>
+    (journalSlugs ?? []).map(({ slug }) => ({
+      url: `${SITE_URL}/${locale}/journal/${slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+  );
 
   const home: MetadataRoute.Sitemap = routing.locales.map((locale) => ({
     url: `${SITE_URL}/${locale}`,
@@ -47,5 +65,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  return [...home, ...content, ...legal];
+  return [...home, ...content, ...journal, ...legal];
 }

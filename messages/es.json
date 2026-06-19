@@ -9,6 +9,7 @@
       "metodo": { "label": "Método", "subtitle": "Cómo trabajamos" },
       "barrios": { "label": "Barrios", "subtitle": "Dónde vivir" },
       "propiedades": { "label": "Propiedades", "subtitle": "Selección actual" },
+      "journal": { "label": "Journal", "subtitle": "Historias y guías" },
       "contacto": { "label": "Contacto", "subtitle": "Hablemos" }
     }
   },
@@ -180,6 +181,24 @@
     "ctaWhatsapp": "Contactar por WhatsApp",
     "cardViewLabel": "Ver propiedad"
   },
+  "journal": {
+    "kicker": "Journal",
+    "readMore": "Leer más",
+    "viewAll": "Ver todo el Journal",
+    "backLink": "Journal",
+    "by": "por",
+    "dateLocale": "es-ES",
+    "empty": "Pronto compartiremos historias, guías y miradas sobre vivir en Barcelona.",
+    "teaserTitle": "Journal",
+    "teaserIntro": "Historias, guías y una mirada cercana a la vida en Barcelona.",
+    "categories": {
+      "barrios": "Barrios",
+      "lifestyle": "Lifestyle",
+      "inversion": "Inversión",
+      "interiorismo": "Interiorismo",
+      "guias": "Guías"
+    }
+  },
   "contacto": {
     "kicker": "Contacto",
     "headline": "Cuéntanos cómo quieres vivir Barcelona.",
@@ -231,6 +250,11 @@
       "kicker": "Propiedades",
       "title": "Selección actual",
       "intro": "Pocas propiedades, cuidadosamente seleccionadas y trabajadas en exclusiva."
+    },
+    "journal": {
+      "kicker": "Journal",
+      "title": "Historias, guías y una mirada a Barcelona",
+      "intro": "Barrios, lifestyle, inversión e interiorismo: nuestra forma de entender cómo se vive la ciudad."
     },
     "contacto": {
       "kicker": "Contacto",
