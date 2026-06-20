@@ -1,77 +1,49 @@
 "use client";
 
-import Image from "next/image";
-import { useRef } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform
-} from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 import { CTALink } from "@/components/ui/CTALink";
-import { heroScaleAnimation, itemAnimation, staggerContainer } from "@/lib/motion";
+import { EASE, itemAnimation, staggerContainer } from "@/lib/motion";
+import { HeroBackground } from "./HeroBackground";
 import { OceanSound } from "./OceanSound";
 
-const HERO_IMAGE = "/mediterranean-seaview.webp";
-// const HERO_VIDEO = "/casa-madre-video.mp4";
+// Hero background assets — swap to the final encoded files when delivered.
+// Poster (LCP): high-quality first frame. Until the real /hero/hero-poster.jpg
+// is supplied, we reuse the existing Mediterranean still as a tasteful placeholder.
+const HERO_POSTER = "/mediterranean-seaview.webp"; // TODO: /hero/hero-poster.jpg
+const HERO_VIDEO_MP4 = "/hero/hero.mp4";
+const HERO_VIDEO_WEBM = "/hero/hero.webm"; // TODO: encode + enable <source> in HeroBackground
+
+// "video" = cinemagraph clip; "kenburns" = lightweight slow-zoom still fallback.
+const HERO_MODE: "video" | "kenburns" = "video";
+
+// "warm" = subtle warm-dark gradient (light/bright clip); "light" = soft cream
+// glow behind the content for legibility over darker, more cinematic footage.
+const HERO_SCRIM: "warm" | "light" = "warm";
 
 export function Hero() {
   const t = useTranslations("hero");
   const locale = useLocale();
   const reduce = useReducedMotion();
-  const ref = useRef<HTMLElement>(null);
-
-  // Very subtle slow parallax + scale on the background as the hero scrolls away.
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const yRaw = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
-  const scaleRaw = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
-  const y = reduce ? undefined : yRaw;
-  const scale = reduce ? undefined : scaleRaw;
 
   const container = staggerContainer(reduce, 0.22);
-  const heroScale = heroScaleAnimation(reduce);
   const item = itemAnimation(reduce);
 
   return (
     <section
       id="hero"
-      ref={ref}
       className="relative flex min-h-svh items-center justify-center overflow-hidden text-center text-cream"
     >
+      <HeroBackground
+        mode={HERO_MODE}
+        scrim={HERO_SCRIM}
+        poster={HERO_POSTER}
+        videoMp4={HERO_VIDEO_MP4}
+        videoWebm={HERO_VIDEO_WEBM}
+        soundLabel={{ unmute: t("sound.unmute"), mute: t("sound.mute") }}
+      />
       <OceanSound />
-      <motion.div
-        style={{ y, scale }}
-        variants={heroScale}
-        initial="hidden"
-        animate="show"
-        className="absolute inset-0 will-change-transform"
-      >
-        <Image
-          src={HERO_IMAGE}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        {/* <video
-          autoPlay
-          muted={true}
-          loop={false}
-          playsInline={true}
-          poster={HERO_IMAGE}
-          className="object-cover w-full h-full"
-          width={1000}
-          height={1000}
-        >
-          <source src={HERO_VIDEO} type="video/mp4" />
-        </video> */}
-      </motion.div>
 
       <motion.div
         variants={container}
@@ -128,6 +100,17 @@ export function Hero() {
         >
           {t("claim")}
         </motion.p>
+
+        {/* Emotional tagline — unhurried fade-up ~1s after load, calm and slow. */}
+        <motion.p
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 18 }}
+          animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: EASE, delay: reduce ? 0 : 1 }}
+          className="mx-auto mt-8 max-w-[34ch] font-serif text-[20px] italic leading-[1.4] text-deep/90 sm:text-[26px]"
+        >
+          {t("tagline")}
+        </motion.p>
+
         <motion.div variants={item} className="mt-10">
           <CTALink href={`/${locale}/contacto`} variant="onLight">
             {t("cta")}

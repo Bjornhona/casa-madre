@@ -17,8 +17,13 @@
     "brand": "Casa Madre",
     "descriptor": "Properties and Lifestyle",
     "claim": "Where living begins",
+    "tagline": "There are places where we live. And places where we truly begin to live.",
     "subtext": "Casa Madre guides the purchase, sale, rental and investment of Barcelona properties — with a close, strategic and aesthetic eye.",
-    "cta": "Tell us what you're looking for"
+    "cta": "Tell us what you're looking for",
+    "sound": {
+      "unmute": "Unmute",
+      "mute": "Mute"
+    }
   },
   "about": {
     "kicker": "What is Casa Madre",

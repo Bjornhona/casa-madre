@@ -27,6 +27,27 @@ html {
   }
 }
 
+/* Ken Burns fallback — slow, infinite-alternate zoom on a single still. */
+@keyframes ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.animate-ken-burns {
+  animation: ken-burns 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ken-burns {
+    animation: none;
+  }
+}
+
 body {
   background: var(--color-ivory);
   color: var(--color-deep);
