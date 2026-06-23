@@ -13,7 +13,6 @@ import { OceanSound } from "./OceanSound";
 // is supplied, we reuse the existing Mediterranean still as a tasteful placeholder.
 const HERO_POSTER = "/mediterranean-seaview.webp"; // TODO: /hero/hero-poster.jpg
 const HERO_VIDEO_MP4 = "/hero/hero.mp4";
-const HERO_VIDEO_WEBM = "/hero/hero.webm"; // TODO: encode + enable <source> in HeroBackground
 
 // "video" = cinemagraph clip; "kenburns" = lightweight slow-zoom still fallback.
 const HERO_MODE: "video" | "kenburns" = "video";
@@ -40,8 +39,6 @@ export function Hero() {
         scrim={HERO_SCRIM}
         poster={HERO_POSTER}
         videoMp4={HERO_VIDEO_MP4}
-        videoWebm={HERO_VIDEO_WEBM}
-        soundLabel={{ unmute: t("sound.unmute"), mute: t("sound.mute") }}
       />
       <OceanSound />
 

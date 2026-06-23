@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { SiteNav } from "@/components/SiteNav";
 import { Footer } from "@/components/Footer";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { JournalArticle } from "@/components/JournalArticle";
 import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";
@@ -62,7 +63,14 @@ export async function generateMetadata({
   return {
     title: { absolute: fullTitle },
     description,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        es: `/es/journal/${slug}`,
+        en: `/en/journal/${slug}`,
+        "x-default": `/es/journal/${slug}`,
+      },
+    },
     openGraph: {
       type: "article",
       title: fullTitle,
@@ -94,6 +102,16 @@ export default async function JournalPostPage({
 
   if (!post) notFound();
 
+  const tNav = await getTranslations({ locale, namespace: "nav" });
+  const breadcrumbs =
+    SITE_URL && post.title
+      ? [
+          { name: "Casa Madre", url: `${SITE_URL}/${locale}` },
+          { name: tNav("items.journal.label"), url: `${SITE_URL}/${locale}/journal` },
+          { name: post.title, url: `${SITE_URL}/${locale}/journal/${slug}` },
+        ]
+      : [];
+
   const image = post.coverImage?.asset
     ? urlFor(post.coverImage).width(1200).height(630).fit("crop").url()
     : undefined;
@@ -117,6 +135,7 @@ export default async function JournalPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <BreadcrumbJsonLd items={breadcrumbs} />
       <SiteNav />
       <main>
         <JournalArticle post={post} />

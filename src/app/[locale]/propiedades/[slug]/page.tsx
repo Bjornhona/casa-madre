@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { SiteNav } from "@/components/SiteNav";
 import { Footer } from "@/components/Footer";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { PropertyView } from "@/components/PropertyView";
 import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";
@@ -15,6 +16,8 @@ import { fallbackImagesFor } from "@/lib/property-fallback-images";
 import { routing } from "@/i18n/routing";
 
 type Params = { locale: string; slug: string };
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "";
 
 // Pre-render every public property in both locales. `generateStaticParams` runs
 // without a request, so we use the plain client (not `sanityFetch`, which reads
@@ -58,7 +61,14 @@ export async function generateMetadata({
   return {
     title: { absolute: fullTitle },
     description,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        es: `/es/propiedades/${slug}`,
+        en: `/en/propiedades/${slug}`,
+        "x-default": `/es/propiedades/${slug}`,
+      },
+    },
     openGraph: {
       type: "website",
       title: fullTitle,
@@ -89,8 +99,25 @@ export default async function PropertyPage({
 
   if (!property) notFound();
 
+  const tNav = await getTranslations({ locale, namespace: "nav" });
+  const breadcrumbs =
+    SITE_URL && property.title
+      ? [
+          { name: "Casa Madre", url: `${SITE_URL}/${locale}` },
+          {
+            name: tNav("items.propiedades.label"),
+            url: `${SITE_URL}/${locale}/propiedades`,
+          },
+          {
+            name: property.title,
+            url: `${SITE_URL}/${locale}/propiedades/${slug}`,
+          },
+        ]
+      : [];
+
   return (
     <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
       <SiteNav />
       <main>
         <PropertyView property={property} />

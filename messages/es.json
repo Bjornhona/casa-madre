@@ -279,8 +279,9 @@
   "floatingContact": {
     "contact": "Contacto",
     "whatsapp": "WhatsApp",
-    "contactAria": "Ir a la página de contacto",
-    "whatsappAria": "Escríbenos por WhatsApp"
+    "dismiss": "Ocultar",
+    "openLabel": "Abrir menú de contacto",
+    "closeLabel": "Cerrar menú de contacto"
   },
   "footer": {
     "tagline": "Casa Madre · Barcelona · Properties and Lifestyle",

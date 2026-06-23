@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Volume2, VolumeX } from "lucide-react";
 
 const TARGET_VOLUME = 0.3;
 
 export function OceanSound({ src = "/ocean-waves-pixabay-RMultimediaEU.mp3" }: { src?: string }) {
+  const t = useTranslations("hero.sound");
   const audioRef = useRef<HTMLAudioElement>(null);
   const raf = useRef<number | null>(null);
   const [on, setOn] = useState(false);
@@ -50,12 +52,14 @@ export function OceanSound({ src = "/ocean-waves-pixabay-RMultimediaEU.mp3" }: {
   return (
     <>
       <audio ref={audioRef} src={src} loop preload="auto" />
+      {/* Lives inside the hero (the section is `relative`) so it scrolls away with
+          it, rather than persisting as a fixed control over the whole page. */}
       <button
         type="button"
         onClick={toggle}
-        aria-label={on ? "Mute ocean sound" : "Play ocean sound"}
+        aria-label={on ? t("mute") : t("unmute")}
         aria-pressed={on}
-        className="fixed bottom-6 right-6 z-50 grid h-11 w-11 place-items-center rounded-full bg-black/30 text-white backdrop-blur-sm transition hover:bg-black/50"
+        className="absolute bottom-6 left-6 z-10 grid h-11 w-11 place-items-center rounded-full bg-deep/30 text-cream backdrop-blur-sm transition-colors hover:bg-deep/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream/70"
       >
         {on ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
       </button>

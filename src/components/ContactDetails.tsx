@@ -72,21 +72,12 @@ export function ContactDetails() {
               <dt className="text-[11px] uppercase tracking-[0.16em] text-brown">
                 {t("phoneTitle")}
               </dt>
-              <dd className="mt-1 flex flex-col gap-1 text-[16px] leading-[1.6]">
+              <dd className="mt-1 text-[16px] leading-[1.6]">
                 <a
                   href={`tel:+${WHATSAPP}`}
                   className="text-deep/80 transition-colors duration-300 hover:text-brown focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
                 >
                   {`+${WHATSAPP}`}
-                </a>
-                <a
-                  href={`https://wa.me/${WHATSAPP}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-fit items-center gap-1.5 text-[13px] text-clay transition-colors duration-300 hover:text-brown focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
-                >
-                  WhatsApp
-                  <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
                 </a>
               </dd>
             </div>

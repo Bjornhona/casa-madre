@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, useReducedMotion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { MessageCircle, Mail, Loader2, CheckCircle2 } from "lucide-react";
+import { MessageCircle, Loader2, CheckCircle2 } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
@@ -58,7 +58,6 @@ const SERVICE_SLUG_TO_INDEX: Record<string, number> = {
 };
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP;
-const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
 
 export function Contacto() {
   const t = useTranslations("contacto");
@@ -411,7 +410,8 @@ function ContactoForm() {
         )}
       </motion.div>
 
-      {/* Direct channels */}
+      {/* Direct channel — the single prominent WhatsApp CTA. Email + phone live
+          once in the details block below to avoid repeating contact mechanisms. */}
       <motion.aside
         variants={item}
         initial="hidden"
@@ -428,21 +428,6 @@ function ContactoForm() {
           >
             <MessageCircle className="h-4 w-4" strokeWidth={1.5} aria-hidden />
             {t("whatsapp")}
-          </a>
-        )}
-
-        {CONTACT_EMAIL && (
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
-            className="inline-flex items-center gap-3 self-start text-[14px] text-deep/80 transition-colors duration-300 hover:text-brown focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
-          >
-            <Mail className="h-4 w-4 text-clay" strokeWidth={1.5} aria-hidden />
-            <span>
-              <span className="block text-[11px] uppercase tracking-[0.16em] text-brown">
-                {t("emailLabel")}
-              </span>
-              {CONTACT_EMAIL}
-            </span>
           </a>
         )}
       </motion.aside>

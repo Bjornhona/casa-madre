@@ -45,3 +45,47 @@ export async function pageMetadata(
     },
   };
 }
+
+// Route segment → key under `footer.legal`.
+const LEGAL_LABEL: Record<string, string> = {
+  legal: "notice",
+  privacidad: "privacy",
+  cookies: "cookies",
+};
+
+/**
+ * Localized metadata for the legal placeholder routes. Title comes from the
+ * `footer.legal.*` labels; description reuses the brand tagline. Emits canonical
+ * + hreflang alternates so these routes match the rest of the site.
+ */
+export async function legalMetadata(
+  locale: string,
+  segment: keyof typeof LEGAL_LABEL,
+  path: string,
+): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: "footer" });
+  const title = t(`legal.${LEGAL_LABEL[segment]}`);
+  const description = t("tagline");
+  const url = `/${locale}${path}`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+      languages: {
+        es: `/es${path}`,
+        en: `/en${path}`,
+        "x-default": `/es${path}`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      siteName: "Casa Madre",
+      title: `${title} — Casa Madre`,
+      description,
+      url,
+      locale: OG_LOCALE[locale] ?? "es_ES",
+    },
+  };
+}

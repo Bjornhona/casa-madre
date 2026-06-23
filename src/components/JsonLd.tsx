@@ -34,3 +34,33 @@ export function JsonLd({ description }: { description: string }) {
     />
   );
 }
+
+/**
+ * BreadcrumbList structured data for nested routes (journal posts, properties).
+ * Pass absolute URLs; render nothing if any are missing (no SITE_URL configured).
+ */
+export function BreadcrumbJsonLd({
+  items,
+}: {
+  items: { name: string; url: string }[];
+}) {
+  if (items.length === 0 || items.some((i) => !i.url)) return null;
+
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
