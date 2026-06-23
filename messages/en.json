@@ -227,6 +227,15 @@
     },
     "whatsapp": "Message us on WhatsApp",
     "emailLabel": "Email",
+    "details": {
+      "addressTitle": "Address",
+      "address": "Barcelona, Spain",
+      "emailTitle": "Email",
+      "phoneTitle": "Phone",
+      "hoursTitle": "Hours",
+      "hours": "By appointment",
+      "directions": "Get directions"
+    },
     "referencia": {
       "pill": "Regarding",
       "zona": "Area of interest",
@@ -266,6 +275,12 @@
       "title": "Let's talk",
       "intro": "Tell us how you want to live Barcelona, and we'll be with you from the very first moment."
     }
+  },
+  "floatingContact": {
+    "contact": "Contact",
+    "whatsapp": "WhatsApp",
+    "contactAria": "Go to the contact page",
+    "whatsappAria": "Message us on WhatsApp"
   },
   "footer": {
     "tagline": "Casa Madre · Barcelona · Properties and Lifestyle",

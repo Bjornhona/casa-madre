@@ -10,6 +10,7 @@ import { MessageCircle, Mail, Loader2, CheckCircle2 } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
+import { ContactDetails } from "@/components/ContactDetails";
 import { EASE, fadeUp } from "@/lib/motion";
 import { contactSchema, type ContactFormValues } from "@/lib/contact-schema";
 
@@ -76,6 +77,8 @@ export function Contacto() {
       <Suspense fallback={null}>
         <ContactoForm />
       </Suspense>
+
+      <ContactDetails />
     </Section>
   );
 }

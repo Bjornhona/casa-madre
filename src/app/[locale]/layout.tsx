@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { JsonLd } from "@/components/JsonLd";
+import { FloatingContact } from "@/components/FloatingContact";
 import { SanityLive } from "@/sanity/lib/live";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -98,7 +99,10 @@ export default async function LocaleLayout({
           <JsonLd description={t("subtext")} />
         </head>
         <SanityLive />
-        <body className="min-h-full flex flex-col">{children}</body>
+        <body className="min-h-full flex flex-col">
+          {children}
+          <FloatingContact />
+        </body>
       </NextIntlClientProvider>
     </html>
   );

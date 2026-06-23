@@ -227,6 +227,15 @@
     },
     "whatsapp": "Escríbenos por WhatsApp",
     "emailLabel": "Email",
+    "details": {
+      "addressTitle": "Dirección",
+      "address": "Barcelona, España",
+      "emailTitle": "Email",
+      "phoneTitle": "Teléfono",
+      "hoursTitle": "Horario",
+      "hours": "Con cita previa",
+      "directions": "Cómo llegar"
+    },
     "referencia": {
       "pill": "En referencia a",
       "zona": "Zona de interés",
@@ -266,6 +275,12 @@
       "title": "Hablemos",
       "intro": "Cuéntanos cómo quieres vivir Barcelona y te acompañamos desde el primer momento."
     }
+  },
+  "floatingContact": {
+    "contact": "Contacto",
+    "whatsapp": "WhatsApp",
+    "contactAria": "Ir a la página de contacto",
+    "whatsappAria": "Escríbenos por WhatsApp"
   },
   "footer": {
     "tagline": "Casa Madre · Barcelona · Properties and Lifestyle",
