@@ -221,6 +221,17 @@
     "kicker": "Neighbourhoods",
     "intro": "A city isn't understood when you visit it. It's understood when it becomes part of your life.",
     "viewAll": "Explore neighbourhoods",
+    "discover": "Discover the neighbourhood",
+    "detail": {
+      "kicker": "Neighbourhoods",
+      "backLink": "Neighbourhoods",
+      "highlightsLabel": "Highlights",
+      "ctaKicker": "Contact",
+      "ctaHeadline": "Can you picture yourself living here?",
+      "ctaBody": "Tell us how you want to live the neighbourhood and we'll guide your search.",
+      "ctaPrimary": "Let's talk about this neighbourhood",
+      "ctaWhatsapp": "Contact on WhatsApp"
+    },
     "items": [
       {
         "name": "Sarrià",

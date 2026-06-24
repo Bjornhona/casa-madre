@@ -3,6 +3,7 @@ import { routing } from "@/i18n/routing";
 import { client } from "@/sanity/lib/client";
 import {
   JOURNAL_SLUGS_QUERY,
+  NEIGHBOURHOOD_SLUGS_QUERY,
   PROPERTY_SLUGS_QUERY,
 } from "@/sanity/lib/queries";
 import { SERVICE_SLUGS } from "@/lib/services";
@@ -33,9 +34,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     perspective: "published",
     useCdn: false,
   });
-  const [journalSlugs, propertySlugs] = await Promise.all([
+  const [journalSlugs, propertySlugs, neighbourhoodSlugs] = await Promise.all([
     publishedClient.fetch(JOURNAL_SLUGS_QUERY),
     publishedClient.fetch(PROPERTY_SLUGS_QUERY),
+    publishedClient.fetch(NEIGHBOURHOOD_SLUGS_QUERY),
   ]);
 
   const journal: MetadataRoute.Sitemap = routing.locales.flatMap((locale) =>
@@ -55,6 +57,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly" as const,
       priority: 0.7,
       alternates: { languages: altsFor(`propiedades/${slug}`) },
+    })),
+  );
+
+  const neighbourhoods: MetadataRoute.Sitemap = routing.locales.flatMap((locale) =>
+    (neighbourhoodSlugs ?? []).map(({ slug }) => ({
+      url: `${SITE_URL}/${locale}/barrios/${slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+      alternates: { languages: altsFor(`barrios/${slug}`) },
     })),
   );
 
@@ -96,5 +108,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
-  return [...home, ...content, ...journal, ...properties, ...services, ...legal];
+  return [
+    ...home,
+    ...content,
+    ...journal,
+    ...properties,
+    ...services,
+    ...neighbourhoods,
+    ...legal,
+  ];
 }

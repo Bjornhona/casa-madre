@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
+import { ArrowRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
@@ -65,25 +66,38 @@ export function Barrios({
               variants={item}
               className="overflow-hidden rounded-card border border-line bg-cream"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden">
-                <Image
-                  src={src}
-                  alt={barrio.image?.alt ?? ""}
-                  fill
-                  sizes="(min-width: 1024px) 25vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <SerifHeading as="h3" className="text-[26px] text-brown">
-                  {barrio.name}
-                </SerifHeading>
-                {barrio.blurb && (
-                  <p className="mt-3 text-[14px] leading-[1.55] text-deep/80">
-                    {barrio.blurb}
-                  </p>
-                )}
-              </div>
+              <a
+                href={`/${locale}/barrios/${barrio.slug}`}
+                className="group block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brown"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <Image
+                    src={src}
+                    alt={barrio.image?.alt ?? ""}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, 50vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  />
+                </div>
+                <div className="p-6">
+                  <SerifHeading as="h3" className="text-[26px] text-brown">
+                    {barrio.name}
+                  </SerifHeading>
+                  {barrio.blurb && (
+                    <p className="mt-3 text-[14px] leading-[1.55] text-deep/80">
+                      {barrio.blurb}
+                    </p>
+                  )}
+                  <span className="mt-5 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-brown">
+                    {t("discover")}
+                    <ArrowRight
+                      className="h-3.5 w-3.5 transition-transform duration-500 ease-out group-hover:translate-x-1"
+                      strokeWidth={1.5}
+                      aria-hidden
+                    />
+                  </span>
+                </div>
+              </a>
             </motion.li>
           );
         })}

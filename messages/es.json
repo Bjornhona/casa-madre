@@ -221,6 +221,17 @@
     "kicker": "Barrios",
     "intro": "Una ciudad no se entiende cuando se visita. Se entiende cuando empieza a formar parte de tu vida.",
     "viewAll": "Explorar barrios",
+    "discover": "Descubrir el barrio",
+    "detail": {
+      "kicker": "Barrios",
+      "backLink": "Barrios",
+      "highlightsLabel": "Aspectos destacados",
+      "ctaKicker": "Contacto",
+      "ctaHeadline": "¿Te imaginas viviendo aquí?",
+      "ctaBody": "Cuéntanos cómo quieres vivir el barrio y te acompañamos en la búsqueda.",
+      "ctaPrimary": "Hablemos de este barrio",
+      "ctaWhatsapp": "Contactar por WhatsApp"
+    },
     "items": [
       {
         "name": "Sarrià",

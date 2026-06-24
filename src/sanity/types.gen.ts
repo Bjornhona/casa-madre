@@ -209,6 +209,87 @@ export type Neighbourhood = {
   name: string;
   slug: Slug;
   blurb?: InternationalizedArrayText;
+  intro?: InternationalizedArrayText;
+  highlights?: Array<{
+    label?: InternationalizedArrayString;
+    value?: InternationalizedArrayString;
+    _type: "highlight";
+    _key: string;
+  }>;
+  bodyEs?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }
+  >;
+  bodyEn?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }
+  >;
   image?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -217,6 +298,23 @@ export type Neighbourhood = {
     alt?: string;
     _type: "image";
   };
+  heroImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  gallery?: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
   order?: number;
 };
 
@@ -398,6 +496,90 @@ export type NEIGHBOURHOODS_QUERY_RESULT = Array<{
 }>;
 
 // Source: src/sanity/lib/queries.ts
+// Variable: NEIGHBOURHOOD_SLUGS_QUERY
+// Query: *[_type == "neighbourhood" && defined(slug.current)] {    "slug": slug.current  }
+export type NEIGHBOURHOOD_SLUGS_QUERY_RESULT = Array<{
+  slug: string;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: NEIGHBOURHOOD_BY_SLUG_QUERY
+// Query: *[_type == "neighbourhood" && slug.current == $slug][0] {    _id,    name,    "slug": slug.current,    "blurb": coalesce(      blurb[language == $locale][0].value,      blurb[language == "es"][0].value    ),    "intro": coalesce(      intro[language == $locale][0].value,      intro[language == "es"][0].value    ),    heroImage,    image,    gallery[]{ ... },    "highlights": highlights[]{      "label": coalesce(        label[language == $locale][0].value,        label[language == "es"][0].value      ),      "value": coalesce(        value[language == $locale][0].value,        value[language == "es"][0].value      )    },    "body": select(      $locale == "en" && defined(bodyEn) => bodyEn,      bodyEs    )  }
+export type NEIGHBOURHOOD_BY_SLUG_QUERY_RESULT = {
+  _id: string;
+  name: string;
+  slug: string;
+  blurb: string | null;
+  intro: string | null;
+  heroImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  image: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  gallery: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  highlights: Array<{
+    label: string | null;
+    value: string | null;
+  }> | null;
+  body: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?:
+          | "blockquote"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | {
+        asset?: SanityImageAssetReference;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+        _key: string;
+      }
+  > | null;
+} | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: PUBLISHED_TESTIMONIALS_QUERY
 // Query: *[_type == "testimonial" && isPublished == true] | order(_createdAt desc) {    _id,    "quote": coalesce(      quote[language == $locale][0].value,      quote[language == "es"][0].value    ),    attribution  }
 export type PUBLISHED_TESTIMONIALS_QUERY_RESULT = Array<{
@@ -554,6 +736,8 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "property" && isPublic == true] | order(price desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    operation,\n    propertyType,\n    "neighbourhood": neighbourhood->name,\n    price,\n    surface,\n    bedrooms,\n    bathrooms,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    "image": gallery[0]\n  }\n': PROPERTIES_QUERY_RESULT;
     '\n  *[_type == "neighbourhood"] | order(order asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    "blurb": coalesce(\n      blurb[language == $locale][0].value,\n      blurb[language == "es"][0].value\n    ),\n    image\n  }\n': NEIGHBOURHOODS_QUERY_RESULT;
+    '\n  *[_type == "neighbourhood" && defined(slug.current)] {\n    "slug": slug.current\n  }\n': NEIGHBOURHOOD_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "neighbourhood" && slug.current == $slug][0] {\n    _id,\n    name,\n    "slug": slug.current,\n    "blurb": coalesce(\n      blurb[language == $locale][0].value,\n      blurb[language == "es"][0].value\n    ),\n    "intro": coalesce(\n      intro[language == $locale][0].value,\n      intro[language == "es"][0].value\n    ),\n    heroImage,\n    image,\n    gallery[]{ ... },\n    "highlights": highlights[]{\n      "label": coalesce(\n        label[language == $locale][0].value,\n        label[language == "es"][0].value\n      ),\n      "value": coalesce(\n        value[language == $locale][0].value,\n        value[language == "es"][0].value\n      )\n    },\n    "body": select(\n      $locale == "en" && defined(bodyEn) => bodyEn,\n      bodyEs\n    )\n  }\n': NEIGHBOURHOOD_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "testimonial" && isPublished == true] | order(_createdAt desc) {\n    _id,\n    "quote": coalesce(\n      quote[language == $locale][0].value,\n      quote[language == "es"][0].value\n    ),\n    attribution\n  }\n': PUBLISHED_TESTIMONIALS_QUERY_RESULT;
     '\n  *[_type == "property" && isPublic == true && defined(slug.current)] {\n    "slug": slug.current\n  }\n': PROPERTY_SLUGS_QUERY_RESULT;
     '\n  *[_type == "property" && slug.current == $slug && isPublic == true][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    price,\n    operation,\n    propertyType,\n    "neighbourhood": neighbourhood->name,\n    surface,\n    bedrooms,\n    bathrooms,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    gallery[]{ ... },\n    isPublic\n  }\n': PROPERTY_BY_SLUG_QUERY_RESULT;

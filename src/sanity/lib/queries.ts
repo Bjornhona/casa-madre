@@ -41,6 +41,49 @@ export const NEIGHBOURHOODS_QUERY = defineQuery(`
   }
 `)
 
+// Slugs of every neighbourhood — used by generateStaticParams and the sitemap.
+export const NEIGHBOURHOOD_SLUGS_QUERY = defineQuery(`
+  *[_type == "neighbourhood" && defined(slug.current)] {
+    "slug": slug.current
+  }
+`)
+
+// A single neighbourhood by slug, with locale-aware intro/blurb/highlights and
+// the locale-specific Portable Text body (bodyEn / bodyEs, falling back to ES).
+// An unknown slug resolves to null, which the page turns into a 404.
+export const NEIGHBOURHOOD_BY_SLUG_QUERY = defineQuery(`
+  *[_type == "neighbourhood" && slug.current == $slug][0] {
+    _id,
+    name,
+    "slug": slug.current,
+    "blurb": coalesce(
+      blurb[language == $locale][0].value,
+      blurb[language == "es"][0].value
+    ),
+    "intro": coalesce(
+      intro[language == $locale][0].value,
+      intro[language == "es"][0].value
+    ),
+    heroImage,
+    image,
+    gallery[]{ ... },
+    "highlights": highlights[]{
+      "label": coalesce(
+        label[language == $locale][0].value,
+        label[language == "es"][0].value
+      ),
+      "value": coalesce(
+        value[language == $locale][0].value,
+        value[language == "es"][0].value
+      )
+    },
+    "body": select(
+      $locale == "en" && defined(bodyEn) => bodyEn,
+      bodyEs
+    )
+  }
+`)
+
 // Published client testimonials, newest first. The quote is an
 // internationalized array, resolved with the same coalesce-to-Spanish fallback
 // used for property/journal localized fields.
