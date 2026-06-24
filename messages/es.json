@@ -41,36 +41,143 @@
   "servicios": {
     "kicker": "Servicios",
     "viewAll": "Ver todos los servicios",
+    "detail": {
+      "backLink": "Servicios",
+      "forWhoLabel": "Para quién es",
+      "includesLabel": "Qué incluye",
+      "processLabel": "Cómo trabajamos",
+      "differenceLabel": "Qué nos diferencia",
+      "ctaKicker": "Contacto",
+      "ctaHeadline": "Cuéntanos qué buscas.",
+      "ctaBody": "Te acompañamos en cada paso, con criterio y cercanía.",
+      "ctaWhatsapp": "Contactar por WhatsApp"
+    },
     "items": [
       {
         "title": "Compraventa",
         "description": "Acompañamos cada operación con estrategia, valoración y sensibilidad.",
-        "cta": "Quiero comprar o vender"
+        "cta": "Quiero comprar o vender",
+        "tagline": "Comprar o vender no es solo una operación. Es entender el momento, el valor y lo que viene después.",
+        "intro": "Acompañamos procesos de compraventa desde una mirada completa. No se trata solo de encontrar o colocar un inmueble, sino de hacerlo en el momento adecuado y con el criterio correcto.",
+        "forWho": "Para quienes compran o venden una vivienda y quieren hacerlo con estrategia, criterio y un acompañamiento real en cada paso.",
+        "includes": [
+          "Valoración real de la propiedad",
+          "Estrategia clara de compra o comercialización",
+          "Gestión cuidada de todo el proceso",
+          "Acompañamiento hasta el cierre de la operación"
+        ],
+        "process": [
+          "Entendemos tu momento y tu objetivo",
+          "Definimos una estrategia personalizada",
+          "Valoramos y posicionamos con criterio",
+          "Acompañamos cada detalle hasta la firma"
+        ],
+        "difference": "Porque una buena operación no depende de la suerte, sino de cómo se hace."
       },
       {
         "title": "Alquileres",
         "description": "Viviendas para cada momento: temporada y larga estancia.",
-        "cta": "Buscar o alquilar vivienda"
+        "cta": "Buscar o alquilar vivienda",
+        "tagline": "Llegar a una casa debería sentirse fácil. Como si ya supieras cómo vivir en ella.",
+        "intro": "Seleccionamos viviendas pensadas para distintos momentos de la vida, con todo preparado para empezar a vivir.",
+        "forWho": "Para quienes llegan a Barcelona por una etapa o para quedarse, y buscan un proceso ágil, seguro y bien cuidado.",
+        "includes": [
+          "Alquiler de temporada — para quienes llegan por etapas concretas, con todo listo para empezar",
+          "Larga estancia — para quienes buscan estabilidad, ritmo y continuidad",
+          "Selección de vivienda, documentación y contratos",
+          "Acompañamiento durante todo el proceso"
+        ],
+        "process": [
+          "Entendemos tu momento y tu estancia",
+          "Seleccionamos viviendas que encajan contigo",
+          "Cuidamos la documentación y los contratos",
+          "Te acompañamos hasta que te sientes en casa"
+        ],
+        "difference": "No gestionamos solo contratos. Cuidamos la experiencia de vivir."
       },
       {
         "title": "Personal Shopper",
         "description": "Buscamos por ti. Entendemos, filtramos y encontramos.",
-        "cta": "Buscar por mí"
+        "cta": "Buscar por mí",
+        "tagline": "Cuando no sabes por dónde empezar, empezamos contigo.",
+        "intro": "Buscamos por ti. Pero antes, entendemos: qué necesitas, qué encaja contigo, qué tiene sentido en este momento.",
+        "forWho": "Para compradores con poco tiempo, clientes internacionales o quienes quieren delegar la búsqueda en alguien de confianza.",
+        "includes": [
+          "Búsqueda y filtrado según tus criterios",
+          "Selección de propiedades que realmente valen la pena",
+          "Acceso a oportunidades off-market cuando es posible",
+          "Organización de visitas con intención"
+        ],
+        "process": [
+          "Primero entendemos qué buscas de verdad",
+          "Filtramos y seleccionamos por ti",
+          "Te proponemos solo lo que encaja",
+          "Acompañamos la visita y la negociación"
+        ],
+        "difference": "Para que no pierdas tiempo, y cada visita tenga intención."
       },
       {
         "title": "Reformas & Home Staging",
         "description": "Transformamos espacios para que cuenten su mejor versión.",
-        "cta": "Transformar mi vivienda"
+        "cta": "Transformar mi vivienda",
+        "tagline": "Un espacio puede cambiar por completo cuando se entiende cómo debe vivirse.",
+        "intro": "Trabajamos los espacios desde dentro, para que cuenten su mejor versión sin perder autenticidad.",
+        "forWho": "Para propietarios, compradores y vendedores que quieren sacar lo mejor de un espacio antes de venderlo, alquilarlo o habitarlo.",
+        "includes": [
+          "Reformas — proyectos que transforman un inmueble en algo coherente, funcional y con identidad",
+          "Home Staging — preparar la vivienda para presentarla en su mejor versión",
+          "Análisis del potencial del espacio",
+          "Coordinación con una red de colaboradores especializados"
+        ],
+        "process": [
+          "Interpretamos el espacio y su potencial",
+          "Proponemos mejoras con criterio estético",
+          "Coordinamos a los profesionales necesarios",
+          "Cuidamos el resultado de principio a fin"
+        ],
+        "difference": "No se trata de decorar. Se trata de interpretar el espacio."
       },
       {
         "title": "Inversión",
         "description": "Analizamos, valoramos y te ayudamos a tomar decisiones acertadas.",
-        "cta": "Analizar una inversión"
+        "cta": "Analizar una inversión",
+        "tagline": "Toda propiedad es una decisión. Algunas, además, son una oportunidad.",
+        "intro": "Analizamos activos desde una mirada estratégica, para ayudarte a entender no solo qué comprar, sino por qué.",
+        "forWho": "Para inversores particulares y compradores patrimoniales que buscan rentabilidad, revalorización y valor a largo plazo.",
+        "includes": [
+          "Análisis de rentabilidad",
+          "Estudio de potencial y revalorización",
+          "Posicionamiento del activo en el mercado",
+          "Acompañamiento también después de la compra"
+        ],
+        "process": [
+          "Estudiamos el activo y su contexto",
+          "Analizamos rentabilidad y potencial",
+          "Te explicamos el porqué de cada opción",
+          "Acompañamos la decisión y lo que viene después"
+        ],
+        "difference": "Porque invertir bien es saber leer más allá del presente."
       },
       {
         "title": "Jurídico & Financiero",
         "description": "Procesos legales y financieros con transparencia y rigor.",
-        "cta": "Resolver mi operación"
+        "cta": "Resolver mi operación",
+        "tagline": "Hay procesos que necesitan algo más que gestión. Necesitan claridad.",
+        "intro": "Contamos con un equipo legal y financiero que acompaña situaciones complejas con discreción y rigor.",
+        "forWho": "Para clientes locales e internacionales que afrontan operaciones sensibles y quieren claridad, seguridad y discreción.",
+        "includes": [
+          "Herencias",
+          "Separaciones",
+          "Reestructuración patrimonial",
+          "Operaciones sensibles y compradores internacionales"
+        ],
+        "process": [
+          "Escuchamos y entendemos la situación",
+          "Coordinamos a los especialistas adecuados",
+          "Gestionamos con transparencia y rigor",
+          "Acompañamos hasta resolver, sin fricción"
+        ],
+        "difference": "Para que todo se gestione con transparencia, seguridad y sin fricción innecesaria."
       }
     ]
   },

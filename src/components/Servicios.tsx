@@ -2,47 +2,18 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
-import {
-  KeyRound,
-  House,
-  Search,
-  Armchair,
-  TrendingUp,
-  Scale,
-  ArrowRight,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { CTALink } from "@/components/ui/CTALink";
 import { fadeUp, staggerContainer } from "@/lib/motion";
-import { contactoHref } from "@/lib/contacto-href";
+import { SERVICES } from "@/lib/services";
 
 type ServiceItem = { title: string; description: string; cta: string };
 
-// Index-aligned with `servicios.items` in the message catalogs.
-const ICONS: LucideIcon[] = [
-  KeyRound, // Compraventa
-  House, // Alquileres
-  Search, // Personal Shopper
-  Armchair, // Reformas & Home Staging
-  TrendingUp, // Inversión
-  Scale, // Jurídico & Financiero
-];
-
-// CTA context per service (index-aligned). `interes` pre-selects the form's
-// interest dropdown; services with no obvious interest just carry the servicio.
-const SERVICE_PARAMS: { servicio: string; interes?: string }[] = [
-  { servicio: "compraventa", interes: "buy" },
-  { servicio: "alquileres", interes: "rent" },
-  { servicio: "personal-shopper", interes: "buy" },
-  { servicio: "reformas" },
-  { servicio: "inversion", interes: "invest" },
-  { servicio: "juridico" },
-];
-
-// On the dedicated /servicios page each card is an anchor target (#compraventa,
-// #alquileres, …). On the home teaser the cards link to those anchors instead.
+// On the dedicated /servicios page each card links to its detail page and is an
+// anchor target (#compraventa, …). On the home teaser the cards link to those
+// anchors on /servicios instead.
 export function Servicios({ variant = "page" }: { variant?: "home" | "page" }) {
   const t = useTranslations("servicios");
   const items = t.raw("items") as ServiceItem[];
@@ -63,19 +34,18 @@ export function Servicios({ variant = "page" }: { variant?: "home" | "page" }) {
         viewport={{ once: true, amount: 0.2 }}
         className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2 lg:grid-cols-3"
       >
-        {items.map((service, index) => {
-          const Icon = ICONS[index] ?? KeyRound;
-          const params = SERVICE_PARAMS[index] ?? {};
-          const anchor = params.servicio;
-          // Home: link to the service's section on /servicios. Page: pre-fill
-          // the contact form with this service's context.
+        {SERVICES.map((svc) => {
+          const service = items[svc.index];
+          const Icon = svc.icon;
+          // Home: jump to the service's section on /servicios. Page: open the
+          // service's dedicated detail page.
           const href = isHome
-            ? `/${locale}/servicios#${anchor}`
-            : contactoHref(locale, params);
+            ? `/${locale}/servicios#${svc.key}`
+            : `/${locale}/servicios/${svc.slug}`;
           return (
             <motion.li
-              key={service.title}
-              id={isHome ? undefined : anchor}
+              key={svc.key}
+              id={isHome ? undefined : svc.key}
               variants={item}
               className="scroll-mt-28 bg-cream"
             >

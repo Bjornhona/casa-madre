@@ -5,6 +5,7 @@ import {
   JOURNAL_SLUGS_QUERY,
   PROPERTY_SLUGS_QUERY,
 } from "@/sanity/lib/queries";
+import { SERVICE_SLUGS } from "@/lib/services";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const CONTENT_PATHS = [
@@ -75,6 +76,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
+  const services: MetadataRoute.Sitemap = routing.locales.flatMap((locale) =>
+    SERVICE_SLUGS.map((slug) => ({
+      url: `${SITE_URL}/${locale}/servicios/${slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+      alternates: { languages: altsFor(`servicios/${slug}`) },
+    })),
+  );
+
   const legal: MetadataRoute.Sitemap = routing.locales.flatMap((locale) =>
     LEGAL_PATHS.map((path) => ({
       url: `${SITE_URL}/${locale}/${path}`,
@@ -85,5 +96,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
-  return [...home, ...content, ...journal, ...properties, ...legal];
+  return [...home, ...content, ...journal, ...properties, ...services, ...legal];
 }

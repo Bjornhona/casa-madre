@@ -41,36 +41,143 @@
   "servicios": {
     "kicker": "Services",
     "viewAll": "View all services",
+    "detail": {
+      "backLink": "Services",
+      "forWhoLabel": "Who it's for",
+      "includesLabel": "What's included",
+      "processLabel": "How we work",
+      "differenceLabel": "What sets us apart",
+      "ctaKicker": "Contact",
+      "ctaHeadline": "Tell us what you're looking for.",
+      "ctaBody": "We'll guide you at every step, with judgement and closeness.",
+      "ctaWhatsapp": "Contact on WhatsApp"
+    },
     "items": [
       {
         "title": "Buying & Selling",
         "description": "We guide every transaction with strategy, valuation and sensibility.",
-        "cta": "I want to buy or sell"
+        "cta": "I want to buy or sell",
+        "tagline": "Buying or selling isn't just a transaction. It's understanding the moment, the value, and what comes next.",
+        "intro": "We guide buying and selling from a complete perspective. It's not only about finding or placing a property, but about doing it at the right moment, with the right judgement.",
+        "forWho": "For those buying or selling a home who want to do it with strategy, judgement, and real support at every step.",
+        "includes": [
+          "A genuine property valuation",
+          "A clear buying or marketing strategy",
+          "Careful management of the whole process",
+          "Support all the way to closing"
+        ],
+        "process": [
+          "We understand your moment and your goal",
+          "We define a personalised strategy",
+          "We value and position with judgement",
+          "We accompany every detail through to signing"
+        ],
+        "difference": "Because a good transaction doesn't come down to luck — it comes down to how it's done."
       },
       {
         "title": "Rentals",
         "description": "Homes for every moment: seasonal and long-term.",
-        "cta": "Find or rent a home"
+        "cta": "Find or rent a home",
+        "tagline": "Arriving at a home should feel easy. As if you already knew how to live in it.",
+        "intro": "We select homes thought out for different moments in life, with everything ready for you to begin living.",
+        "forWho": "For those arriving in Barcelona for a season or to stay, looking for a process that's smooth, secure and well cared for.",
+        "includes": [
+          "Seasonal rental — for those arriving for a defined chapter, ready to begin",
+          "Long-term — for those seeking stability, rhythm and continuity",
+          "Property selection, documentation and contracts",
+          "Support throughout the whole process"
+        ],
+        "process": [
+          "We understand your moment and your stay",
+          "We select homes that fit you",
+          "We handle the documentation and contracts",
+          "We stay with you until you feel at home"
+        ],
+        "difference": "We don't just manage contracts. We care for the experience of living."
       },
       {
         "title": "Personal Shopper",
         "description": "We search for you — understanding, filtering, finding.",
-        "cta": "Search for me"
+        "cta": "Search for me",
+        "tagline": "When you don't know where to begin, we begin with you.",
+        "intro": "We search for you. But first, we understand — what you need, what fits you, what makes sense right now.",
+        "forWho": "For time-poor buyers, international clients, or anyone who'd rather entrust the search to someone they trust.",
+        "includes": [
+          "Searching and filtering against your criteria",
+          "A selection of only the properties truly worth it",
+          "Access to off-market opportunities where possible",
+          "Visits organised with intention"
+        ],
+        "process": [
+          "First we understand what you're really looking for",
+          "We filter and select for you",
+          "We propose only what fits",
+          "We accompany the visit and the negotiation"
+        ],
+        "difference": "So you lose no time, and every visit has intention."
       },
       {
         "title": "Renovation & Home Staging",
         "description": "We transform spaces so they tell their finest version.",
-        "cta": "Transform my home"
+        "cta": "Transform my home",
+        "tagline": "A space can change completely once you understand how it's meant to be lived in.",
+        "intro": "We work with spaces from the inside, so they tell their finest version without losing authenticity.",
+        "forWho": "For owners, buyers and sellers who want to draw out the best of a space before selling, renting or living in it.",
+        "includes": [
+          "Renovation — projects that turn a property into something coherent, functional and full of identity",
+          "Home staging — preparing a home to show at its very best",
+          "An analysis of the space's potential",
+          "Coordination with a network of specialist collaborators"
+        ],
+        "process": [
+          "We read the space and its potential",
+          "We propose improvements with aesthetic judgement",
+          "We coordinate the right professionals",
+          "We care for the result from start to finish"
+        ],
+        "difference": "It isn't about decorating. It's about interpreting the space."
       },
       {
         "title": "Investment",
         "description": "We analyse, value and help you make sound decisions.",
-        "cta": "Analyse an investment"
+        "cta": "Analyse an investment",
+        "tagline": "Every property is a decision. Some are also an opportunity.",
+        "intro": "We analyse assets from a strategic perspective, to help you understand not just what to buy, but why.",
+        "forWho": "For private investors and wealth-minded buyers seeking yield, appreciation and long-term value.",
+        "includes": [
+          "Yield analysis",
+          "A study of potential and appreciation",
+          "Positioning the asset in the market",
+          "Support after the purchase, too"
+        ],
+        "process": [
+          "We study the asset and its context",
+          "We analyse yield and potential",
+          "We explain the reasoning behind each option",
+          "We accompany the decision and what follows"
+        ],
+        "difference": "Because investing well means reading beyond the present."
       },
       {
         "title": "Legal & Financial",
         "description": "Legal and financial processes, with transparency and rigour.",
-        "cta": "Resolve my transaction"
+        "cta": "Resolve my matter",
+        "tagline": "Some processes need more than management. They need clarity.",
+        "intro": "We work with a legal and financial team that guides complex situations with discretion and rigour.",
+        "forWho": "For local and international clients facing sensitive matters who want clarity, security and discretion.",
+        "includes": [
+          "Inheritances",
+          "Separations",
+          "Estate restructuring",
+          "Sensitive transactions and international buyers"
+        ],
+        "process": [
+          "We listen and understand the situation",
+          "We coordinate the right specialists",
+          "We manage with transparency and rigour",
+          "We see it through, without friction"
+        ],
+        "difference": "So everything is handled with transparency, security and no unnecessary friction."
       }
     ]
   },
