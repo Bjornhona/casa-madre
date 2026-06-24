@@ -6,6 +6,7 @@ import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 import type { PUBLISHED_TESTIMONIALS_QUERY_RESULT } from "@/sanity/types.gen";
+import TestimonyCard from "./TestimonyCard";
 
 /**
  * Quiet, editorial testimonials — large serif italic quote, muted attribution.
@@ -25,7 +26,7 @@ export function TestimoniosView({
   const single = testimonials.length === 1;
 
   return (
-    <Section id="testimonios" aria-labelledby="testimonios-kicker">
+    <Section id="testimonios" aria-labelledby="testimonios-kicker" className="border-line border-b-1">
       <motion.div
         variants={container}
         initial="hidden"
@@ -51,26 +52,7 @@ export function TestimoniosView({
           }
         >
           {testimonials.map((testimonial) => (
-            <motion.li
-              key={testimonial._id}
-              variants={item}
-              className={single ? "max-w-[44rem] text-center" : ""}
-            >
-              <figure>
-                <blockquote
-                  className={`font-serif italic tracking-[-0.02em] text-brown ${
-                    single
-                      ? "text-[28px] leading-[1.3] sm:text-[36px]"
-                      : "text-[23px] leading-[1.35] sm:text-[26px]"
-                  }`}
-                >
-                  {testimonial.quote}
-                </blockquote>
-                <figcaption className="mt-6 text-[12px] uppercase tracking-[0.16em] text-muted">
-                  {`— ${testimonial.attribution}`}
-                </figcaption>
-              </figure>
-            </motion.li>
+            <TestimonyCard key={testimonial._id} testimonial={testimonial} single={single} item={item} />
           ))}
         </motion.ul>
       </motion.div>

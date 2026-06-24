@@ -2,7 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import { SiteNav } from "@/components/SiteNav";
 import { Hero } from "@/components/Hero";
 import { AboutIntro } from "@/components/AboutIntro";
-import { Servicios } from "@/components/Servicios";
+import { ServiciosMarquee } from "@/components/ServiciosMarquee";
 import { MetodoTeaser } from "@/components/MetodoTeaser";
 import { Testimonios } from "@/components/Testimonios";
 import { Barrios } from "@/components/Barrios";
@@ -41,7 +41,7 @@ export default async function Home({
       <main>
         <Hero />
         <AboutIntro />
-        <Servicios variant="home" />
+        <ServiciosMarquee />
         <MetodoTeaser />
         <Testimonios max={3} />
         <Propiedades properties={properties} variant="home" />

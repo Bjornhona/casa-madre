@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ivory: #f4ede3;
   --color-cream: #fbf6ef;
+  --color-ivory: #f4ede3;
+  --color-bone: #F2E8DD;
   --color-sand: #d7c1a8;
   /* Terracotta accent. Darkened from #A06A43 to clear WCAG AA (4.5:1) for small
      text on ivory/cream — used for kickers, error text and meta labels. */
@@ -46,6 +47,86 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-ken-burns {
+    animation: none;
+  }
+}
+
+/* Services overview — "Áreas de trabajo" bordered grid: one continuous divided
+   rectangle (shared hairline borders between cells), mirroring the approved
+   concept. Cells share borders rather than floating as separate cards. */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border: 1px solid var(--color-line);
+  background: color-mix(in srgb, var(--color-cream) 55%, transparent);
+}
+.services-grid > * {
+  border-right: 1px solid var(--color-line);
+}
+.services-grid > *:last-child {
+  border-right: 0;
+}
+@media (max-width: 1100px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .services-grid > *:nth-child(3) {
+    border-right: 0;
+  }
+  .services-grid > *:nth-child(n + 4) {
+    border-top: 1px solid var(--color-line);
+  }
+}
+@media (max-width: 720px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+  .services-grid > * {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .services-grid > *:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* Home services marquee — slow, seamless right-to-left drift via a single
+   transform animation (the track holds two copies; -50% loops gaplessly).
+   Pauses on hover/focus; collapses to a static row under reduced motion. */
+@keyframes services-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.services-marquee {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 4%,
+    #000 96%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 4%,
+    #000 96%,
+    transparent
+  );
+}
+.services-marquee-track {
+  animation: services-marquee 55s linear infinite;
+  will-change: transform;
+}
+.services-marquee:hover .services-marquee-track,
+.services-marquee:focus-within .services-marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .services-marquee-track {
     animation: none;
   }
 }

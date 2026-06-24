@@ -106,7 +106,7 @@ export function Propiedades({
   ];
 
   return (
-    <Section id="propiedades" aria-labelledby="propiedades-kicker" className="border-line border-b-1">
+    <Section id="propiedades" aria-labelledby="propiedades-kicker" className="border-line border-b-1 bg-bone">
       <Kicker id="propiedades-kicker">{t("kicker")}</Kicker>
       <p className="mt-6 max-w-[46rem] font-serif text-[24px] leading-[1.2] text-deep sm:text-[29px]">
         {t("intro")}

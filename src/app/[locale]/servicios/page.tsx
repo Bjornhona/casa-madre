@@ -28,7 +28,7 @@ export default async function ServiciosPage({
       <SiteNav />
       <main>
         <PageHero pageKey="servicios" />
-        <Servicios variant="page" />
+        <Servicios />
       </main>
       <Footer />
     </>
