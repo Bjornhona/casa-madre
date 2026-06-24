@@ -91,19 +91,19 @@ export function Hero() {
         >
           {t("descriptor")}
         </motion.p>
-        <motion.p
+        {/* <motion.p
           variants={item}
           className="mt-12 text-[15px] uppercase tracking-[0.42em] text-clay"
         >
           {t("claim")}
-        </motion.p>
+        </motion.p> */}
 
         {/* Emotional tagline — unhurried fade-up ~1s after load, calm and slow. */}
         <motion.p
           initial={reduce ? { opacity: 0 } : { opacity: 0, y: 18 }}
           animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: EASE, delay: reduce ? 0 : 1 }}
-          className="mx-auto mt-8 max-w-[34ch] font-serif text-[20px] italic leading-[1.4] text-deep/90 sm:text-[26px]"
+          className="mx-auto mt-8 max-w-[34ch] font-serif text-[20px] italic leading-[1.4] text-clay sm:text-[26px]"
         >
           {t("tagline")}
         </motion.p>

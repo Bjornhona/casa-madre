@@ -104,13 +104,13 @@ export function FloatingContact() {
                   <Mail className="h-4 w-4" strokeWidth={1.5} aria-hidden />
                   {t("contact")}
                 </Link>
-                <button
+                {/* <button
                   type="button"
                   onClick={() => setDismissed(true)}
                   className="px-2 py-1 text-[10px] uppercase tracking-[0.16em] text-muted transition-colors duration-300 hover:text-brown focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
                 >
                   {t("dismiss")}
-                </button>
+                </button> */}
               </motion.div>
             )}
           </AnimatePresence>
