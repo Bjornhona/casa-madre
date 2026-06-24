@@ -8,33 +8,47 @@ import {HomeIcon} from '@sanity/icons'
  */
 export const property = defineType({
   name: 'property',
-  title: 'Property',
+  title: 'Propiedad',
   type: 'document',
   icon: HomeIcon,
   groups: [
-    {name: 'details', title: 'Details', default: true},
-    {name: 'content', title: 'Content'},
-    {name: 'media', title: 'Media'},
+    {name: 'details', title: 'Detalles', default: true},
+    {name: 'content', title: 'Contenido'},
+    {name: 'media', title: 'Medios'},
   ],
   fields: [
     defineField({
       name: 'title',
-      title: 'Title',
+      title: 'Título',
+      description: 'Título de la propiedad (ES + EN).',
       type: 'string',
       group: 'details',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'slug',
-      title: 'Slug',
+      title: 'URL (slug)',
+      description:
+      'Identificador en la URL, en inglés para SEO internacional. Se genera desde el título en inglés, pero puede editarse manualmente.',
       type: 'slug',
       group: 'details',
-      options: {source: 'title', maxLength: 96},
+      options: {
+        maxLength: 96,
+        // Slug source: prefer the EN title, fall back to ES.
+        source: (doc) => {
+          const title = doc.title as
+            | Array<{language?: string; value?: string}>
+            | undefined
+          const byLang = (lang: string) =>
+            title?.find((t) => t.language === lang)?.value
+          return byLang('en') || byLang('es') || ''
+        },
+      },
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'operation',
-      title: 'Operation',
+      title: 'Operación',
       type: 'string',
       group: 'details',
       options: {
@@ -48,7 +62,7 @@ export const property = defineType({
     }),
     defineField({
       name: 'propertyType',
-      title: 'Type',
+      title: 'Tipo',
       type: 'string',
       group: 'details',
       options: {
@@ -65,7 +79,7 @@ export const property = defineType({
     }),
     defineField({
       name: 'neighbourhood',
-      title: 'Neighbourhood',
+      title: 'Barrio',
       type: 'reference',
       group: 'details',
       to: [{type: 'neighbourhood'}],
@@ -73,44 +87,44 @@ export const property = defineType({
     }),
     defineField({
       name: 'price',
-      title: 'Price (EUR)',
-      description: 'Sale price, or monthly rent for alquiler.',
+      title: 'Precio (EUR)',
+      description: 'Precio de venta, o alquiler mensual para alquiler.',
       type: 'number',
       group: 'details',
       validation: (rule) => rule.required().positive(),
     }),
     defineField({
       name: 'surface',
-      title: 'Surface (m²)',
+      title: 'Superficie (m²)',
       type: 'number',
       group: 'details',
       validation: (rule) => rule.positive(),
     }),
     defineField({
       name: 'bedrooms',
-      title: 'Bedrooms',
+      title: 'Dormitorios',
       type: 'number',
       group: 'details',
       validation: (rule) => rule.min(0).integer(),
     }),
     defineField({
       name: 'bathrooms',
-      title: 'Bathrooms',
+      title: 'Baños',
       type: 'number',
       group: 'details',
       validation: (rule) => rule.min(0).integer(),
     }),
     defineField({
       name: 'description',
-      title: 'Description',
-      description: 'Short editorial description (ES + EN).',
+      title: 'Descripción',
+      description: 'Descripción editorial (ES + EN).',
       type: 'internationalizedArrayText',
       group: 'content',
     }),
     defineField({
       name: 'highlights',
-      title: 'Highlights',
-      description: 'Short feature tags, e.g. "Terraza", "Luz natural", "Reformado".',
+      title: 'Destacados',
+      description: 'Etiquetas de características, p. ej. "Terraza", "Luz natural", "Reformado".',
       type: 'array',
       of: [defineArrayMember({type: 'string'})],
       options: {layout: 'tags'},
@@ -118,7 +132,7 @@ export const property = defineType({
     }),
     defineField({
       name: 'gallery',
-      title: 'Gallery',
+      title: 'Galería',
       type: 'array',
       group: 'media',
       of: [
@@ -128,18 +142,18 @@ export const property = defineType({
           fields: [
             defineField({
               name: 'alt',
-              title: 'Alt text',
+              title: 'Texto alternativo',
               type: 'string',
             }),
           ],
         }),
       ],
-      validation: (rule) => rule.min(1).warning('Add at least one image'),
+      validation: (rule) => rule.min(1).warning('Añade al menos una imagen'),
     }),
     defineField({
       name: 'isPublic',
-      title: 'Publicly listed',
-      description: 'Off when this is an off-market / private listing (Phase 2).',
+      title: 'Publicado',
+      description: 'Desactivado cuando es una propiedad privada (Fase 2).',
       type: 'boolean',
       group: 'details',
       initialValue: true,

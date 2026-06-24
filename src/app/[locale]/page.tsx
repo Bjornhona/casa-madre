@@ -4,6 +4,7 @@ import { Hero } from "@/components/Hero";
 import { AboutIntro } from "@/components/AboutIntro";
 import { Servicios } from "@/components/Servicios";
 import { MetodoTeaser } from "@/components/MetodoTeaser";
+import { Testimonios } from "@/components/Testimonios";
 import { Barrios } from "@/components/Barrios";
 import { Propiedades } from "@/components/Propiedades";
 import { JournalTeaser } from "@/components/JournalTeaser";
@@ -42,6 +43,7 @@ export default async function Home({
         <AboutIntro />
         <Servicios variant="home" />
         <MetodoTeaser />
+        <Testimonios max={3} />
         <Propiedades properties={properties} variant="home" />
         <Barrios neighbourhoods={neighbourhoods} variant="home" />
         <JournalTeaser posts={journalPosts} />

@@ -38,7 +38,6 @@ export const journalPost = defineType({
       group: 'meta',
       options: {
         maxLength: 96,
-        // Slug source: prefer the EN title, fall back to ES.
         source: (doc) => {
           const title = doc.title as
             | Array<{language?: string; value?: string}>
@@ -53,7 +52,7 @@ export const journalPost = defineType({
     defineField({
       name: 'excerpt',
       title: 'Resumen',
-      description: 'Entradilla breve para tarjetas y metadatos (ES + EN).',
+      description: 'Un breve resumen para tarjetas y metadatos (ES + EN).',
       type: 'internationalizedArrayText',
       group: 'content',
     }),

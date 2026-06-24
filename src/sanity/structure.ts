@@ -8,6 +8,6 @@ export const structure: StructureResolver = (S) =>
     .items([
       S.documentTypeListItem('property').title('Propiedades').icon(HomeIcon),
       S.documentTypeListItem('neighbourhood').title('Barrios').icon(PinIcon),
-      S.documentTypeListItem('testimonial').title('Testimoniales').icon(CommentIcon),
+      S.documentTypeListItem('testimonial').title('Testimonios').icon(CommentIcon),
       S.documentTypeListItem('journalPost').title('Artículos del Journal').icon(DocumentTextIcon),
     ])

@@ -41,6 +41,20 @@ export const NEIGHBOURHOODS_QUERY = defineQuery(`
   }
 `)
 
+// Published client testimonials, newest first. The quote is an
+// internationalized array, resolved with the same coalesce-to-Spanish fallback
+// used for property/journal localized fields.
+export const PUBLISHED_TESTIMONIALS_QUERY = defineQuery(`
+  *[_type == "testimonial" && isPublished == true] | order(_createdAt desc) {
+    _id,
+    "quote": coalesce(
+      quote[language == $locale][0].value,
+      quote[language == "es"][0].value
+    ),
+    attribution
+  }
+`)
+
 // Slugs of every public property — used by generateStaticParams for the
 // individual property pages.
 export const PROPERTY_SLUGS_QUERY = defineQuery(`

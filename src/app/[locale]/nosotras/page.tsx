@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { PageHero } from "@/components/ui/PageHero";
 import { Nosotras } from "@/components/Nosotras";
 import { Metodo } from "@/components/Metodo";
+import { Testimonios } from "@/components/Testimonios";
 import { pageMetadata } from "@/lib/page-metadata";
 
 export async function generateMetadata({
@@ -31,6 +32,7 @@ export default async function NosotrasPage({
         <PageHero pageKey="nosotras" />
         <Nosotras />
         <Metodo />
+        <Testimonios />
       </main>
       <Footer />
     </>

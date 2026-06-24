@@ -7,27 +7,27 @@ import {CommentIcon} from '@sanity/icons'
  */
 export const testimonial = defineType({
   name: 'testimonial',
-  title: 'Testimonial',
+  title: 'Testimonio',
   type: 'document',
   icon: CommentIcon,
   fields: [
     defineField({
       name: 'quote',
-      title: 'Quote',
-      description: 'The testimonial text (ES + EN).',
+      title: 'Cita',
+      description: 'El texto del testimonio (ES + EN).',
       type: 'internationalizedArrayText',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'attribution',
-      title: 'Attribution',
-      description: 'Who said it, e.g. "Marta R., compradora en Gràcia".',
+      title: 'Autor',
+      description: 'Quién lo dijo, p. ej. "Marta R., compradora en Gràcia".',
       type: 'string',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'isPublished',
-      title: 'Published',
+      title: 'Publicado',
       type: 'boolean',
       initialValue: false,
     }),
@@ -36,8 +36,8 @@ export const testimonial = defineType({
     select: {title: 'attribution', published: 'isPublished'},
     prepare({title, published}) {
       return {
-        title: title || 'Testimonial',
-        subtitle: published ? 'Published' : 'Draft',
+        title: title || 'Testimonio',
+        subtitle: published ? 'Publicado' : 'Borrador',
       }
     },
   },

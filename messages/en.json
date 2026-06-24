@@ -106,6 +106,10 @@
       }
     ]
   },
+  "testimonios": {
+    "kicker": "In their words",
+    "intro": "A few words, but true ones — from those already living in their home with us."
+  },
   "barrios": {
     "kicker": "Neighbourhoods",
     "intro": "A city isn't understood when you visit it. It's understood when it becomes part of your life.",

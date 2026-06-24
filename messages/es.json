@@ -106,6 +106,10 @@
       }
     ]
   },
+  "testimonios": {
+    "kicker": "Lo que dicen",
+    "intro": "Pocas palabras, pero verdaderas. Quienes ya viven su casa con nosotras."
+  },
   "barrios": {
     "kicker": "Barrios",
     "intro": "Una ciudad no se entiende cuando se visita. Se entiende cuando empieza a formar parte de tu vida.",
