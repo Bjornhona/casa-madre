@@ -18,22 +18,22 @@ export function ContactoTeaser() {
   const reduce = useReducedMotion();
 
   return (
-    <Section id="contacto" aria-labelledby="contacto-teaser-kicker">
+    <Section id="contacto" aria-labelledby="contacto-teaser-kicker" className="bg-brown text-cream">
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 18 }}
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.8, ease: EASE }}
       >
-        <Kicker id="contacto-teaser-kicker">{t("kicker")}</Kicker>
+        <Kicker id="contacto-teaser-kicker" tone="sand">{t("kicker")}</Kicker>
         <SerifHeading
           as="h2"
-          className="mt-5 max-w-[18ch] text-[34px] leading-[1.04] text-brown sm:text-[48px]"
+          className="mt-5 max-w-[18ch] text-[34px] leading-[1.04] sm:text-[48px]"
         >
           {t("headline")}
         </SerifHeading>
         <div className="mt-9">
-          <CTALink href={`/${locale}/contacto`}>{t("teaserCta")}</CTALink>
+          <CTALink href={`/${locale}/contacto`} variant="onDark">{t("teaserCta")}</CTALink>
         </div>
       </motion.div>
     </Section>

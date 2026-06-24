@@ -28,7 +28,7 @@ export function JournalTeaser({
     <Section
       id="journal"
       aria-labelledby="journal-kicker"
-      className="border-line border-b"
+      className="border-line border-b bg-bone"
     >
       <Kicker id="journal-kicker">{t("teaserTitle")}</Kicker>
       <p className="mt-6 max-w-[46rem] font-serif text-[24px] leading-[1.2] text-deep sm:text-[29px]">
