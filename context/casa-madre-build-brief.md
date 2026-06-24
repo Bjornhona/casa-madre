@@ -7,13 +7,15 @@
 
 ## 1. Project snapshot
 
-| | |
-|---|---|
-| **Client** | Casa Madre — boutique real estate + lifestyle, Barcelona |
-| **Deliverable (Phase 1)** | One-page premium site, bilingual ES/EN |
-| **Primary message** | A boutique agency combining closeness, judgement, aesthetic sensibility and end-to-end support — *more than a property* |
-| **Feeling** | Confidence, calm, inspiration, warmth. Premium but human, never cold/corporate |
-| **Stack** | Next.js (App Router) · TypeScript · Tailwind · Sanity · Framer Motion · `next-intl` for i18n |
+
+|                           |                                                                                                                         |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Client**                | Casa Madre — boutique real estate + lifestyle, Barcelona                                                                |
+| **Deliverable (Phase 1)** | One-page premium site, bilingual ES/EN                                                                                  |
+| **Primary message**       | A boutique agency combining closeness, judgement, aesthetic sensibility and end-to-end support — *more than a property* |
+| **Feeling**               | Confidence, calm, inspiration, warmth. Premium but human, never cold/corporate                                          |
+| **Stack**                 | Next.js (App Router) · TypeScript · Tailwind · Sanity · Framer Motion · `next-intl` for i18n                            |
+
 
 ---
 
@@ -35,10 +37,12 @@
 ## 3. Design system (locked — from approved concept)
 
 **Fonts** (Google Fonts):
+
 - Headings/display: **Cormorant Garamond** (500), tight tracking `-0.035em`
 - Body/UI: **Inter** (base weight **300**), line-height ~1.55
 
 **Color tokens:**
+
 ```
 --ivory  #F4EDE3   (page background)
 --cream  #FBF6EF   (light text on dark / cards)
@@ -51,6 +55,7 @@
 ```
 
 **Layout principles:**
+
 - Generous vertical rhythm — sections ~92px padding desktop
 - Hairline `1px` borders, near-flat corners (`2px` radius), soft long shadows `0 24px 80px rgba(43,33,27,.13)`
 - Kickers: 11–12px, UPPERCASE, letterspacing `.16–.22em`, in `--brown`
@@ -59,6 +64,7 @@
 - The **Método** block inverts to a dark-brown background with cream text
 
 **Token mapping — Tailwind v4 (CSS-first, in `src/app/globals.css`):**
+
 ```css
 @import "tailwindcss";
 
@@ -74,6 +80,7 @@
   --font-sans:  var(--font-inter), sans-serif;   /* Inter via next/font */
 }
 ```
+
 Auto-generates `bg-clay`, `text-brown`, `border-sand`, `font-serif`, etc. No JS config file in v4. *(If the project is on Tailwind v3, use the old `tailwind.config.ts` `theme.extend` form instead — but new installs should be v4.)*
 
 ---
@@ -81,6 +88,7 @@ Auto-generates `bg-clay`, `text-brown`, `border-sand`, `font-serif`, etc. No JS 
 ## 4. Sitemap & scope
 
 **PHASE 1 — launch (one page, anchored sections):**
+
 1. Hero
 2. Qué es Casa Madre (intro + image)
 3. Nosotras / About
@@ -107,14 +115,17 @@ Journal/blog · individual neighbourhood SEO pages · off-market/private listing
 **Nosotras** — *"Dos miradas. Una misma forma de entender el hogar."* Founders: one from international advertising (Cannes/San Sebastián festivals), one from interior design. Met when one captured the other's flat. Strategy + sensibility + craft. Real names/bios + editorial photos TBD by client → build with placeholders.
 
 **Servicios** (6, each card = icon + title + one-line + CTA):
-| Service | Line | CTA |
-|---|---|---|
-| Compraventa | Acompañamos cada operación con estrategia, valoración y sensibilidad. | Quiero comprar o vender |
-| Alquileres | Viviendas para cada momento: temporada y larga estancia. | Buscar o alquilar vivienda |
-| Personal Shopper | Buscamos por ti. Entendemos, filtramos y encontramos. | Buscar por mí |
-| Reformas & Home Staging | Transformamos espacios para que cuenten su mejor versión. | Transformar mi vivienda |
-| Inversión | Analizamos, valoramos y te ayudamos a tomar decisiones acertadas. | Analizar una inversión |
-| Jurídico & Financiero | Procesos legales y financieros con transparencia y rigor. | Resolver mi operación |
+
+
+| Service                 | Line                                                                  | CTA                        |
+| ----------------------- | --------------------------------------------------------------------- | -------------------------- |
+| Compraventa             | Acompañamos cada operación con estrategia, valoración y sensibilidad. | Quiero comprar o vender    |
+| Alquileres              | Viviendas para cada momento: temporada y larga estancia.              | Buscar o alquilar vivienda |
+| Personal Shopper        | Buscamos por ti. Entendemos, filtramos y encontramos.                 | Buscar por mí              |
+| Reformas & Home Staging | Transformamos espacios para que cuenten su mejor versión.             | Transformar mi vivienda    |
+| Inversión               | Analizamos, valoramos y te ayudamos a tomar decisiones acertadas.     | Analizar una inversión     |
+| Jurídico & Financiero   | Procesos legales y financieros con transparencia y rigor.             | Resolver mi operación      |
+
 
 **Método Casa Madre** (dark section, 5 numbered steps): 01 Te conocemos · 02 Damos sentido · 03 Valoramos · 04 Menos, pero mejor · 05 Se convierte en método. Intro: *"Entender primero. Buscar después."*
 
@@ -133,6 +144,7 @@ Journal/blog · individual neighbourhood SEO pages · off-market/private listing
 **Routing / i18n:** App Router with `[locale]` segment (`es` default, `en`). `next-intl`. Approved copy keyed in message catalogs; English = adapted, not auto-translated.
 
 **Sanity — minimal Phase 1 schema:**
+
 - `property` — title, slug, price, operation (venta|alquiler), neighbourhood (ref), type, surface, bedrooms, bathrooms, description (localized), gallery[], highlights[], isPublic (bool, for off-market later)
 - `neighbourhood` — name, slug, lifestyle blurb (localized), image (powers Barrios + filters)
 - `testimonial` — quote, attribution, isPublished
@@ -174,11 +186,11 @@ Journal/blog · individual neighbourhood SEO pages · off-market/private listing
 
 **Performance / Core Web Vitals.** Image-heavy premium site lives or dies on this. Use `next/image` everywhere; `priority` on the hero (it's the LCP element), explicit sizes, lazy-load below the fold, modern formats. Subset the two Google fonts via `next/font` (already planned) to avoid layout shift. Aim Lighthouse ≥ 90 across the board — it's a credibility signal in the proposal.
 
-**SEO foundations (ship in Phase 1 even though SEO *pages* are Phase 2).** Per-locale `metadata` (title/description), **`hreflang` alternates for es/en**, canonical URLs, Open Graph + a branded OG image (CM monogram), `RealEstateAgent`/`LocalBusiness` JSON-LD, and a localized `sitemap.ts` + `robots.ts`. This is cheap now and painful to retrofit. Target terms are in the questionnaire (inmobiliaria boutique Barcelona, luxury real estate Barcelona, etc.).
+**SEO foundations (ship in Phase 1 even though SEO *pages* are Phase 2).** Per-locale `metadata` (title/description), `**hreflang` alternates for es/en**, canonical URLs, Open Graph + a branded OG image (CM monogram), `RealEstateAgent`/`LocalBusiness` JSON-LD, and a localized `sitemap.ts` + `robots.ts`. This is cheap now and painful to retrofit. Target terms are in the questionnaire (inmobiliaria boutique Barcelona, luxury real estate Barcelona, etc.).
 
 **Privacy / GDPR (Spain–EU, non-negotiable for a data-collecting site).** The contact form gathers personal data (name, email, phone, budget) → add a **consent checkbox** linking to the privacy policy, a **honeypot + basic rate-limit** for spam, and store/transmit data lawfully (Resend email is fine; no unnecessary retention). If analytics are added, a **cookie-consent banner** before non-essential cookies fire. Legal copy is client-supplied (their lawyer) — build the routes with clearly-marked placeholders so launch isn't blocked on your side.
 
-**Config via env (no hardcoded contact details).** `NEXT_PUBLIC_WHATSAPP`, `NEXT_PUBLIC_CONTACT_EMAIL`, `SANITY_*`, `RESEND_API_KEY`. All are "pending" client decisions — env vars let you ship with placeholders and swap in seconds.
+**Config via env (no hardcoded contact details).** `NEXT_PUBLIC_WHATSAPP`, `NEXT_PUBLIC_CONTACT_EMAIL`, `SANITY_`*, `RESEND_API_KEY`. All are "pending" client decisions — env vars let you ship with placeholders and swap in seconds.
 
 **Image art direction.** Interim images are explicitly allowed at launch. Keep them coherent: consistent warm grade, similar focal treatment, generous negative space. One unifying overlay token keeps mixed-source placeholders from looking mismatched. Define standard aspect ratios (hero, property card, editorial split) up front.
 
