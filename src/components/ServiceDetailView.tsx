@@ -9,6 +9,7 @@ import { CTALink } from "@/components/ui/CTALink";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 import { contactoHref } from "@/lib/contacto-href";
 import { getServiceBySlug } from "@/lib/services";
+import { serviceImage } from "@/lib/service-images";
 import { PageHero } from "./ui/PageHero";
 
 type ServiceDetailItem = {
@@ -40,12 +41,29 @@ export function ServiceDetailView({ slug }: { slug: string }) {
   const container = staggerContainer(reduce, 0.12);
   const reveal = fadeUp(reduce, { y: 20, duration: 0.7 });
 
+  // Editorial hero image for this service. When none is set, PageHero falls back
+  // to its plain dark band — no broken image.
+  const heroSrc = serviceImage(slug);
+
   return (
     <article>
-      {/* PAGE HERO — with the service title + editorial tagline. */}
+      {/* PAGE HERO — editorial image with the service title + tagline overlaid,
+          or the plain dark band when no image is available. */}
       <PageHero
         pageKey="servicios"
-        item={{ kicker: t("kicker"), title: item.title, tagline: item.tagline }}
+        item={{
+          kicker: t("kicker"),
+          title: item.title,
+          tagline: item.tagline,
+          image: heroSrc
+            ? {
+                heroSrc,
+                heroAlt: "",
+                heroName: item.title,
+                heroTagline: item.tagline,
+              }
+            : undefined,
+        }}
       />
 
       {/* BODY */}

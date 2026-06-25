@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { PageHero } from "@/components/ui/PageHero";
 import { Servicios } from "@/components/Servicios";
 import { pageMetadata } from "@/lib/page-metadata";
+import { SERVICES_OVERVIEW_IMAGE } from "@/lib/service-images";
 
 export async function generateMetadata({
   params,
@@ -27,7 +28,19 @@ export default async function ServiciosPage({
     <>
       <SiteNav />
       <main>
-        <PageHero pageKey="servicios" />
+        <PageHero
+          pageKey="servicios"
+          item={
+            SERVICES_OVERVIEW_IMAGE
+              ? {
+                  image: {
+                    heroSrc: SERVICES_OVERVIEW_IMAGE,
+                    heroAlt: "Services overview"
+                  },
+                }
+              : undefined
+          }
+        />
         <Servicios />
       </main>
       <Footer />

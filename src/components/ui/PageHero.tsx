@@ -23,12 +23,12 @@ export function PageHero({
     image?: {
       heroSrc: string;
       heroAlt: string;
-      heroName: string;
-      heroTagline: string | null;
+      heroName?: string;
+      heroTagline?: string | null;
     };
-    kicker: string;
-    title: string;
-    tagline: string | null;
+    kicker?: string;
+    title?: string;
+    tagline?: string | null;
   };
 }) {
   const t = useTranslations(`pages.${pageKey}`);
@@ -78,9 +78,9 @@ export function PageHero({
       />
       <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 pb-12 sm:px-10 lg:px-12">
         {heroText(
-          t("kicker"),
-          item.image.heroName,
-          item.image.heroTagline ?? t("intro"),
+          item?.kicker ?? t("kicker"),
+          item?.image?.heroName ?? item?.title ?? t("title"),
+          item?.image?.heroTagline ?? item?.tagline ?? t("intro"),
         )}
       </div>
     </section>
