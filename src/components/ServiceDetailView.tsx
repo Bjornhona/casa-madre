@@ -9,6 +9,7 @@ import { CTALink } from "@/components/ui/CTALink";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 import { contactoHref } from "@/lib/contacto-href";
 import { getServiceBySlug } from "@/lib/services";
+import { PageHero } from "./ui/PageHero";
 
 type ServiceDetailItem = {
   title: string;
@@ -41,26 +42,11 @@ export function ServiceDetailView({ slug }: { slug: string }) {
 
   return (
     <article>
-      {/* HERO BAND — mirrors PageHero, with the service title + editorial tagline. */}
-      <section className="bg-deep px-6 pt-36 pb-20 text-cream sm:px-10 lg:px-12 lg:pt-40 lg:pb-24">
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 18 }}
-          animate={reduce ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE }}
-          className="mx-auto w-full max-w-[1240px]"
-        >
-          <Kicker tone="sand">{t("kicker")}</Kicker>
-          <SerifHeading
-            as="h1"
-            className="mt-5 max-w-[20ch] text-[40px] leading-[1.04] sm:text-[56px]"
-          >
-            {item.title}
-          </SerifHeading>
-          <p className="mt-6 max-w-[52ch] text-[17px] font-light leading-[1.7] text-cream/75">
-            {item.tagline}
-          </p>
-        </motion.div>
-      </section>
+      {/* PAGE HERO — with the service title + editorial tagline. */}
+      <PageHero
+        pageKey="servicios"
+        item={{ kicker: t("kicker"), title: item.title, tagline: item.tagline }}
+      />
 
       {/* BODY */}
       <Section>
@@ -101,8 +87,13 @@ export function ServiceDetailView({ slug }: { slug: string }) {
             <ul className="mt-6 grid gap-x-10 gap-y-4 sm:grid-cols-2">
               {item.includes.map((line, i) => (
                 <li key={i} className="flex items-baseline gap-3">
-                  <span aria-hidden className="mt-[0.1em] h-px w-5 shrink-0 bg-clay" />
-                  <span className="text-[16px] leading-[1.6] text-deep/85">{line}</span>
+                  <span
+                    aria-hidden
+                    className="mt-[0.1em] h-px w-5 shrink-0 bg-clay"
+                  />
+                  <span className="text-[16px] leading-[1.6] text-deep/85">
+                    {line}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -117,7 +108,9 @@ export function ServiceDetailView({ slug }: { slug: string }) {
                   <span className="block font-serif text-[40px] leading-none text-clay">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <p className="mt-4 text-[16px] leading-[1.6] text-deep/85">{step}</p>
+                  <p className="mt-4 text-[16px] leading-[1.6] text-deep/85">
+                    {step}
+                  </p>
                 </li>
               ))}
             </ol>

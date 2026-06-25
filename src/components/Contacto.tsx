@@ -81,7 +81,6 @@ export function Contacto() {
 }
 
 function ContactoForm() {
-  const t = useTranslations("contacto");
   const tForm = useTranslations("contacto.form");
   const tRef = useTranslations("contacto.referencia");
   const tServicios = useTranslations("servicios");
@@ -189,6 +188,7 @@ function ContactoForm() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}
+        className="bg-bone rounded-card border border-line p-10"
       >
         {status === "success" ? (
           <div

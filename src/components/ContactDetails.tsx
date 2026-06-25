@@ -124,13 +124,6 @@ export function ContactDetails() {
 
         {/* Direct channel — the single prominent WhatsApp CTA. Email + phone live
           once in the details block below to avoid repeating contact mechanisms. */}
-        <motion.aside
-          variants={item}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="flex flex-col gap-5 lg:pt-2"
-        >
           {WHATSAPP && (
             <a
               href={`https://wa.me/${WHATSAPP}`}
@@ -146,7 +139,6 @@ export function ContactDetails() {
               {t("whatsapp")}
             </a>
           )}
-        </motion.aside>
       </dl>
 
       {/* Static map card — links out to the user's maps app (no embedded map JS). */}
@@ -157,10 +149,10 @@ export function ContactDetails() {
         aria-label={t("directions")}
         className="group relative block overflow-hidden rounded-card border border-line shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
       >
-        <div className="relative aspect-[4/3] w-full">
+        <div className="relative aspect-[4/3] w-full h-full">
           <Image
             src="/map-placeholder.jpg"
-            alt=""
+            alt="Location map of Barcelona, Spain"
             fill
             sizes="(min-width: 1024px) 40vw, 100vw"
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
@@ -173,7 +165,7 @@ export function ContactDetails() {
             <MapPin
               className="h-9 w-9 text-clay drop-shadow-[0_2px_6px_rgba(43,33,27,0.4)]"
               strokeWidth={1.75}
-              fill="currentColor"
+              fill="white"
               aria-hidden
             />
           </span>
