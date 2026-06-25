@@ -398,6 +398,12 @@
       "intro": "Cuéntanos cómo quieres vivir Barcelona y te acompañamos desde el primer momento."
     }
   },
+  "notFound": {
+    "kicker": "Error 404",
+    "title": "Esta página parece haberse mudado",
+    "intro": "La página que buscas no existe o ha cambiado de dirección. Te acompañamos de vuelta al inicio.",
+    "cta": "Volver al inicio"
+  },
   "floatingContact": {
     "contact": "Contacto",
     "whatsapp": "WhatsApp",

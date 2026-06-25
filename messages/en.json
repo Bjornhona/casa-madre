@@ -398,6 +398,12 @@
       "intro": "Tell us how you want to live Barcelona, and we'll be with you from the very first moment."
     }
   },
+  "notFound": {
+    "kicker": "Error 404",
+    "title": "This page seems to have moved out",
+    "intro": "The page you are looking for doesn't exist or has changed address. Let us walk you back home.",
+    "cta": "Back to home"
+  },
   "floatingContact": {
     "contact": "Contact",
     "whatsapp": "WhatsApp",
