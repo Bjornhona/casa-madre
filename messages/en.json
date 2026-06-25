@@ -347,7 +347,6 @@
       "consent": "I have read and accept the privacy policy.",
       "submit": "Send"
     },
-    "whatsapp": "Message us on WhatsApp",
     "emailLabel": "Email",
     "details": {
       "addressTitle": "Address",
@@ -356,7 +355,8 @@
       "phoneTitle": "Phone",
       "hoursTitle": "Hours",
       "hours": "By appointment",
-      "directions": "Get directions"
+      "directions": "Get directions",
+      "whatsapp": "Message us on WhatsApp"
     },
     "referencia": {
       "pill": "Regarding",
@@ -412,6 +412,7 @@
       "privacy": "Privacy policy",
       "cookies": "Cookie policy"
     },
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "credit": "Designed and developed by <link>Åsa Eriksson</link>"
   }
 }

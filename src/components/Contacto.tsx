@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, useReducedMotion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { MessageCircle, Loader2, CheckCircle2 } from "lucide-react";
+import { Loader2, CheckCircle2 } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
@@ -56,8 +56,6 @@ const SERVICE_SLUG_TO_INDEX: Record<string, number> = {
   inversion: 4,
   juridico: 5,
 };
-
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP;
 
 export function Contacto() {
   const t = useTranslations("contacto");
@@ -184,7 +182,7 @@ function ContactoForm() {
   }
 
   return (
-    <div className="mt-12 grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-20">
+    <div className="mt-12 grid gap-12 xl:grid-cols-[1.5fr_1fr] xl:gap-20">
       {/* Form / success state */}
       <motion.div
         variants={item}
@@ -409,28 +407,6 @@ function ContactoForm() {
           </form>
         )}
       </motion.div>
-
-      {/* Direct channel — the single prominent WhatsApp CTA. Email + phone live
-          once in the details block below to avoid repeating contact mechanisms. */}
-      <motion.aside
-        variants={item}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-        className="flex flex-col gap-5 lg:pt-2"
-      >
-        {WHATSAPP && (
-          <a
-            href={`https://wa.me/${WHATSAPP}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 self-start border border-brown px-7 py-3.5 text-[11px] uppercase tracking-[0.16em] text-brown transition-colors duration-500 ease-out hover:bg-brown hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
-          >
-            <MessageCircle className="h-4 w-4" strokeWidth={1.5} aria-hidden />
-            {t("whatsapp")}
-          </a>
-        )}
-      </motion.aside>
     </div>
   );
 }

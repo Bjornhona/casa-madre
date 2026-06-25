@@ -39,9 +39,23 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-6 border-t border-line pt-8 text-[12px] sm:flex-row sm:items-center sm:justify-between">
-          <p className="tracking-[0.02em]">
-            © {year} Casa Madre. {t("rights")}
-          </p>
+          <div className="flex flex-col gap-2 tracking-[0.02em]">
+            <p>© {year} Casa Madre. {t("rights")}</p>
+            <p>
+              {t.rich("credit", {
+                link: (chunks) => (
+                  <a
+                    href="https://asaeriksson.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline underline-offset-4 transition-colors duration-300 hover:text-brown focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
+                  >
+                    {chunks}
+                  </a>
+                ),
+              })}
+            </p>
+          </div>
           <LocaleSwitch />
         </div>
       </div>

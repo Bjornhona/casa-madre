@@ -3,7 +3,14 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { ArrowUpRight, Clock, Mail, MapPin, Phone } from "lucide-react";
+import {
+  ArrowUpRight,
+  Clock,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+} from "lucide-react";
 import { fadeUp } from "@/lib/motion";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP;
@@ -11,7 +18,8 @@ const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
 
 // Where the map card links out to. Swap the query for the real street address
 // once the client confirms it (kept in one place for an easy edit).
-const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Barcelona+Spain";
+const MAPS_URL =
+  "https://www.google.com/maps/search/?api=1&query=Barcelona+Spain";
 
 /**
  * Address details + a static, privacy-friendly map card.
@@ -37,18 +45,28 @@ export function ContactDetails() {
       {/* Details */}
       <dl className="flex flex-col gap-8">
         <div className="flex items-start gap-4">
-          <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-clay" strokeWidth={1.5} aria-hidden />
+          <MapPin
+            className="mt-0.5 h-5 w-5 shrink-0 text-clay"
+            strokeWidth={1.5}
+            aria-hidden
+          />
           <div>
             <dt className="text-[11px] uppercase tracking-[0.16em] text-brown">
               {t("addressTitle")}
             </dt>
-            <dd className="mt-1 text-[16px] leading-[1.6] text-deep/80">{t("address")}</dd>
+            <dd className="mt-1 text-[16px] leading-[1.6] text-deep/80">
+              {t("address")}
+            </dd>
           </div>
         </div>
 
         {CONTACT_EMAIL && (
           <div className="flex items-start gap-4">
-            <Mail className="mt-0.5 h-5 w-5 shrink-0 text-clay" strokeWidth={1.5} aria-hidden />
+            <Mail
+              className="mt-0.5 h-5 w-5 shrink-0 text-clay"
+              strokeWidth={1.5}
+              aria-hidden
+            />
             <div>
               <dt className="text-[11px] uppercase tracking-[0.16em] text-brown">
                 {t("emailTitle")}
@@ -67,7 +85,11 @@ export function ContactDetails() {
 
         {WHATSAPP && (
           <div className="flex items-start gap-4">
-            <Phone className="mt-0.5 h-5 w-5 shrink-0 text-clay" strokeWidth={1.5} aria-hidden />
+            <Phone
+              className="mt-0.5 h-5 w-5 shrink-0 text-clay"
+              strokeWidth={1.5}
+              aria-hidden
+            />
             <div>
               <dt className="text-[11px] uppercase tracking-[0.16em] text-brown">
                 {t("phoneTitle")}
@@ -85,14 +107,46 @@ export function ContactDetails() {
         )}
 
         <div className="flex items-start gap-4">
-          <Clock className="mt-0.5 h-5 w-5 shrink-0 text-clay" strokeWidth={1.5} aria-hidden />
+          <Clock
+            className="mt-0.5 h-5 w-5 shrink-0 text-clay"
+            strokeWidth={1.5}
+            aria-hidden
+          />
           <div>
             <dt className="text-[11px] uppercase tracking-[0.16em] text-brown">
               {t("hoursTitle")}
             </dt>
-            <dd className="mt-1 text-[16px] leading-[1.6] text-deep/80">{t("hours")}</dd>
+            <dd className="mt-1 text-[16px] leading-[1.6] text-deep/80">
+              {t("hours")}
+            </dd>
           </div>
         </div>
+
+        {/* Direct channel — the single prominent WhatsApp CTA. Email + phone live
+          once in the details block below to avoid repeating contact mechanisms. */}
+        <motion.aside
+          variants={item}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="flex flex-col gap-5 lg:pt-2"
+        >
+          {WHATSAPP && (
+            <a
+              href={`https://wa.me/${WHATSAPP}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 self-start border border-brown px-7 py-3.5 text-[11px] uppercase tracking-[0.16em] text-brown transition-colors duration-500 ease-out hover:bg-brown hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
+            >
+              <MessageCircle
+                className="h-4 w-4"
+                strokeWidth={1.5}
+                aria-hidden
+              />
+              {t("whatsapp")}
+            </a>
+          )}
+        </motion.aside>
       </dl>
 
       {/* Static map card — links out to the user's maps app (no embedded map JS). */}

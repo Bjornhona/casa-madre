@@ -347,7 +347,6 @@
       "consent": "He leído y acepto la política de privacidad.",
       "submit": "Enviar"
     },
-    "whatsapp": "Escríbenos por WhatsApp",
     "emailLabel": "Email",
     "details": {
       "addressTitle": "Dirección",
@@ -356,7 +355,8 @@
       "phoneTitle": "Teléfono",
       "hoursTitle": "Horario",
       "hours": "Con cita previa",
-      "directions": "Cómo llegar"
+      "directions": "Cómo llegar",
+      "whatsapp": "Escríbenos por WhatsApp"
     },
     "referencia": {
       "pill": "En referencia a",
@@ -412,6 +412,7 @@
       "privacy": "Política de privacidad",
       "cookies": "Política de cookies"
     },
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "credit": "Diseño y desarrollo por <link>Åsa Eriksson</link>"
   }
 }
