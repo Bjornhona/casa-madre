@@ -11,7 +11,7 @@ import { SERVICE_SLUGS } from "@/lib/services";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const CONTENT_PATHS = [
   "about",
-  "servicios",
+  "services",
   "barrios",
   "propiedades",
   "journal",
@@ -90,11 +90,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const services: MetadataRoute.Sitemap = routing.locales.flatMap((locale) =>
     SERVICE_SLUGS.map((slug) => ({
-      url: `${SITE_URL}/${locale}/servicios/${slug}`,
+      url: `${SITE_URL}/${locale}/services/${slug}`,
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.7,
-      alternates: { languages: altsFor(`servicios/${slug}`) },
+      alternates: { languages: altsFor(`services/${slug}`) },
     })),
   );
 

@@ -16,6 +16,17 @@ const nextConfig: NextConfig = {
         destination: "/:locale/about/:path*",
         permanent: true,
       },
+      // Route renamed /servicios → /services (overview + the six detail pages).
+      {
+        source: "/:locale/servicios",
+        destination: "/:locale/services",
+        permanent: true,
+      },
+      {
+        source: "/:locale/servicios/:path*",
+        destination: "/:locale/services/:path*",
+        permanent: true,
+      },
     ];
   },
   images: {

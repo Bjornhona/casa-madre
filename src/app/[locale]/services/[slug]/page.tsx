@@ -35,7 +35,7 @@ export async function generateMetadata({
   const item = (t.raw("items") as ServiceItem[])[service.index];
   const title = item.title;
   const description = item.tagline;
-  const url = `/${locale}/servicios/${slug}`;
+  const url = `/${locale}/services/${slug}`;
 
   return {
     title,
@@ -43,9 +43,9 @@ export async function generateMetadata({
     alternates: {
       canonical: url,
       languages: {
-        es: `/es/servicios/${slug}`,
-        en: `/en/servicios/${slug}`,
-        "x-default": `/es/servicios/${slug}`,
+        es: `/es/services/${slug}`,
+        en: `/en/services/${slug}`,
+        "x-default": `/es/services/${slug}`,
       },
     },
     openGraph: {
@@ -92,14 +92,14 @@ export default async function ServicePage({
       name: "Casa Madre",
       ...(SITE_URL ? { url: `${SITE_URL}/${locale}` } : {}),
     },
-    ...(SITE_URL ? { url: `${SITE_URL}/${locale}/servicios/${slug}` } : {}),
+    ...(SITE_URL ? { url: `${SITE_URL}/${locale}/services/${slug}` } : {}),
   };
 
   const breadcrumbs = SITE_URL
     ? [
         { name: "Casa Madre", url: `${SITE_URL}/${locale}` },
-        { name: tNav("items.servicios.label"), url: `${SITE_URL}/${locale}/servicios` },
-        { name: item.title, url: `${SITE_URL}/${locale}/servicios/${slug}` },
+        { name: tNav("items.servicios.label"), url: `${SITE_URL}/${locale}/services` },
+        { name: item.title, url: `${SITE_URL}/${locale}/services/${slug}` },
       ]
     : [];
 

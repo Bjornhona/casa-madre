@@ -25,7 +25,7 @@ export function AboutManifesto() {
   const item = fadeUp(reduce, { y: 20, duration: 0.7 });
 
   return (
-    <Section>
+    <Section className="border-line border-b-1">
       <motion.div
         variants={container}
         initial="hidden"
@@ -187,7 +187,7 @@ export function AboutNetwork() {
     <Section
       id="network"
       aria-labelledby="network-kicker"
-      className="border-line border-b-1"
+      className="border-line border-b-1 bg-bone"
     >
       <motion.div
         variants={container}

@@ -9,13 +9,13 @@ import {
 } from "lucide-react";
 
 /**
- * Single source of truth for the six services. Shared by the /servicios hub,
+ * Single source of truth for the six services. Shared by the /services hub,
  * the detail pages and the sitemap so the set never drifts.
  *
  * - `key` is the Spanish identifier used for the contact pre-fill `servicio`
  *   param and the in-page anchor (matches the contact form's lookup) — DO NOT
  *   change it to the slug, or the pre-fill pill breaks.
- * - `slug` is the English URL segment for /[locale]/servicios/[slug].
+ * - `slug` is the English URL segment for /[locale]/services/[slug].
  * - `index` aligns with the `servicios.items` message array.
  * - `interes` pre-selects the contact form's interest dropdown.
  */

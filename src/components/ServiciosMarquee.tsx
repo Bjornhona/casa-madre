@@ -43,7 +43,7 @@ export function ServiciosMarquee() {
     return (
       <a
         key={`${card.key}${duplicate ? "-dup" : ""}`}
-        href={`/${locale}/servicios/${card.slug}`}
+        href={`/${locale}/services/${card.slug}`}
         // The second (duplicate) set exists only for the seamless loop — keep it
         // out of the a11y tree and tab order.
         aria-hidden={duplicate || undefined}
@@ -80,7 +80,7 @@ export function ServiciosMarquee() {
       )}
 
       <div className="mt-12">
-        <CTALink href={`/${locale}/servicios`}>{t("viewAll")}</CTALink>
+        <CTALink href={`/${locale}/services`}>{t("viewAll")}</CTALink>
       </div>
     </Section>
   );

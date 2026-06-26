@@ -40,7 +40,7 @@
     },
     "founders": {
       "kicker": "Quiénes somos",
-      "body": "[PENDIENTE — texto de las fundadoras: nombres, breve historia, por qué crearon Casa Madre. Cuando la clienta lo facilite, lo adaptamos a esta voz. Estructura sugerida: una frase sobre su trayectoria, una sobre por qué nació Casa Madre, una sobre cómo trabajan.]"
+      "body": "[PENDIENTE — texto de las fundadoras: nombres, breve historia, por qué crearon Casa Madre. Cuando facilitado, lo adaptamos a esta voz. Estructura sugerida: una frase sobre su trayectoria, una sobre por qué nació Casa Madre, una sobre cómo trabajan.]"
     },
     "method": {
       "kicker": "El Método",
@@ -235,6 +235,30 @@
         "difference": "Para que todo se gestione con transparencia, seguridad y sin fricción innecesaria."
       }
     ]
+  },
+  "serviciosHub": {
+    "hero": {
+      "kicker": "Servicios",
+      "title": "Acompañamos cada decisión, no solo cada operación.",
+      "tagline": "Una misma manera de hacer, aplicada a cada momento."
+    },
+    "intro": {
+      "body": [
+        "En Casa Madre no entendemos los servicios como una lista, sino como una forma de acompañar. Detrás de cada operación hay una persona, un momento y una decisión importante — y eso es lo que cuidamos.",
+        "Trabajamos con criterio y con calma: pocas operaciones, mucha atención. Ya sea comprar, vender, alquilar, invertir o transformar un espacio, lo abordamos desde la misma cercanía y el mismo cuidado por el detalle."
+      ]
+    },
+    "gridLabel": "Áreas de trabajo",
+    "closing": {
+      "body": "Cada parte del proceso tiene su lugar. Y todas forman parte de la misma manera de hacer: entender primero, acompañar siempre.",
+      "networkLine": "Cuando un proceso lo necesita, contamos con nuestra red de especialistas de confianza.",
+      "networkLink": "Conoce cómo trabajamos"
+    },
+    "cta": {
+      "title": "¿No sabes por dónde empezar?",
+      "text": "Cuéntanos tu situación y te orientamos sobre el mejor camino. Sin compromiso.",
+      "button": "Hablemos"
+    }
   },
   "metodo": {
     "kicker": "Método Casa Madre",

@@ -69,7 +69,7 @@ export function ServiceDetailView({ slug }: { slug: string }) {
       {/* BODY */}
       <Section>
         <a
-          href={`/${locale}/servicios`}
+          href={`/${locale}/services`}
           className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-brown transition-opacity duration-300 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
         >
           <span aria-hidden>←</span>

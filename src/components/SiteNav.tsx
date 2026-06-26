@@ -18,7 +18,7 @@ import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 // locale-agnostic path handed to next-intl's <Link>, which adds the locale.
 const ROUTES = [
   { key: "nosotras", href: "/about" },
-  { key: "servicios", href: "/servicios" },
+  { key: "servicios", href: "/services" },
   { key: "barrios", href: "/barrios" },
   { key: "propiedades", href: "/propiedades" },
   { key: "journal", href: "/journal" },

@@ -40,7 +40,7 @@
     },
     "founders": {
       "kicker": "Who we are",
-      "body": "[PENDING — founders' text: names, brief story, why they created Casa Madre. To adapt once the client provides it.]"
+      "body": "[PENDING — founders' text: names, brief story, why they created Casa Madre. To adapt once provided.]"
     },
     "method": {
       "kicker": "The Method",
@@ -235,6 +235,30 @@
         "difference": "So everything is handled with transparency, security and no unnecessary friction."
       }
     ]
+  },
+  "serviciosHub": {
+    "hero": {
+      "kicker": "Services",
+      "title": "We accompany every decision, not just every transaction.",
+      "tagline": "One way of working, applied to every moment."
+    },
+    "intro": {
+      "body": [
+        "At Casa Madre we don't think of services as a list, but as a way of accompanying. Behind every transaction there's a person, a moment and an important decision — and that's what we care for.",
+        "We work with judgement and with calm: few transactions, a great deal of attention. Whether it's buying, selling, renting, investing or transforming a space, we approach it with the same closeness and the same care for detail."
+      ]
+    },
+    "gridLabel": "Areas of work",
+    "closing": {
+      "body": "Every part of the process has its place. And all of it belongs to the same way of working: understand first, accompany always.",
+      "networkLine": "When a process calls for it, we draw on our network of trusted specialists.",
+      "networkLink": "See how we work"
+    },
+    "cta": {
+      "title": "Not sure where to begin?",
+      "text": "Tell us your situation and we'll guide you toward the best path. No commitment.",
+      "button": "Let's talk"
+    }
   },
   "metodo": {
     "kicker": "The Casa Madre Method",

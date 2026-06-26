@@ -16,14 +16,15 @@ type ServiceItem = { title: string; description: string };
  */
 export function Servicios() {
   const t = useTranslations("servicios");
+  const tHub = useTranslations("serviciosHub");
   const items = t.raw("items") as ServiceItem[];
   const locale = useLocale();
   const reduce = useReducedMotion();
   const reveal = fadeUp(reduce, { y: 16, duration: 0.7 });
 
   return (
-    <Section id="servicios" aria-labelledby="servicios-kicker">
-      <Kicker id="servicios-kicker">{t("kicker")}</Kicker>
+    <Section id="servicios" aria-labelledby="servicios-kicker" className="bg-bone">
+      <Kicker id="servicios-kicker">{tHub("gridLabel")}</Kicker>
 
       <motion.ul
         variants={reveal}
@@ -38,7 +39,7 @@ export function Servicios() {
           return (
             <li key={svc.key} id={svc.key} className="scroll-mt-28">
               <a
-                href={`/${locale}/servicios/${svc.slug}`}
+                href={`/${locale}/services/${svc.slug}`}
                 className="flex h-full min-h-[210px] w-full flex-col items-center justify-center px-[22px] py-[34px] text-center transition-colors duration-500 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brown"
               >
                 <Icon
