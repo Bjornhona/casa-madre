@@ -151,7 +151,7 @@ export function ContactDetails() {
       >
         <div className="relative aspect-[4/3] w-full h-full">
           <Image
-            src="/map-placeholder.jpg"
+            src="/map-placeholder-maptiler.webp"
             alt="Location map of Barcelona, Spain"
             fill
             sizes="(min-width: 1024px) 40vw, 100vw"

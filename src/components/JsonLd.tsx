@@ -1,26 +1,46 @@
+import { LEGAL_DATA, isPending } from "@/lib/legal-data";
+
 /**
  * RealEstateAgent + LocalBusiness structured data.
  * Server component (no client JS) — renders a JSON-LD script tag.
+ *
+ * Company details come from LEGAL_DATA (single source of truth). Unfilled
+ * "[PENDIENTE…]" fields are omitted rather than leaked into structured data;
+ * email/phone fall back to the public env values when LEGAL_DATA is still pending.
  */
 export function JsonLd({ description }: { description: string }) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
   const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP;
+  const addr = LEGAL_DATA.address;
+
+  const email = isPending(LEGAL_DATA.email)
+    ? process.env.NEXT_PUBLIC_CONTACT_EMAIL
+    : LEGAL_DATA.email;
+  const telephone = !isPending(LEGAL_DATA.phone)
+    ? LEGAL_DATA.phone
+    : whatsapp
+      ? `+${whatsapp}`
+      : undefined;
 
   const data = {
     "@context": "https://schema.org",
     "@type": ["RealEstateAgent", "LocalBusiness"],
-    name: "Casa Madre",
+    name: LEGAL_DATA.brandName,
+    ...(isPending(LEGAL_DATA.legalName) ? {} : { legalName: LEGAL_DATA.legalName }),
+    ...(isPending(LEGAL_DATA.taxId) ? {} : { taxID: LEGAL_DATA.taxId }),
     description,
     url: siteUrl,
     areaServed: "Barcelona",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Barcelona",
+      ...(isPending(addr.street) ? {} : { streetAddress: addr.street }),
+      ...(isPending(addr.postalCode) ? {} : { postalCode: addr.postalCode }),
+      addressLocality: addr.city,
+      addressRegion: addr.region,
       addressCountry: "ES",
     },
     email,
-    telephone: whatsapp ? `+${whatsapp}` : undefined,
+    telephone,
     priceRange: "€€€",
     openingHoursSpecification: [],
     sameAs: [],

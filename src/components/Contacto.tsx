@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, useReducedMotion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import { Link } from "@/i18n/navigation";
 import { Loader2, CheckCircle2 } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
@@ -379,7 +380,18 @@ function ContactoForm() {
                   className="mt-1 h-4 w-4 shrink-0 accent-brown"
                   {...register("consent")}
                 />
-                <span>{tForm("consent")}</span>
+                <span>
+                  {tForm.rich("consent", {
+                    link: (chunks) => (
+                      <Link
+                        href="/privacidad"
+                        className="text-brown underline decoration-clay/60 underline-offset-2 transition-colors duration-300 hover:decoration-clay"
+                      >
+                        {chunks}
+                      </Link>
+                    ),
+                  })}
+                </span>
               </label>
               {errors.consent && (
                 <p id="consent-error" className="mt-1.5 text-[12px] text-clay">

@@ -31,7 +31,62 @@
     "headlineEmphasis": "at home",
     "headlinePart2": ".",
     "body": "Casa Madre begins with origin and intention — with the place where everything starts. And with a feeling we want to stay with you from the very first moment: that you are in good hands.",
-    "cta": "Get to know us"
+    "cta": "Get to know us",
+    "manifesto": {
+      "body": [
+        "We don't sell houses. We accompany the moment someone decides where to truly begin living. That's why we work with few properties and a great deal of attention — with judgement and with calm, understanding first who you are and how you want to live.",
+        "We believe a home is far more than square metres. It's where the stories happen. And our work is to help you find the place where yours begin."
+      ]
+    },
+    "founders": {
+      "kicker": "Who we are",
+      "body": "[PENDING — founders' text: names, brief story, why they created Casa Madre. To adapt once the client provides it.]"
+    },
+    "method": {
+      "kicker": "The Method",
+      "title": "A way of working that repeats, until it becomes a method.",
+      "intro": "We don't improvise. Every journey follows a way of working designed to understand you and care for every detail.",
+      "steps": [
+        {
+          "number": "01",
+          "title": "Understand who you are",
+          "body": "Before showing you anything, we listen. We understand your moment, your way of living, and what you're truly looking for."
+        },
+        {
+          "number": "02",
+          "title": "Define the path",
+          "body": "We map a clear, personalised strategy — with judgement and without haste, shaped around your goal."
+        },
+        {
+          "number": "03",
+          "title": "Select with judgement",
+          "body": "We filter for you. We propose only what genuinely fits, so every visit has meaning."
+        },
+        {
+          "number": "04",
+          "title": "Tend to every detail",
+          "body": "We care for the entire process — the paperwork, the negotiation, the timing — through to closing, without friction."
+        },
+        {
+          "number": "05",
+          "title": "When it repeats, it becomes a method",
+          "body": "What works, we repeat. That consistency is what turns our way of working into something you can trust."
+        }
+      ]
+    },
+    "network": {
+      "kicker": "Our Network",
+      "title": "We work as one house.",
+      "body": [
+        "Behind Casa Madre is a network of trusted professionals — lawyers, financial advisors, architects, interior designers and specialists — who work alongside us whenever a process calls for it.",
+        "We don't hand you off; we accompany you. We coordinate each specialist so you have a single point of contact, and everything unfolds with the same closeness and the same judgement from beginning to end."
+      ]
+    },
+    "ctaSection": {
+      "title": "Shall we begin imagining your home?",
+      "text": "Tell us who you are and how you want to live. The rest, we build with you.",
+      "button": "Let's talk"
+    }
   },
   "nosotras": {
     "kicker": "About us",
@@ -344,7 +399,7 @@
       "budget": "Budget",
       "area": "Preferred area",
       "message": "Message",
-      "consent": "I have read and accept the privacy policy.",
+      "consent": "I have read and accept the <link>privacy policy</link>.",
       "submit": "Send"
     },
     "emailLabel": "Email",
@@ -367,6 +422,11 @@
     }
   },
   "pages": {
+    "about": {
+      "kicker": "About",
+      "title": "Even before you find your home, we want you to feel at home.",
+      "intro": "Casa Madre speaks of origins. Of the mother's house — that first place where we learned what it means to feel at home: the care, the closeness, the sense of belonging."
+    },
     "nosotras": {
       "kicker": "About",
       "title": "Who we are and how we understand home",
@@ -420,5 +480,62 @@
     },
     "rights": "All rights reserved.",
     "credit": "Designed and developed by <link>Åsa Eriksson</link>"
+  },
+  "legal": {
+    "lastUpdated": "Last updated",
+    "backHome": "Back to home",
+    "fields": {
+      "legalName": "Legal name",
+      "taxId": "Tax ID (NIF/CIF)",
+      "address": "Address",
+      "email": "Email",
+      "phone": "Phone",
+      "registry": "Registry details",
+      "domain": "Domain"
+    },
+    "aviso": {
+      "title": "Legal Notice",
+      "intro": "In compliance with Spanish Law 34/2002 on Information Society Services and Electronic Commerce (LSSI-CE), the following identifying details of the website owner are provided.",
+      "ownerTitle": "Website owner",
+      "objectTitle": "Purpose",
+      "objectBody": "This website provides information about Casa Madre's real estate and lifestyle services, and offers a means of contact for interested parties.",
+      "useTitle": "Terms of use",
+      "useBody": "Accessing and using this website confers the status of user and implies acceptance of these terms. Users agree to make appropriate use of the content and not to use it for unlawful activities.",
+      "ipTitle": "Intellectual and industrial property",
+      "ipBody": "All website content (texts, images, design, logos and code) belongs to Casa Madre or to third parties who have authorised its use, and is protected by intellectual and industrial property law. Reproduction without express authorisation is prohibited.",
+      "liabilityTitle": "Liability",
+      "liabilityBody": "Casa Madre is not liable for damages arising from improper use of the site or from information published by third parties. Property information is indicative and does not constitute a binding offer.",
+      "lawTitle": "Applicable law",
+      "lawBody": "These terms are governed by Spanish law. Any dispute shall be submitted to the courts and tribunals determined in accordance with the law."
+    },
+    "privacidad": {
+      "title": "Privacy Policy",
+      "intro": "Casa Madre respects your privacy and processes your personal data in accordance with Regulation (EU) 2016/679 (GDPR) and Spanish Organic Law 3/2018 (LOPDGDD).",
+      "responsibleTitle": "Data controller",
+      "dataTitle": "Data we collect",
+      "dataBody": "We collect the data you provide through the contact form: name, email, phone, area of interest, budget and the message you send us.",
+      "purposeTitle": "Purpose of processing",
+      "purposeBody": "We use your data solely to respond to your request, manage our relationship and provide information about our services. It is not used for automated decisions or profiling.",
+      "legalBasisTitle": "Legal basis",
+      "legalBasisBody": "The legal basis is your consent, given when you submit the form, and Casa Madre's legitimate interest in responding to your enquiry.",
+      "retentionTitle": "Retention",
+      "retentionBody": "We keep your data for as long as necessary to handle your request and, thereafter, for any legally required periods. It is then securely deleted.",
+      "sharingTitle": "Recipients",
+      "sharingBody": "We do not share your data with third parties, except where legally required or with providers delivering necessary services (e.g. email delivery) under the corresponding data processing agreement.",
+      "rightsTitle": "Your rights",
+      "rightsBody": "You may exercise your rights of access, rectification, erasure, objection, restriction and portability by writing to our contact email. You may also lodge a complaint with the Spanish Data Protection Agency (www.aepd.es).",
+      "contactBody": "For any question about your data, contact us using the details provided."
+    },
+    "cookies": {
+      "title": "Cookie Policy",
+      "intro": "This website uses only technical and necessary cookies required for it to function correctly.",
+      "whatTitle": "What are cookies?",
+      "whatBody": "Cookies are small files stored on your device as you browse. They allow the site to work correctly and to remember certain preferences, such as language.",
+      "typesTitle": "Cookies we use",
+      "typesBody": "We currently use only technical and preference cookies necessary for the site to function (for example, remembering your language). We do not use analytics, advertising or third-party tracking cookies.",
+      "consentBody": "As only necessary technical cookies are used, no prior consent is required under current regulations. Should analytics or third-party cookies be added in future, your consent will be requested.",
+      "manageTitle": "Managing cookies",
+      "manageBody": "You can configure or delete cookies through your browser settings at any time."
+    }
   }
 }

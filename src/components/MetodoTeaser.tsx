@@ -9,7 +9,7 @@ import { CTALink } from "@/components/ui/CTALink";
 import { EASE } from "@/lib/motion";
 
 /**
- * Home-page teaser for the Método, which now lives in full on /nosotras. Echoes
+ * Home-page teaser for the Método, which now lives in full on /about. Echoes
  * the dark Método band as a single editorial statement that links onward.
  */
 export function MetodoTeaser() {
@@ -38,7 +38,7 @@ export function MetodoTeaser() {
           {t("intro")}
         </SerifHeading>
         <div className="mt-9">
-          <CTALink href={`/${locale}/nosotras`} variant="onDark">
+          <CTALink href={`/${locale}/about`} variant="onDark">
             {t("teaserCta")}
           </CTALink>
         </div>

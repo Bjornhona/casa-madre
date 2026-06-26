@@ -31,7 +31,62 @@
     "headlineEmphasis": "en casa",
     "headlinePart2": ".",
     "body": "Casa Madre nace del origen y de la intención. Del lugar donde empieza todo. Y también de esa sensación que queremos que te acompañe desde el primer momento: que estés en buenas manos.",
-    "cta": "Conócenos"
+    "cta": "Conócenos",
+    "manifesto": {
+      "body": [
+        "No vendemos casas. Acompañamos el momento en que alguien decide dónde empezar a vivir de verdad. Por eso trabajamos con pocas propiedades y mucha atención, con criterio y con calma, entendiendo primero quién eres y cómo quieres vivir.",
+        "Creemos que una casa es mucho más que metros cuadrados. Es donde ocurren las historias. Y nuestro trabajo es ayudarte a encontrar el lugar donde empiezan las tuyas."
+      ]
+    },
+    "founders": {
+      "kicker": "Quiénes somos",
+      "body": "[PENDIENTE — texto de las fundadoras: nombres, breve historia, por qué crearon Casa Madre. Cuando la clienta lo facilite, lo adaptamos a esta voz. Estructura sugerida: una frase sobre su trayectoria, una sobre por qué nació Casa Madre, una sobre cómo trabajan.]"
+    },
+    "method": {
+      "kicker": "El Método",
+      "title": "Una forma de hacer que se repite, hasta convertirse en método.",
+      "intro": "No improvisamos. Cada acompañamiento sigue una manera de hacer pensada para entenderte y cuidar cada detalle.",
+      "steps": [
+        {
+          "number": "01",
+          "title": "Entender quién eres",
+          "body": "Antes de enseñarte nada, escuchamos. Entendemos tu momento, tu manera de vivir y lo que buscas de verdad."
+        },
+        {
+          "number": "02",
+          "title": "Definir el camino",
+          "body": "Trazamos una estrategia clara y personalizada, con criterio y sin prisa, adaptada a tu objetivo."
+        },
+        {
+          "number": "03",
+          "title": "Seleccionar con criterio",
+          "body": "Filtramos por ti. Solo te proponemos lo que realmente encaja, para que cada visita tenga sentido."
+        },
+        {
+          "number": "04",
+          "title": "Acompañar cada detalle",
+          "body": "Cuidamos todo el proceso — la documentación, la negociación, los tiempos — hasta el cierre, sin fricción."
+        },
+        {
+          "number": "05",
+          "title": "Cuando se repite, se convierte en método",
+          "body": "Lo que funciona, lo repetimos. Esa constancia es lo que convierte nuestra forma de trabajar en algo de confianza."
+        }
+      ]
+    },
+    "network": {
+      "kicker": "Nuestra Red",
+      "title": "Trabajamos como una misma casa.",
+      "body": [
+        "Detrás de Casa Madre hay una red de profesionales de confianza — abogados, asesores financieros, arquitectos, interioristas y especialistas — que colaboran con nosotras cuando un proceso lo necesita.",
+        "No derivamos: acompañamos. Coordinamos a cada especialista para que tú tengas una sola interlocutora y todo ocurra con la misma cercanía y el mismo criterio de principio a fin."
+      ]
+    },
+    "ctaSection": {
+      "title": "¿Empezamos a imaginar tu casa?",
+      "text": "Cuéntanos quién eres y cómo quieres vivir. El resto, lo construimos contigo.",
+      "button": "Hablemos"
+    }
   },
   "nosotras": {
     "kicker": "Nosotras",
@@ -344,7 +399,7 @@
       "budget": "Presupuesto",
       "area": "Zona preferida",
       "message": "Mensaje",
-      "consent": "He leído y acepto la política de privacidad.",
+      "consent": "He leído y acepto la <link>política de privacidad</link>.",
       "submit": "Enviar"
     },
     "emailLabel": "Email",
@@ -367,6 +422,11 @@
     }
   },
   "pages": {
+    "about": {
+      "kicker": "Nosotras",
+      "title": "Antes incluso de encontrar tu casa, queremos que te sientas en casa.",
+      "intro": "Casa Madre habla del origen. De la casa de la madre — ese primer lugar donde aprendimos lo que significa sentirse en casa: el cuidado, la cercanía, la sensación de pertenecer."
+    },
     "nosotras": {
       "kicker": "Nosotras",
       "title": "Quiénes somos y cómo entendemos el hogar",
@@ -420,5 +480,62 @@
     },
     "rights": "Todos los derechos reservados.",
     "credit": "Diseño y desarrollo por <link>Åsa Eriksson</link>"
+  },
+  "legal": {
+    "lastUpdated": "Última actualización",
+    "backHome": "Volver al inicio",
+    "fields": {
+      "legalName": "Razón social",
+      "taxId": "NIF/CIF",
+      "address": "Dirección",
+      "email": "Email",
+      "phone": "Teléfono",
+      "registry": "Datos registrales",
+      "domain": "Dominio"
+    },
+    "aviso": {
+      "title": "Aviso Legal",
+      "intro": "En cumplimiento de la Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se facilitan los siguientes datos identificativos del titular de este sitio web.",
+      "ownerTitle": "Titular del sitio web",
+      "objectTitle": "Objeto",
+      "objectBody": "El presente sitio web tiene como finalidad ofrecer información sobre los servicios inmobiliarios y de estilo de vida de Casa Madre, así como facilitar el contacto con personas interesadas.",
+      "useTitle": "Condiciones de uso",
+      "useBody": "El acceso y uso de este sitio web atribuye la condición de usuario e implica la aceptación de las presentes condiciones. El usuario se compromete a hacer un uso adecuado de los contenidos y a no emplearlos para actividades ilícitas.",
+      "ipTitle": "Propiedad intelectual e industrial",
+      "ipBody": "Todos los contenidos del sitio web (textos, imágenes, diseño, logotipos y código) son titularidad de Casa Madre o de terceros que han autorizado su uso, y están protegidos por la normativa de propiedad intelectual e industrial. Queda prohibida su reproducción sin autorización expresa.",
+      "liabilityTitle": "Responsabilidad",
+      "liabilityBody": "Casa Madre no se responsabiliza de los daños derivados del uso indebido del sitio ni de la información publicada por terceros. La información sobre propiedades es orientativa y no constituye oferta vinculante.",
+      "lawTitle": "Legislación aplicable",
+      "lawBody": "Las presentes condiciones se rigen por la legislación española. Para cualquier controversia, las partes se someten a los juzgados y tribunales que correspondan conforme a derecho."
+    },
+    "privacidad": {
+      "title": "Política de Privacidad",
+      "intro": "Casa Madre respeta tu privacidad y trata tus datos personales conforme al Reglamento (UE) 2016/679 (RGPD) y a la Ley Orgánica 3/2018 (LOPDGDD).",
+      "responsibleTitle": "Responsable del tratamiento",
+      "dataTitle": "Datos que recopilamos",
+      "dataBody": "Recopilamos los datos que nos facilitas a través del formulario de contacto: nombre, correo electrónico, teléfono, zona de interés, presupuesto y el mensaje que nos envíes.",
+      "purposeTitle": "Finalidad del tratamiento",
+      "purposeBody": "Utilizamos tus datos únicamente para responder a tu solicitud, gestionar la relación y ofrecerte información sobre nuestros servicios. No se utilizan para decisiones automatizadas ni elaboración de perfiles.",
+      "legalBasisTitle": "Base legal",
+      "legalBasisBody": "La base legal es tu consentimiento, que otorgas al enviar el formulario, y el interés legítimo de Casa Madre en atender tu consulta.",
+      "retentionTitle": "Conservación",
+      "retentionBody": "Conservamos tus datos durante el tiempo necesario para atender tu solicitud y, posteriormente, durante los plazos legalmente exigidos. Después se suprimen de forma segura.",
+      "sharingTitle": "Destinatarios",
+      "sharingBody": "No cedemos tus datos a terceros, salvo obligación legal o a proveedores que prestan servicios necesarios (por ejemplo, envío de correo) bajo el correspondiente contrato de tratamiento.",
+      "rightsTitle": "Tus derechos",
+      "rightsBody": "Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a nuestro correo de contacto. También puedes reclamar ante la Agencia Española de Protección de Datos (www.aepd.es).",
+      "contactBody": "Para cualquier cuestión sobre tus datos, escríbenos a través de los datos de contacto indicados."
+    },
+    "cookies": {
+      "title": "Política de Cookies",
+      "intro": "Este sitio web utiliza únicamente cookies técnicas y necesarias para su correcto funcionamiento.",
+      "whatTitle": "¿Qué son las cookies?",
+      "whatBody": "Las cookies son pequeños archivos que se almacenan en tu dispositivo al navegar. Permiten que el sitio funcione correctamente y recuerde ciertas preferencias, como el idioma.",
+      "typesTitle": "Cookies que utilizamos",
+      "typesBody": "Actualmente solo utilizamos cookies técnicas y de preferencias necesarias para el funcionamiento del sitio (por ejemplo, recordar tu idioma). No utilizamos cookies de análisis, publicidad ni seguimiento de terceros.",
+      "consentBody": "Al tratarse exclusivamente de cookies técnicas necesarias, no se requiere consentimiento previo conforme a la normativa vigente. Si en el futuro se incorporan cookies de análisis o terceros, se solicitará tu consentimiento.",
+      "manageTitle": "Gestión de cookies",
+      "manageBody": "Puedes configurar o eliminar las cookies desde los ajustes de tu navegador en cualquier momento."
+    }
   }
 }

@@ -52,7 +52,7 @@ export function AboutIntro() {
             {t("body")}
           </motion.p>
           <motion.div variants={item} className="mt-7">
-            <CTALink href={`/${locale}/nosotras`}>{t("cta")}</CTALink>
+            <CTALink href={`/${locale}/about`}>{t("cta")}</CTALink>
           </motion.div>
         </motion.div>
 

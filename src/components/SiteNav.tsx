@@ -17,7 +17,7 @@ import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 // Menu items, in order. Labels/subtitles come from `nav.items.*`; `href` is the
 // locale-agnostic path handed to next-intl's <Link>, which adds the locale.
 const ROUTES = [
-  { key: "nosotras", href: "/nosotras" },
+  { key: "nosotras", href: "/about" },
   { key: "servicios", href: "/servicios" },
   { key: "barrios", href: "/barrios" },
   { key: "propiedades", href: "/propiedades" },

@@ -3,8 +3,13 @@ import { setRequestLocale } from "next-intl/server";
 import { SiteNav } from "@/components/SiteNav";
 import { Footer } from "@/components/Footer";
 import { PageHero } from "@/components/ui/PageHero";
-import { Nosotras } from "@/components/Nosotras";
-import { Metodo } from "@/components/Metodo";
+import {
+  AboutManifesto,
+  AboutFounders,
+  AboutMethod,
+  AboutNetwork,
+  AboutCta,
+} from "@/components/About";
 import { Testimonios } from "@/components/Testimonios";
 import { pageMetadata } from "@/lib/page-metadata";
 
@@ -14,10 +19,10 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  return pageMetadata(locale, "nosotras", "/nosotras");
+  return pageMetadata(locale, "about", "/about");
 }
 
-export default async function NosotrasPage({
+export default async function AboutPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -29,10 +34,19 @@ export default async function NosotrasPage({
     <>
       <SiteNav />
       <main>
-        <PageHero pageKey="nosotras" />
-        <Nosotras />
-        <Metodo />
+        {/* 1 · Manifesto / origin — hero (kicker + title + opening line). */}
+        <PageHero pageKey="about" />
+        <AboutManifesto />
+        {/* 2 · Founders */}
+        <AboutFounders />
+        {/* 3 · The Método */}
+        <AboutMethod />
+        {/* 4 · Our network */}
+        <AboutNetwork />
+        {/* 5 · Testimonios (from Sanity; renders nothing if none published) */}
         <Testimonios />
+        {/* 6 · CTA */}
+        <AboutCta />
       </main>
       <Footer />
     </>

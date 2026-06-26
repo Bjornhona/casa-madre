@@ -10,7 +10,7 @@ import { SERVICE_SLUGS } from "@/lib/services";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const CONTENT_PATHS = [
-  "nosotras",
+  "about",
   "servicios",
   "barrios",
   "propiedades",
