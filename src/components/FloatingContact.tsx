@@ -17,7 +17,7 @@ const SHOW_AFTER = 400;
  *
  * Collapsed it's a single round button; tapping it expands to reveal WhatsApp +
  * Contacto, and a session-only dismiss. It appears after ~400px of scroll, hides
- * on /contacto (the form is right there), and sits at z-10 so the nav overlay
+ * on /contact (the form is right there), and sits at z-10 so the nav overlay
  * menu (z-20) covers it cleanly when open.
  */
 export function FloatingContact() {
@@ -61,7 +61,7 @@ export function FloatingContact() {
   }, [open]);
 
   // The form is already on the contact page; dismissal hides it for the session.
-  if (dismissed || pathname === "/contacto") return null;
+  if (dismissed || pathname === "/contact") return null;
 
   const actionClass =
     "inline-flex items-center gap-2.5 rounded-full border border-line bg-cream px-5 py-3 text-[11px] uppercase tracking-[0.16em] text-brown shadow-soft transition-[transform,background-color,color] duration-300 ease-out hover:-translate-y-0.5 hover:bg-brown hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory";
@@ -100,7 +100,7 @@ export function FloatingContact() {
                     {t("whatsapp")}
                   </a>
                 )}
-                <Link href="/contacto" onClick={() => setOpen(false)} className={actionClass}>
+                <Link href="/contact" onClick={() => setOpen(false)} className={actionClass}>
                   <Mail className="h-4 w-4" strokeWidth={1.5} aria-hidden />
                   {t("contact")}
                 </Link>

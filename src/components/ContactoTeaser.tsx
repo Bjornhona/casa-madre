@@ -10,7 +10,7 @@ import { EASE } from "@/lib/motion";
 
 /**
  * Home-page contact band: a short invitation that links to the full contact
- * page (/contacto) rather than embedding the form on the home page.
+ * page (/contact) rather than embedding the form on the home page.
  */
 export function ContactoTeaser() {
   const t = useTranslations("contacto");
@@ -33,7 +33,7 @@ export function ContactoTeaser() {
           {t("headline")}
         </SerifHeading>
         <div className="mt-9">
-          <CTALink href={`/${locale}/contacto`} variant="onDark">{t("teaserCta")}</CTALink>
+          <CTALink href={`/${locale}/contact`} variant="onDark">{t("teaserCta")}</CTALink>
         </div>
       </motion.div>
     </Section>

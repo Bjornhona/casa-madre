@@ -384,7 +384,7 @@ function ContactoForm() {
                   {tForm.rich("consent", {
                     link: (chunks) => (
                       <Link
-                        href="/privacidad"
+                        href="/privacy"
                         className="text-brown underline decoration-clay/60 underline-offset-2 transition-colors duration-300 hover:decoration-clay"
                       >
                         {chunks}

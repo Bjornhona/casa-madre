@@ -280,7 +280,7 @@ export function Propiedades({
 
                 <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
                   {p.slug && (
-                    <CTALink href={`/${locale}/propiedades/${p.slug}`}>
+                    <CTALink href={`/${locale}/properties/${p.slug}`}>
                       {tp("cardViewLabel")}
                     </CTALink>
                   )}
@@ -303,7 +303,7 @@ export function Propiedades({
 
       {isHome && (
         <div className="mt-12">
-          <CTALink href={`/${locale}/propiedades`}>{t("viewAll")}</CTALink>
+          <CTALink href={`/${locale}/properties`}>{t("viewAll")}</CTALink>
         </div>
       )}
     </Section>

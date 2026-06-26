@@ -54,7 +54,7 @@ export default async function ServicesPage({
         <Servicios />
         {/* 4 · Editorial closing + one-line network link → /about */}
         <ServiciosClosing />
-        {/* 5 · CTA band → /contacto */}
+        {/* 5 · CTA band → /contact */}
         <ServiciosCta />
       </main>
       <Footer />

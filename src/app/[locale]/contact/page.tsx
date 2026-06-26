@@ -3,10 +3,8 @@ import { setRequestLocale } from "next-intl/server";
 import { SiteNav } from "@/components/SiteNav";
 import { Footer } from "@/components/Footer";
 import { PageHero } from "@/components/ui/PageHero";
-import { Barrios } from "@/components/Barrios";
+import { Contacto } from "@/components/Contacto";
 import { pageMetadata } from "@/lib/page-metadata";
-import { sanityFetch } from "@/sanity/lib/live";
-import { NEIGHBOURHOODS_QUERY } from "@/sanity/lib/queries";
 
 export async function generateMetadata({
   params,
@@ -14,10 +12,10 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  return pageMetadata(locale, "barrios", "/barrios");
+  return pageMetadata(locale, "contacto", "/contact");
 }
 
-export default async function BarriosPage({
+export default async function ContactoPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -25,17 +23,12 @@ export default async function BarriosPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const { data: neighbourhoods } = await sanityFetch({
-    query: NEIGHBOURHOODS_QUERY,
-    params: { locale },
-  });
-
   return (
     <>
       <SiteNav />
       <main>
-        <PageHero pageKey="barrios" />
-        <Barrios neighbourhoods={neighbourhoods} variant="page" />
+        <PageHero pageKey="contacto" />
+        <Contacto />
       </main>
       <Footer />
     </>

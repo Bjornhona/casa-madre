@@ -109,7 +109,7 @@ export function Hero() {
         </motion.p>
 
         <motion.div variants={item} className="mt-10">
-          <CTALink href={`/${locale}/contacto`} variant="onLight">
+          <CTALink href={`/${locale}/contact`} variant="onLight">
             {t("cta")}
           </CTALink>
         </motion.div>

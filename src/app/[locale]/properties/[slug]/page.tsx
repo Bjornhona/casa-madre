@@ -56,7 +56,7 @@ export async function generateMetadata({
     : fallbackImagesFor(slug)[0];
 
   const fullTitle = `${property.title} — Casa Madre`;
-  const url = `/${locale}/propiedades/${slug}`;
+  const url = `/${locale}/properties/${slug}`;
 
   return {
     title: { absolute: fullTitle },
@@ -64,9 +64,9 @@ export async function generateMetadata({
     alternates: {
       canonical: url,
       languages: {
-        es: `/es/propiedades/${slug}`,
-        en: `/en/propiedades/${slug}`,
-        "x-default": `/es/propiedades/${slug}`,
+        es: `/es/properties/${slug}`,
+        en: `/en/properties/${slug}`,
+        "x-default": `/es/properties/${slug}`,
       },
     },
     openGraph: {
@@ -106,11 +106,11 @@ export default async function PropertyPage({
           { name: "Casa Madre", url: `${SITE_URL}/${locale}` },
           {
             name: tNav("items.propiedades.label"),
-            url: `${SITE_URL}/${locale}/propiedades`,
+            url: `${SITE_URL}/${locale}/properties`,
           },
           {
             name: property.title,
-            url: `${SITE_URL}/${locale}/propiedades/${slug}`,
+            url: `${SITE_URL}/${locale}/properties/${slug}`,
           },
         ]
       : [];

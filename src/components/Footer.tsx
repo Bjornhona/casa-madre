@@ -6,7 +6,7 @@ import { LocaleSwitch } from "@/components/LocaleSwitch";
 
 const LEGAL_LINKS = [
   { href: "/legal", key: "notice" },
-  { href: "/privacidad", key: "privacy" },
+  { href: "/privacy", key: "privacy" },
   { href: "/cookies", key: "cookies" },
 ] as const;
 

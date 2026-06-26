@@ -67,7 +67,7 @@ export function Barrios({
               className="overflow-hidden rounded-card border border-line bg-cream"
             >
               <a
-                href={`/${locale}/barrios/${barrio.slug}`}
+                href={`/${locale}/neighbourhoods/${barrio.slug}`}
                 className="group block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brown"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
@@ -105,7 +105,7 @@ export function Barrios({
 
       {isHome && (
         <div className="mt-12">
-          <CTALink href={`/${locale}/barrios`}>{t("viewAll")}</CTALink>
+          <CTALink href={`/${locale}/neighbourhoods`}>{t("viewAll")}</CTALink>
         </div>
       )}
     </Section>

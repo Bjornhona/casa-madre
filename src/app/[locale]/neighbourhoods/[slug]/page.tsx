@@ -58,7 +58,7 @@ export async function generateMetadata({
       : undefined;
 
   const fullTitle = `${barrio.name} — Casa Madre`;
-  const url = `/${locale}/barrios/${slug}`;
+  const url = `/${locale}/neighbourhoods/${slug}`;
 
   return {
     title: { absolute: fullTitle },
@@ -66,9 +66,9 @@ export async function generateMetadata({
     alternates: {
       canonical: url,
       languages: {
-        es: `/es/barrios/${slug}`,
-        en: `/en/barrios/${slug}`,
-        "x-default": `/es/barrios/${slug}`,
+        es: `/es/neighbourhoods/${slug}`,
+        en: `/en/neighbourhoods/${slug}`,
+        "x-default": `/es/neighbourhoods/${slug}`,
       },
     },
     openGraph: {
@@ -123,14 +123,14 @@ export default async function NeighbourhoodPage({
       addressLocality: "Barcelona",
       addressCountry: "ES",
     },
-    ...(SITE_URL ? { url: `${SITE_URL}/${locale}/barrios/${slug}` } : {}),
+    ...(SITE_URL ? { url: `${SITE_URL}/${locale}/neighbourhoods/${slug}` } : {}),
   };
 
   const breadcrumbs = SITE_URL
     ? [
         { name: "Casa Madre", url: `${SITE_URL}/${locale}` },
-        { name: tNav("items.barrios.label"), url: `${SITE_URL}/${locale}/barrios` },
-        { name: barrio.name, url: `${SITE_URL}/${locale}/barrios/${slug}` },
+        { name: tNav("items.barrios.label"), url: `${SITE_URL}/${locale}/neighbourhoods` },
+        { name: barrio.name, url: `${SITE_URL}/${locale}/neighbourhoods/${slug}` },
       ]
     : [];
 

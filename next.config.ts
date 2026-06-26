@@ -27,6 +27,37 @@ const nextConfig: NextConfig = {
         destination: "/:locale/services/:path*",
         permanent: true,
       },
+      // Spanish route segments anglicized (child slugs unchanged in Sanity).
+      {
+        source: "/:locale/propiedades",
+        destination: "/:locale/properties",
+        permanent: true,
+      },
+      {
+        source: "/:locale/propiedades/:path*",
+        destination: "/:locale/properties/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:locale/barrios",
+        destination: "/:locale/neighbourhoods",
+        permanent: true,
+      },
+      {
+        source: "/:locale/barrios/:path*",
+        destination: "/:locale/neighbourhoods/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:locale/contacto",
+        destination: "/:locale/contact",
+        permanent: true,
+      },
+      {
+        source: "/:locale/privacidad",
+        destination: "/:locale/privacy",
+        permanent: true,
+      },
     ];
   },
   images: {

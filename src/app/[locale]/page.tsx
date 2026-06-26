@@ -18,8 +18,8 @@ import {
 } from "@/sanity/lib/queries";
 
 // Condensed narrative overview: each band teases a section and links to its
-// dedicated page. Full versions live on /about, /services, /barrios,
-// /propiedades and /contacto.
+// dedicated page. Full versions live on /about, /services, /neighbourhoods,
+// /properties and /contact.
 export default async function Home({
   params,
 }: {

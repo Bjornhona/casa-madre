@@ -19,10 +19,10 @@ import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 const ROUTES = [
   { key: "nosotras", href: "/about" },
   { key: "servicios", href: "/services" },
-  { key: "barrios", href: "/barrios" },
-  { key: "propiedades", href: "/propiedades" },
+  { key: "barrios", href: "/neighbourhoods" },
+  { key: "propiedades", href: "/properties" },
   { key: "journal", href: "/journal" },
-  { key: "contacto", href: "/contacto" },
+  { key: "contacto", href: "/contact" },
 ] as const;
 
 export function SiteNav() {
@@ -37,7 +37,7 @@ export function SiteNav() {
   const item = fadeUp(reduce, { y: 18, duration: 0.55 });
 
   // A route is active when the pathname (locale already stripped by next-intl)
-  // matches the item, or sits beneath it (e.g. /propiedades/[slug]).
+  // matches the item, or sits beneath it (e.g. /properties/[slug]).
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
 
@@ -110,7 +110,7 @@ export function SiteNav() {
         <div className="flex items-center gap-5">
           <LocaleSwitch />
           <Link
-            href="/contacto"
+            href="/contact"
             className="hidden border border-cream/70 px-6 py-3 text-[11px] uppercase tracking-[0.16em] transition-colors duration-500 hover:bg-cream hover:text-deep focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cream/70 sm:inline-block"
           >
             {t("contact")}

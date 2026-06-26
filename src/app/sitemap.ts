@@ -12,12 +12,12 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const CONTENT_PATHS = [
   "about",
   "services",
-  "barrios",
-  "propiedades",
+  "neighbourhoods",
+  "properties",
   "journal",
-  "contacto",
+  "contact",
 ];
-const LEGAL_PATHS = ["legal", "privacidad", "cookies"];
+const LEGAL_PATHS = ["legal", "privacy", "cookies"];
 
 // hreflang alternates for a path across every locale.
 const altsFor = (path: string) =>
@@ -52,21 +52,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const properties: MetadataRoute.Sitemap = routing.locales.flatMap((locale) =>
     (propertySlugs ?? []).map(({ slug }) => ({
-      url: `${SITE_URL}/${locale}/propiedades/${slug}`,
+      url: `${SITE_URL}/${locale}/properties/${slug}`,
       lastModified,
       changeFrequency: "weekly" as const,
       priority: 0.7,
-      alternates: { languages: altsFor(`propiedades/${slug}`) },
+      alternates: { languages: altsFor(`properties/${slug}`) },
     })),
   );
 
   const neighbourhoods: MetadataRoute.Sitemap = routing.locales.flatMap((locale) =>
     (neighbourhoodSlugs ?? []).map(({ slug }) => ({
-      url: `${SITE_URL}/${locale}/barrios/${slug}`,
+      url: `${SITE_URL}/${locale}/neighbourhoods/${slug}`,
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.6,
-      alternates: { languages: altsFor(`barrios/${slug}`) },
+      alternates: { languages: altsFor(`neighbourhoods/${slug}`) },
     })),
   );
 

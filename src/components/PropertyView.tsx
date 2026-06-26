@@ -111,7 +111,7 @@ export function PropertyView({ property }: { property: Property }) {
       <section className="px-6 pt-12 pb-4 sm:px-10 sm:pt-16 lg:px-12">
         <div className="mx-auto w-full max-w-[1240px]">
           <a
-            href={`/${locale}/propiedades`}
+            href={`/${locale}/properties`}
             className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-brown transition-opacity duration-300 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
           >
             <span aria-hidden>←</span>

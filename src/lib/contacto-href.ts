@@ -1,6 +1,6 @@
 /**
  * Builds a locale-aware link to the dedicated contact page, carrying CTA context
- * as query params, e.g. `/es/contacto?servicio=compraventa&interes=buy`.
+ * as query params, e.g. `/es/contact?servicio=compraventa&interes=buy`.
  *
  * The contact form reads these via `useSearchParams()` to pre-fill the interest,
  * area and reference fields, so the params must live in the query string.
@@ -14,5 +14,5 @@ export function contactoHref(
     if (value) search.set(key, value);
   }
   const qs = search.toString();
-  return `/${locale}/contacto${qs ? `?${qs}` : ""}`;
+  return `/${locale}/contact${qs ? `?${qs}` : ""}`;
 }

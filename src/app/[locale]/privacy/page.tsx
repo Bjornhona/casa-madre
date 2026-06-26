@@ -12,7 +12,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  return legalMetadata(locale, "privacidad", "/privacidad");
+  return legalMetadata(locale, "privacidad", "/privacy");
 }
 
 export default async function PrivacidadPage({

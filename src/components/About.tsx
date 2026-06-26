@@ -246,7 +246,7 @@ export function AboutCta() {
           {t("text")}
         </p>
         <div className="mt-9">
-          <CTALink href={`/${locale}/contacto`} variant="onDark">
+          <CTALink href={`/${locale}/contact`} variant="onDark">
             {t("button")}
           </CTALink>
         </div>
