@@ -488,6 +488,13 @@
     "intro": "The page you are looking for doesn't exist or has changed address. Let us walk you back home.",
     "cta": "Back to home"
   },
+  "comingSoon": {
+    "title": "Soon, a new way to live Barcelona.",
+    "subtitle": "Casa Madre is taking shape. In the meantime, we'd be glad to accompany you.",
+    "contact": "Shall we talk?",
+    "ctaEmail": "Write to us",
+    "ctaWhatsapp": "WhatsApp"
+  },
   "floatingContact": {
     "contact": "Contact",
     "whatsapp": "WhatsApp",

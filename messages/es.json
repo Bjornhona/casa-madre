@@ -488,6 +488,13 @@
     "intro": "La página que buscas no existe o ha cambiado de dirección. Te acompañamos de vuelta al inicio.",
     "cta": "Volver al inicio"
   },
+  "comingSoon": {
+    "title": "Pronto, una nueva forma de vivir Barcelona.",
+    "subtitle": "Casa Madre está tomando forma. Mientras tanto, estaremos encantadas de acompañarte.",
+    "contact": "¿Hablamos?",
+    "ctaEmail": "Escríbenos",
+    "ctaWhatsapp": "WhatsApp"
+  },
   "floatingContact": {
     "contact": "Contacto",
     "whatsapp": "WhatsApp",
