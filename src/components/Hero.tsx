@@ -50,7 +50,7 @@ export function Hero() {
       >
         <motion.img
           variants={item}
-          src="/casa-madre-logo-red.png"
+          src="/casa-madre-logo-red.webp"
           alt="Casa Madre"
           width={100}
           height={100}

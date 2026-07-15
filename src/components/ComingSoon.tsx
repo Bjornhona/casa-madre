@@ -52,7 +52,7 @@ export function ComingSoon() {
         {/* Monogram + wordmark — the locked Hero treatment. */}
         <motion.img
           variants={item}
-          src="/casa-madre-logo-red.png"
+          src="/casa-madre-logo-red.webp"
           alt="Casa Madre"
           width={120}
           height={120}
