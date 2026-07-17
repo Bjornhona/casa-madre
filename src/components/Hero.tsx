@@ -54,11 +54,11 @@ export function Hero() {
           alt="Casa Madre"
           width={100}
           height={100}
-          className="w-auto h-[150px] object-contain mx-auto"
+          className="w-auto h-[100px] object-contain mx-auto mb-4"
         />
         <motion.h1
           variants={item}
-          className="mt-[-0.25em] pl-[0.22em] font-serif text-[36px] text-deep uppercase tracking-[0.22em] sm:text-[55px]"
+          className="mt-[-0.25em] pl-[0.22em] font-serif text-[28px] text-deep uppercase tracking-[0.22em] sm:text-[50px]"
         >
           {t("brand")}
         </motion.h1>

@@ -3,7 +3,7 @@ import { BRAND, loadSerifFont } from "@/lib/og-font";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Casa Madre — Properties and Lifestyle";
+export const alt = "Casa Madre — Beyond Real Estate";
 
 export default async function OpengraphImage() {
   const serif = await loadSerifFont();
@@ -63,7 +63,7 @@ export default async function OpengraphImage() {
             paddingLeft: "0.42em",
           }}
         >
-          Properties and Lifestyle
+          Beyond Real Estate
         </div>
       </div>
     ),

@@ -16,6 +16,11 @@ import { fadeUp } from "@/lib/motion";
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP;
 const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
 
+const CONTACT_EMAIL_EVELYN = process.env.NEXT_PUBLIC_CONTACT_EMAIL_EVELYN;
+const CONTACT_PHONE_EVELYN = process.env.NEXT_PUBLIC_CONTACT_PHONE_EVELYN;
+const CONTACT_EMAIL_EUGENIA = process.env.NEXT_PUBLIC_CONTACT_EMAIL_EUGENIA;
+const CONTACT_PHONE_EUGENIA = process.env.NEXT_PUBLIC_CONTACT_PHONE_EUGENIA;
+
 // Where the map card links out to. Swap the query for the real street address
 // once the client confirms it (kept in one place for an easy edit).
 const MAPS_URL =

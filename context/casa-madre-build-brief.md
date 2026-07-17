@@ -108,7 +108,7 @@ Journal/blog · individual neighbourhood SEO pages · off-market/private listing
 
 ## 5. Section content spec (approved copy)
 
-**Hero** — Wordmark CASA MADRE · "Properties and Lifestyle" · claim **"Where living begins"** · CTA **"Cuéntanos qué buscas"**. Mediterranean full-bleed image, scroll-down cue.
+**Hero** — Wordmark CASA MADRE · "Beyond Real Estate" · claim **"Where living begins"** · CTA **"Cuéntanos qué buscas"**. Mediterranean full-bleed image, scroll-down cue.
 
 **Qué es Casa Madre** — Kicker "Qué es Casa Madre". Headline: *"Antes de encontrar tu casa, queremos que te sientas en casa."* (approved, do not change). Short narrative on origin + intention. CTA "Conócenos".
 
@@ -135,7 +135,7 @@ Journal/blog · individual neighbourhood SEO pages · off-market/private listing
 
 **Contacto** — Single elegant form: Nombre · Email · Teléfono · interés selector (comprar/vender/alquilar/invertir) · presupuesto · zona preferida · mensaje. Plus WhatsApp button + email. Calendly = Phase 2.
 
-**Footer** — legal links (placeholder until client's lawyer delivers), language switch, "Casa Madre · Barcelona · Properties and Lifestyle".
+**Footer** — legal links (placeholder until client's lawyer delivers), language switch, "Casa Madre · Barcelona · Beyond Real Estate".
 
 ---
 
