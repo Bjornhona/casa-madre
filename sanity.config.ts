@@ -14,6 +14,7 @@ import {apiVersion, dataset, projectId} from './src/sanity/env'
 import {schema} from './src/sanity/schemaTypes'
 import {structure} from './src/sanity/structure'
 import {generateDraftAction} from './src/sanity/actions/generateDraftAction'
+import {generatePropertyAction} from './src/sanity/actions/generatePropertyAction'
 
 export default defineConfig({
   basePath: '/studio',
@@ -22,11 +23,13 @@ export default defineConfig({
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
   document: {
-    // The "✦ Generar borrador con IA" action is only offered on Journal posts.
-    actions: (prev, context) =>
-      context.schemaType === 'journalPost'
-        ? [...prev, generateDraftAction]
-        : prev,
+    // AI composers: "✦ Generar borrador con IA" on Journal posts and
+    // "✦ Generar ficha con IA" on Propiedades. Both call /api/ai/draft.
+    actions: (prev, context) => {
+      if (context.schemaType === 'journalPost') return [...prev, generateDraftAction]
+      if (context.schemaType === 'property') return [...prev, generatePropertyAction]
+      return prev
+    },
   },
   plugins: [
     structureTool({structure}),

@@ -19,8 +19,8 @@ import {useDocumentOperation, type DocumentActionComponent} from 'sanity'
  * "✦ Generar borrador con IA" — a document action for the Journal editor.
  *
  * It opens a small dialog (Tema · Notas · Categoría), POSTs to the server-only
- * route /api/ai/journal-draft, and patches the returned draft into the current
- * document's bilingual fields. The result is a DRAFT: the team reviews, edits
+ * route /api/ai/draft (contentType "article"), and patches the returned draft
+ * into the current document's bilingual fields. The result is a DRAFT: the team reviews, edits
  * and publishes manually.
  *
  * ⚠️ The Anthropic API key lives only on the server (the API route). This
@@ -92,10 +92,10 @@ const GenerateDraftAction: DocumentActionComponent = (props) => {
     }
     setLoading(true)
     try {
-      const res = await fetch('/api/ai/journal-draft', {
+      const res = await fetch('/api/ai/draft', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({topic, notes, category}),
+        body: JSON.stringify({contentType: 'article', topic, notes, category}),
       })
       const data = (await res.json()) as
         | {ok: true; draft: Draft}

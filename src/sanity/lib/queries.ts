@@ -10,7 +10,10 @@ import {defineQuery} from 'next-sanity'
 export const PROPERTIES_QUERY = defineQuery(`
   *[_type == "property" && isPublic == true] | order(price desc) {
     _id,
-    title,
+    "title": coalesce(
+      title[language == $locale][0].value,
+      title[language == "es"][0].value
+    ),
     "slug": slug.current,
     operation,
     propertyType,
@@ -112,7 +115,10 @@ export const PROPERTY_SLUGS_QUERY = defineQuery(`
 export const PROPERTY_BY_SLUG_QUERY = defineQuery(`
   *[_type == "property" && slug.current == $slug && isPublic == true][0] {
     _id,
-    title,
+    "title": coalesce(
+      title[language == $locale][0].value,
+      title[language == "es"][0].value
+    ),
     "slug": slug.current,
     price,
     operation,

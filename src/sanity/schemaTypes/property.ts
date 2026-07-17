@@ -21,7 +21,7 @@ export const property = defineType({
       name: "title",
       title: "Título",
       description: "Título de la propiedad (ES + EN).",
-      type: "string",
+      type: "internationalizedArrayString",
       group: "details",
       validation: (rule) => rule.required(),
     }),
@@ -168,9 +168,16 @@ export const property = defineType({
       media: "gallery.0",
     },
     prepare({ title, operation, neighbourhood, media }) {
+      const titleArr = title as
+        | Array<{ language?: string; value?: string }>
+        | undefined;
+      const label =
+        titleArr?.find((t) => t.language === "es")?.value ||
+        titleArr?.[0]?.value ||
+        "Propiedad sin título";
       const op = operation === "alquiler" ? "Alquiler" : "Venta";
       return {
-        title,
+        title: label,
         subtitle: [op, neighbourhood].filter(Boolean).join(" · "),
         media,
       };

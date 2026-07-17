@@ -22,6 +22,7 @@ Read it before building or styling anything, and follow it.
 - Animations: `motion/react` (not `framer-motion`); add `"use client"` to files using it.
 - Images: `next/image` always; `priority` on the hero (it's the LCP element).
 - Mobile-first, fully responsive.
+- Never modify the production Sanity dataset without explicit approval — propose migrations, wait for my go.
 
 ## Using the ui-ux-pro-max skill
 Use it for UX guidelines, accessibility, animation best-practice, and Next.js + Tailwind
