@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react'
+import {useState} from 'react'
 import {
   Box,
   Button,
@@ -13,15 +13,25 @@ import {
   useToast,
 } from '@sanity/ui'
 import {SparklesIcon} from '@sanity/icons'
-import {useDocumentOperation, type DocumentActionComponent} from 'sanity'
+import {type DocumentActionComponent} from 'sanity'
+import {
+  clearComposer,
+  getComposerField,
+  openComposer,
+  setComposerField,
+} from './composerStore'
 
 /**
  * "✦ Generar borrador con IA" — a document action for the Journal editor.
  *
  * It opens a small dialog (Tema · Notas · Categoría), POSTs to the server-only
  * route /api/ai/draft (contentType "article"), and patches the returned draft
- * into the current document's bilingual fields. The result is a DRAFT: the team reviews, edits
- * and publishes manually.
+ * into the current document's bilingual fields. The result is a DRAFT: the
+ * team reviews, edits and publishes manually.
+ *
+ * The action itself only opens the dialog via composerStore; the dialog is
+ * rendered by ComposerDialogHost at Studio level so it survives Sanity's
+ * action-component churn (see composerStore for the full story).
  *
  * ⚠️ The Anthropic API key lives only on the server (the API route). This
  * component never sees it — it just calls the route over fetch. All UI is in
@@ -48,6 +58,9 @@ type Draft = {
   bodyEn: string[]
 }
 
+type PatchOperation = {execute: (patches: unknown[]) => void}
+type Toast = ReturnType<typeof useToast>
+
 // Build an internationalizedArray (string/text) value keyed + tagged by language.
 const intl = (typeName: string, es: string, en: string) => [
   {_key: 'es', _type: typeName, language: 'es', value: es},
@@ -64,28 +77,46 @@ const toBlocks = (paragraphs: string[]) =>
     children: [{_key: key(), _type: 'span', text, marks: []}],
   }))
 
-// Uppercase name so eslint's rules-of-hooks recognises this as a component
-// (Sanity renders document actions as components, so calling hooks here is
-// valid). Exported below under the name the config imports.
-const GenerateDraftAction: DocumentActionComponent = (props) => {
-  const {id, type, draft, published} = props
-  const {patch} = useDocumentOperation(id, type)
-  const toast = useToast()
+/**
+ * Dialog content, rendered by ComposerDialogHost. Owns its form state locally
+ * (mirrored to composerStore only as a reopen backup), so typing is fully
+ * synchronous and the cursor never jumps.
+ */
+export function JournalComposerContent(props: {
+  stateKey: string
+  initialCategory: string
+  patch: PatchOperation
+  toast: Toast
+  onClose: () => void
+}) {
+  const {stateKey, initialCategory, patch, toast, onClose} = props
 
-  const doc = (draft || published) as {category?: string} | null
-
-  const [open, setOpen] = useState(false)
+  // Local state drives the inputs; the store is only a reopen backup.
+  const [topic, setTopicState] = useState(() =>
+    getComposerField(stateKey, 'topic', ''),
+  )
+  const [notes, setNotesState] = useState(() =>
+    getComposerField(stateKey, 'notes', ''),
+  )
+  const [category, setCategoryState] = useState(() =>
+    getComposerField(stateKey, 'category', initialCategory),
+  )
   const [loading, setLoading] = useState(false)
-  const [topic, setTopic] = useState('')
-  const [notes, setNotes] = useState('')
-  const [category, setCategory] = useState(doc?.category ?? 'barrios')
 
-  const close = useCallback(() => {
-    if (loading) return
-    setOpen(false)
-  }, [loading])
+  const setTopic = (value: string) => {
+    setTopicState(value)
+    setComposerField(stateKey, 'topic', value)
+  }
+  const setNotes = (value: string) => {
+    setNotesState(value)
+    setComposerField(stateKey, 'notes', value)
+  }
+  const setCategory = (value: string) => {
+    setCategoryState(value)
+    setComposerField(stateKey, 'category', value)
+  }
 
-  const handleGenerate = useCallback(async () => {
+  const handleGenerate = async () => {
     if (!topic.trim()) {
       toast.push({status: 'warning', title: 'Indica un tema para el artículo.'})
       return
@@ -125,9 +156,8 @@ const GenerateDraftAction: DocumentActionComponent = (props) => {
         title: 'Borrador generado',
         description: 'Revisa y edita el contenido antes de publicar.',
       })
-      setOpen(false)
-      setTopic('')
-      setNotes('')
+      clearComposer(stateKey)
+      onClose()
     } catch {
       toast.push({
         status: 'error',
@@ -137,96 +167,94 @@ const GenerateDraftAction: DocumentActionComponent = (props) => {
     } finally {
       setLoading(false)
     }
-  }, [topic, notes, category, patch, toast])
+  }
 
+  return (
+    <Stack space={4}>
+      <Card padding={3} radius={2} tone="primary" border>
+        <Text size={1} muted>
+          La IA redactará un borrador en la voz de Casa Madre (ES + EN). Después
+          podrás revisarlo, editarlo y publicarlo manualmente.
+        </Text>
+      </Card>
+
+      <Stack space={3}>
+        <Text size={1} weight="semibold">
+          Tema
+        </Text>
+        <TextInput
+          value={topic}
+          placeholder="Ej. Vivir en Gràcia: ritmo, luz y vida de barrio"
+          onChange={(e) => setTopic(e.currentTarget.value)}
+          disabled={loading}
+        />
+      </Stack>
+
+      <Stack space={3}>
+        <Text size={1} weight="semibold">
+          Notas (opcional)
+        </Text>
+        <TextArea
+          value={notes}
+          rows={4}
+          placeholder="Indicaciones, ángulo, datos a incluir, tono concreto…"
+          onChange={(e) => setNotes(e.currentTarget.value)}
+          disabled={loading}
+        />
+      </Stack>
+
+      <Stack space={3}>
+        <Text size={1} weight="semibold">
+          Categoría
+        </Text>
+        <Select
+          value={category}
+          onChange={(e) => setCategory(e.currentTarget.value)}
+          disabled={loading}
+        >
+          {CATEGORIES.map((c) => (
+            <option key={c.value} value={c.value}>
+              {c.title}
+            </option>
+          ))}
+        </Select>
+      </Stack>
+
+      <Flex justify="flex-end" gap={3} marginTop={2}>
+        <Button text="Cancelar" mode="ghost" onClick={onClose} disabled={loading} />
+        <Button
+          text={loading ? 'Generando…' : 'Generar borrador'}
+          tone="primary"
+          icon={loading ? undefined : SparklesIcon}
+          onClick={handleGenerate}
+          disabled={loading}
+        />
+      </Flex>
+
+      {loading && (
+        <Flex align="center" justify="center" gap={3} paddingY={2}>
+          <Spinner muted />
+          <Box>
+            <Text size={1} muted>
+              Generando…
+            </Text>
+          </Box>
+        </Flex>
+      )}
+    </Stack>
+  )
+}
+
+// The action itself: a thin trigger. It owns no dialog and no state, so
+// Sanity's action-component churn can't take the composer down with it.
+const GenerateDraftAction: DocumentActionComponent = (props) => {
+  const {id, type, onComplete} = props
   return {
     label: 'Generar borrador con IA',
     icon: SparklesIcon,
-    onHandle: () => setOpen(true),
-    dialog: open && {
-      type: 'dialog',
-      onClose: close,
-      header: '✦ Generar borrador con IA',
-      width: 'medium',
-      content: (
-        <Stack space={4} padding={1}>
-          <Card padding={3} radius={2} tone="primary" border>
-            <Text size={1} muted>
-              La IA redactará un borrador en la voz de Casa Madre (ES + EN). Después
-              podrás revisarlo, editarlo y publicarlo manualmente.
-            </Text>
-          </Card>
-
-          <Stack space={3}>
-            <Text size={1} weight="semibold">
-              Tema
-            </Text>
-            <TextInput
-              value={topic}
-              placeholder="Ej. Vivir en Gràcia: ritmo, luz y vida de barrio"
-              onChange={(e) => setTopic(e.currentTarget.value)}
-              disabled={loading}
-            />
-          </Stack>
-
-          <Stack space={3}>
-            <Text size={1} weight="semibold">
-              Notas (opcional)
-            </Text>
-            <TextArea
-              value={notes}
-              rows={4}
-              placeholder="Indicaciones, ángulo, datos a incluir, tono concreto…"
-              onChange={(e) => setNotes(e.currentTarget.value)}
-              disabled={loading}
-            />
-          </Stack>
-
-          <Stack space={3}>
-            <Text size={1} weight="semibold">
-              Categoría
-            </Text>
-            <Select
-              value={category}
-              onChange={(e) => setCategory(e.currentTarget.value)}
-              disabled={loading}
-            >
-              {CATEGORIES.map((c) => (
-                <option key={c.value} value={c.value}>
-                  {c.title}
-                </option>
-              ))}
-            </Select>
-          </Stack>
-
-          <Flex justify="flex-end" gap={3} marginTop={2}>
-            <Button
-              text="Cancelar"
-              mode="ghost"
-              onClick={close}
-              disabled={loading}
-            />
-            <Button
-              text={loading ? 'Generando…' : 'Generar borrador'}
-              tone="primary"
-              icon={loading ? undefined : SparklesIcon}
-              onClick={handleGenerate}
-              disabled={loading}
-            />
-          </Flex>
-
-          {loading && (
-            <Flex align="center" justify="center" gap={3} paddingY={2}>
-              <Spinner muted />
-              <Box>
-                <Text size={1} muted>
-                  Generando…
-                </Text>
-              </Box>
-            </Flex>
-          )}
-        </Stack>
-      ),
+    onHandle: () => {
+      openComposer({kind: 'article', id, type})
+      onComplete()
     },
   }
 }

@@ -15,6 +15,7 @@ import {schema} from './src/sanity/schemaTypes'
 import {structure} from './src/sanity/structure'
 import {generateDraftAction} from './src/sanity/actions/generateDraftAction'
 import {generatePropertyAction} from './src/sanity/actions/generatePropertyAction'
+import {ComposerLayout} from './src/sanity/actions/ComposerDialogHost'
 
 export default defineConfig({
   basePath: '/studio',
@@ -29,6 +30,13 @@ export default defineConfig({
       if (context.schemaType === 'journalPost') return [...prev, generateDraftAction]
       if (context.schemaType === 'property') return [...prev, generatePropertyAction]
       return prev
+    },
+  },
+  studio: {
+    components: {
+      // Hosts the AI composer dialogs outside the document-action lifecycle
+      // (actions can be unmounted mid-flight; this layout never is).
+      layout: ComposerLayout,
     },
   },
   plugins: [

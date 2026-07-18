@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useState} from 'react'
+import {useState} from 'react'
 import {
   Badge,
   Box,
@@ -13,9 +13,14 @@ import {
   TextArea,
   useToast,
 } from '@sanity/ui'
-import {SparklesIcon} from '@sanity/icons'
-import {useClient, useDocumentOperation, type DocumentActionComponent} from 'sanity'
-import {apiVersion} from '../env'
+import {EditIcon, SparklesIcon} from '@sanity/icons'
+import {type DocumentActionComponent, type SanityClient} from 'sanity'
+import {
+  clearComposer,
+  getComposerField,
+  openComposer,
+  setComposerField,
+} from './composerStore'
 
 /**
  * "✦ Generar ficha con IA" — a document action for Propiedades.
@@ -27,12 +32,16 @@ import {apiVersion} from '../env'
  * dialog and nothing touches the document until the agent explicitly inserts
  * each field (título / descripción / destacados) or all at once.
  *
+ * The action itself only opens the dialog via composerStore; the dialog is
+ * rendered by ComposerDialogHost at Studio level so it survives Sanity's
+ * action-component churn (see composerStore for the full story).
+ *
  * ⚠️ The Anthropic API key lives only on the server (/api/ai/draft). This
  * component never sees it — it just calls the route over fetch. All UI is in
  * Spanish for the Spanish-speaking team.
  */
 
-type PropertyDoc = {
+export type PropertyDoc = {
   operation?: string
   propertyType?: string
   neighbourhood?: {_ref?: string}
@@ -49,6 +58,9 @@ type PropertyDraft = {
   descriptionEn: string[]
   highlights: string[]
 }
+
+type PatchOperation = {execute: (patches: unknown[]) => void}
+type Toast = ReturnType<typeof useToast>
 
 const OPERATION_LABELS: Record<string, string> = {
   venta: 'Venta',
@@ -70,16 +82,17 @@ const intl = (typeName: string, es: string, en: string) => [
   {_key: 'en', _type: typeName, language: 'en', value: en},
 ]
 
-// A small preview block: field label + ES and EN values side by side.
+// Join generated paragraphs into the single text value the schema stores.
+const paragraphs = (parts: string[]) => parts.join('\n\n')
+
 function PreviewField(props: {
   label: string
   es: React.ReactNode
   en?: React.ReactNode
   onInsert: () => void
   inserted: boolean
-  disabled: boolean
 }) {
-  const {label, es, en, onInsert, inserted, disabled} = props
+  const {label, es, en, onInsert, inserted} = props
   return (
     <Card padding={3} radius={2} border>
       <Stack space={3}>
@@ -92,7 +105,6 @@ function PreviewField(props: {
             fontSize={1}
             padding={2}
             onClick={onInsert}
-            disabled={disabled}
           />
         </Flex>
         <Stack space={2}>
@@ -108,65 +120,93 @@ function PreviewField(props: {
   )
 }
 
-// Uppercase name so eslint's rules-of-hooks recognises this as a component
-// (Sanity renders document actions as components, so calling hooks here is
-// valid). Exported below under the name the config imports.
-const GeneratePropertyAction: DocumentActionComponent = (props) => {
-  const {id, type, draft, published} = props
-  const {patch} = useDocumentOperation(id, type)
-  const client = useClient({apiVersion})
-  const toast = useToast()
+const Paragraphs = ({parts}: {parts: string[]}) => (
+  <>
+    {parts.map((p, i) => (
+      <span key={i}>
+        {i > 0 && (
+          <>
+            <br />
+            <br />
+          </>
+        )}
+        {p}
+      </span>
+    ))}
+  </>
+)
 
-  const doc = (draft || published) as PropertyDoc | null
-
-  const [open, setOpen] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [notes, setNotes] = useState('')
-  const [result, setResult] = useState<PropertyDraft | null>(null)
-  const [inserted, setInserted] = useState<Record<string, boolean>>({})
+/**
+ * Dialog content, rendered by ComposerDialogHost. Owns its form state locally
+ * (mirrored to composerStore only as a reopen backup), so typing is fully
+ * synchronous and the cursor never jumps.
+ */
+export function PropertyComposerContent(props: {
+  stateKey: string
+  doc: PropertyDoc | null
+  client: SanityClient
+  patch: PatchOperation
+  toast: Toast
+  onClose: () => void
+}) {
+  const {stateKey, doc, client, patch, toast, onClose} = props
 
   // The facts the generator is grounded on. Required ones gate the button.
-  const missing = useMemo(() => {
-    const m: string[] = []
-    if (!doc?.operation) m.push('Operación')
-    if (!doc?.propertyType) m.push('Tipo')
-    if (!doc?.neighbourhood?._ref) m.push('Barrio')
-    if (doc?.price == null) m.push('Precio')
-    return m
-  }, [doc])
+  const missing: string[] = []
+  if (!doc?.operation) missing.push('Operación')
+  if (!doc?.propertyType) missing.push('Tipo')
+  if (!doc?.neighbourhood?._ref) missing.push('Barrio')
+  if (doc?.price == null) missing.push('Precio')
 
-  const factsLine = useMemo(() => {
-    if (!doc) return ''
-    return [
-      doc.operation && (OPERATION_LABELS[doc.operation] ?? doc.operation),
-      doc.propertyType &&
-        (PROPERTY_TYPE_LABELS[doc.propertyType] ?? doc.propertyType),
-      doc.price != null &&
-        `${new Intl.NumberFormat('es-ES').format(doc.price)} €${
-          doc.operation === 'alquiler' ? '/mes' : ''
-        }`,
-      doc.surface != null && `${doc.surface} m²`,
-      doc.bedrooms != null && `${doc.bedrooms} dorm.`,
-      doc.bathrooms != null && `${doc.bathrooms} baños`,
-    ]
-      .filter(Boolean)
-      .join(' · ')
-  }, [doc])
+  const factsLine = doc
+    ? [
+        doc.operation && (OPERATION_LABELS[doc.operation] ?? doc.operation),
+        doc.propertyType &&
+          (PROPERTY_TYPE_LABELS[doc.propertyType] ?? doc.propertyType),
+        doc.price != null &&
+          `${new Intl.NumberFormat('es-ES').format(doc.price)} €${
+            doc.operation === 'alquiler' ? '/mes' : ''
+          }`,
+        doc.surface != null && `${doc.surface} m²`,
+        doc.bedrooms != null && `${doc.bedrooms} dorm.`,
+        doc.bathrooms != null && `${doc.bathrooms} baños`,
+      ]
+        .filter(Boolean)
+        .join(' · ')
+    : ''
 
-  const close = useCallback(() => {
-    if (loading) return
-    setOpen(false)
-  }, [loading])
+  // Local state drives the inputs; the store is only a reopen backup.
+  const [notes, setNotesState] = useState(() =>
+    getComposerField(stateKey, 'notes', ''),
+  )
+  const [result, setResultState] = useState<PropertyDraft | null>(() =>
+    getComposerField(stateKey, 'result', null),
+  )
+  const [inserted, setInsertedState] = useState<Record<string, boolean>>(() =>
+    getComposerField(stateKey, 'inserted', {}),
+  )
+  const [loading, setLoading] = useState(false)
 
-  const handleGenerate = useCallback(async () => {
-    if (!doc || missing.length > 0) {
-      toast.push({
-        status: 'warning',
-        title: 'Faltan datos de la propiedad',
-        description: `Completa primero: ${missing.join(', ')}.`,
-      })
-      return
-    }
+  const setNotes = (value: string) => {
+    setNotesState(value)
+    setComposerField(stateKey, 'notes', value)
+  }
+  const setResult = (value: PropertyDraft | null) => {
+    setResultState(value)
+    setComposerField(stateKey, 'result', value)
+  }
+  const setInserted = (
+    update: (state: Record<string, boolean>) => Record<string, boolean>,
+  ) => {
+    setInsertedState((state) => {
+      const next = update(state)
+      setComposerField(stateKey, 'inserted', next)
+      return next
+    })
+  }
+
+  const handleGenerate = async () => {
+    if (!doc || missing.length > 0) return
     setLoading(true)
     try {
       // Dereference the neighbourhood to its name — the generator receives
@@ -208,7 +248,7 @@ const GeneratePropertyAction: DocumentActionComponent = (props) => {
       }
 
       setResult(data.draft)
-      setInserted({})
+      setInserted(() => ({}))
     } catch {
       toast.push({
         status: 'error',
@@ -218,9 +258,9 @@ const GeneratePropertyAction: DocumentActionComponent = (props) => {
     } finally {
       setLoading(false)
     }
-  }, [doc, missing, notes, client, toast])
+  }
 
-  const insertTitle = useCallback(() => {
+  const insertTitle = () => {
     if (!result) return
     patch.execute([
       {
@@ -231,33 +271,33 @@ const GeneratePropertyAction: DocumentActionComponent = (props) => {
     ])
     setInserted((s) => ({...s, title: true}))
     toast.push({status: 'success', title: 'Título insertado'})
-  }, [result, patch, toast])
+  }
 
-  const insertDescription = useCallback(() => {
+  const insertDescription = () => {
     if (!result) return
     patch.execute([
       {
         set: {
           description: intl(
             'internationalizedArrayTextValue',
-            result.descriptionEs.join('\n\n'),
-            result.descriptionEn.join('\n\n'),
+            paragraphs(result.descriptionEs),
+            paragraphs(result.descriptionEn),
           ),
         },
       },
     ])
     setInserted((s) => ({...s, description: true}))
     toast.push({status: 'success', title: 'Descripción insertada'})
-  }, [result, patch, toast])
+  }
 
-  const insertHighlights = useCallback(() => {
+  const insertHighlights = () => {
     if (!result) return
     patch.execute([{set: {highlights: result.highlights}}])
     setInserted((s) => ({...s, highlights: true}))
     toast.push({status: 'success', title: 'Destacados insertados'})
-  }, [result, patch, toast])
+  }
 
-  const insertAll = useCallback(() => {
+  const insertAll = () => {
     if (!result) return
     patch.execute([
       {
@@ -265,163 +305,158 @@ const GeneratePropertyAction: DocumentActionComponent = (props) => {
           title: intl('internationalizedArrayStringValue', result.titleEs, result.titleEn),
           description: intl(
             'internationalizedArrayTextValue',
-            result.descriptionEs.join('\n\n'),
-            result.descriptionEn.join('\n\n'),
+            paragraphs(result.descriptionEs),
+            paragraphs(result.descriptionEn),
           ),
           highlights: result.highlights,
         },
       },
     ])
-    setInserted({title: true, description: true, highlights: true})
+    setInserted(() => ({title: true, description: true, highlights: true}))
     toast.push({
       status: 'success',
       title: 'Ficha insertada',
       description: 'Revisa y edita el contenido antes de publicar.',
     })
-  }, [result, patch, toast])
+    clearComposer(stateKey)
+    onClose()
+  }
 
+  return (
+    <Stack space={4}>
+      <Card padding={3} radius={2} tone="primary" border>
+        <Text size={1} muted>
+          La IA redactará título, descripción y destacados (ES + EN) usando
+          únicamente los datos de la propiedad y tus notas. Nada se guarda
+          hasta que lo insertes tú.
+        </Text>
+      </Card>
+
+      {missing.length > 0 ? (
+        <Card padding={4} radius={2} tone="caution" border>
+          <Stack space={4}>
+            <Text size={1} weight="semibold">
+              Para generar la ficha, completa primero estos campos en la
+              propiedad:
+            </Text>
+            <Stack space={3}>
+              {missing.map((field) => (
+                <Flex key={field} align="center" gap={3}>
+                  <Text size={1} muted>
+                    <EditIcon />
+                  </Text>
+                  <Text size={1}>{field}</Text>
+                </Flex>
+              ))}
+            </Stack>
+          </Stack>
+        </Card>
+      ) : (
+        factsLine && (
+          <Card padding={3} radius={2} tone="transparent" border>
+            <Stack space={2}>
+              <Label size={0} muted>
+                Datos de la propiedad
+              </Label>
+              <Text size={1}>{factsLine}</Text>
+            </Stack>
+          </Card>
+        )
+      )}
+
+      <Stack space={3}>
+        <Text size={1} weight="semibold">
+          Notas del agente (opcional)
+        </Text>
+        <TextArea
+          value={notes}
+          rows={4}
+          placeholder="Ej. reformado 2023, terraza 20m², muy luminoso, junto al mercado…"
+          onChange={(e) => setNotes(e.currentTarget.value)}
+          disabled={loading}
+        />
+      </Stack>
+
+      <Stack space={3}>
+        <Flex justify="flex-end" gap={3}>
+          <Button text="Cerrar" mode="ghost" onClick={onClose} disabled={loading} />
+          <Button
+            text={
+              loading ? 'Generando…' : result ? 'Volver a generar' : 'Generar ficha'
+            }
+            tone="primary"
+            icon={loading ? undefined : SparklesIcon}
+            onClick={handleGenerate}
+            disabled={loading || missing.length > 0}
+          />
+        </Flex>
+        {missing.length > 0 && (
+          <Text size={1} muted align="right">
+            Los datos se leen de la ficha de la propiedad, no se escriben aquí.
+          </Text>
+        )}
+      </Stack>
+
+      {loading && (
+        <Flex align="center" justify="center" gap={3} paddingY={2}>
+          <Spinner muted />
+          <Box>
+            <Text size={1} muted>
+              Generando…
+            </Text>
+          </Box>
+        </Flex>
+      )}
+
+      {result && !loading && (
+        <Stack space={3}>
+          <PreviewField
+            label="Título"
+            es={result.titleEs}
+            en={result.titleEn}
+            onInsert={insertTitle}
+            inserted={Boolean(inserted.title)}
+          />
+          <PreviewField
+            label="Descripción"
+            es={<Paragraphs parts={result.descriptionEs} />}
+            en={<Paragraphs parts={result.descriptionEn} />}
+            onInsert={insertDescription}
+            inserted={Boolean(inserted.description)}
+          />
+          <PreviewField
+            label="Destacados"
+            es={
+              <Inline space={2}>
+                {result.highlights.map((h) => (
+                  <Badge key={h} tone="primary" mode="outline">
+                    {h}
+                  </Badge>
+                ))}
+              </Inline>
+            }
+            onInsert={insertHighlights}
+            inserted={Boolean(inserted.highlights)}
+          />
+          <Flex justify="flex-end">
+            <Button text="Insertar todo" tone="positive" onClick={insertAll} />
+          </Flex>
+        </Stack>
+      )}
+    </Stack>
+  )
+}
+
+// The action itself: a thin trigger. It owns no dialog and no state, so
+// Sanity's action-component churn can't take the composer down with it.
+const GeneratePropertyAction: DocumentActionComponent = (props) => {
+  const {id, type, onComplete} = props
   return {
     label: 'Generar ficha con IA',
     icon: SparklesIcon,
-    onHandle: () => setOpen(true),
-    dialog: open && {
-      type: 'dialog',
-      onClose: close,
-      header: '✦ Generar ficha con IA',
-      width: 'medium',
-      content: (
-        <Stack space={4} padding={1}>
-          <Card padding={3} radius={2} tone="primary" border>
-            <Text size={1} muted>
-              La IA redactará título, descripción y destacados (ES + EN) usando
-              únicamente los datos de la propiedad y tus notas. Nada se guarda
-              hasta que lo insertes tú.
-            </Text>
-          </Card>
-
-          {factsLine ? (
-            <Card padding={3} radius={2} tone="transparent" border>
-              <Stack space={2}>
-                <Label size={0} muted>
-                  Datos de la propiedad
-                </Label>
-                <Text size={1}>{factsLine}</Text>
-              </Stack>
-            </Card>
-          ) : null}
-
-          {missing.length > 0 && (
-            <Card padding={3} radius={2} tone="caution" border>
-              <Text size={1}>Completa primero: {missing.join(', ')}.</Text>
-            </Card>
-          )}
-
-          <Stack space={3}>
-            <Text size={1} weight="semibold">
-              Notas del agente (opcional)
-            </Text>
-            <TextArea
-              value={notes}
-              rows={4}
-              placeholder="Ej. reformado 2023, terraza 20m², muy luminoso, junto al mercado…"
-              onChange={(e) => setNotes(e.currentTarget.value)}
-              disabled={loading}
-            />
-          </Stack>
-
-          <Flex justify="flex-end" gap={3}>
-            <Button text="Cerrar" mode="ghost" onClick={close} disabled={loading} />
-            <Button
-              text={
-                loading
-                  ? 'Generando…'
-                  : result
-                    ? 'Volver a generar'
-                    : 'Generar ficha'
-              }
-              tone="primary"
-              icon={loading ? undefined : SparklesIcon}
-              onClick={handleGenerate}
-              disabled={loading || missing.length > 0}
-            />
-          </Flex>
-
-          {loading && (
-            <Flex align="center" justify="center" gap={3} paddingY={2}>
-              <Spinner muted />
-              <Box>
-                <Text size={1} muted>
-                  Generando…
-                </Text>
-              </Box>
-            </Flex>
-          )}
-
-          {result && !loading && (
-            <Stack space={3}>
-              <PreviewField
-                label="Título"
-                es={result.titleEs}
-                en={result.titleEn}
-                onInsert={insertTitle}
-                inserted={Boolean(inserted.title)}
-                disabled={loading}
-              />
-              <PreviewField
-                label="Descripción"
-                es={result.descriptionEs.map((p, i) => (
-                  <span key={i}>
-                    {i > 0 && (
-                      <>
-                        <br />
-                        <br />
-                      </>
-                    )}
-                    {p}
-                  </span>
-                ))}
-                en={result.descriptionEn.map((p, i) => (
-                  <span key={i}>
-                    {i > 0 && (
-                      <>
-                        <br />
-                        <br />
-                      </>
-                    )}
-                    {p}
-                  </span>
-                ))}
-                onInsert={insertDescription}
-                inserted={Boolean(inserted.description)}
-                disabled={loading}
-              />
-              <PreviewField
-                label="Destacados"
-                es={
-                  <Inline space={2}>
-                    {result.highlights.map((h) => (
-                      <Badge key={h} tone="primary" mode="outline">
-                        {h}
-                      </Badge>
-                    ))}
-                  </Inline>
-                }
-                onInsert={insertHighlights}
-                inserted={Boolean(inserted.highlights)}
-                disabled={loading}
-              />
-              <Flex justify="flex-end">
-                <Button
-                  text="Insertar todo"
-                  tone="positive"
-                  onClick={insertAll}
-                  disabled={loading}
-                />
-              </Flex>
-            </Stack>
-          )}
-        </Stack>
-      ),
+    onHandle: () => {
+      openComposer({kind: 'property', id, type})
+      onComplete()
     },
   }
 }
