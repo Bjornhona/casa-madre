@@ -430,12 +430,9 @@
     "details": {
       "addressTitle": "Dirección",
       "address": "Barcelona, España",
-      "emailTitle": "Email",
-      "phoneTitle": "Teléfono",
       "hoursTitle": "Horario",
       "hours": "Con cita previa",
-      "directions": "Cómo llegar",
-      "whatsapp": "Escríbenos por WhatsApp"
+      "directions": "Cómo llegar"
     },
     "agents": {
       "title": "Habla con nosotras",

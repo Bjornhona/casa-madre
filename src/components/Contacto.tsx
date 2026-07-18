@@ -62,7 +62,6 @@ const SERVICE_SLUG_TO_INDEX: Record<string, number> = {
 
 export function Contacto({ agents = [] }: { agents?: AGENTS_QUERY_RESULT }) {
   const t = useTranslations("contacto");
-  const hasAgents = agents.length > 0;
 
   return (
     <Section id="contacto" aria-labelledby="contacto-kicker">
@@ -79,11 +78,11 @@ export function Contacto({ agents = [] }: { agents?: AGENTS_QUERY_RESULT }) {
         <ContactoForm />
       </Suspense>
 
-      {hasAgents && <AgentCards agents={agents} />}
+      {/* Sanity agents are the single source of direct contact channels; with
+        none published the block simply doesn't render. */}
+      {agents.length > 0 && <AgentCards agents={agents} />}
 
-      {/* Without agents the details block reverts to the generic env-var
-        email/phone/WhatsApp rows so the page never loses its channels. */}
-      <ContactDetails withDirectChannels={!hasAgents} />
+      <ContactDetails />
     </Section>
   );
 }

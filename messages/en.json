@@ -430,12 +430,9 @@
     "details": {
       "addressTitle": "Address",
       "address": "Barcelona, Spain",
-      "emailTitle": "Email",
-      "phoneTitle": "Phone",
       "hoursTitle": "Hours",
       "hours": "By appointment",
-      "directions": "Get directions",
-      "whatsapp": "Message us on WhatsApp"
+      "directions": "Get directions"
     },
     "agents": {
       "title": "Talk to us",

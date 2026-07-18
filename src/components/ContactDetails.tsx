@@ -3,20 +3,8 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import {
-  ArrowUpRight,
-  Clock,
-  Mail,
-  MapPin,
-  MessageCircle,
-  Phone,
-} from "lucide-react";
+import { ArrowUpRight, Clock, MapPin } from "lucide-react";
 import { fadeUp } from "@/lib/motion";
-
-// Fallback-only contact channels (see `withDirectChannels`); per-person data
-// now lives in Sanity `agent` documents.
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP;
-const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
 
 // Where the map card links out to. Swap the query for the real street address
 // once the client confirms it (kept in one place for an easy edit).
@@ -24,23 +12,16 @@ const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=Barcelona+Spain";
 
 /**
- * Address details + a static, privacy-friendly map card.
+ * Address · hours · a static, privacy-friendly map card. Direct contact
+ * channels (email/phone/WhatsApp) live on the Sanity-managed agent cards
+ * (see AgentCards) — this block is purely about the place.
  *
  * An interactive embedded map (Google Maps iframe / JS SDK) is intentionally NOT
  * used: it loads third-party scripts and sets cookies before consent (GDPR) and
  * hurts performance. The card is a plain styled image that links out to the
  * user's maps app. Revisit an embedded map in Phase 2, behind cookie consent.
- *
- * `withDirectChannels` renders the generic env-var email/phone rows and the
- * WhatsApp CTA. It is only a fallback for when no agents exist in Sanity yet —
- * once agent cards are shown, they own the human channels and this block keeps
- * just address · hours · map.
  */
-export function ContactDetails({
-  withDirectChannels = true,
-}: {
-  withDirectChannels?: boolean;
-}) {
+export function ContactDetails() {
   const t = useTranslations("contacto.details");
   const reduce = useReducedMotion();
   const item = fadeUp(reduce);
@@ -51,9 +32,7 @@ export function ContactDetails({
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
-      className={`mt-16 grid gap-12 border-t border-line pt-16 lg:grid-cols-2 lg:gap-20 ${
-        withDirectChannels ? "" : "lg:items-center"
-      }`}
+      className="mt-16 grid gap-12 border-t border-line pt-16 lg:grid-cols-2 lg:items-center lg:gap-20"
     >
       {/* Details */}
       <dl className="flex flex-col gap-8">
@@ -73,52 +52,6 @@ export function ContactDetails({
           </div>
         </div>
 
-        {withDirectChannels && CONTACT_EMAIL && (
-          <div className="flex items-start gap-4">
-            <Mail
-              className="mt-0.5 h-5 w-5 shrink-0 text-clay"
-              strokeWidth={1.5}
-              aria-hidden
-            />
-            <div>
-              <dt className="text-[11px] uppercase tracking-[0.16em] text-brown">
-                {t("emailTitle")}
-              </dt>
-              <dd className="mt-1 text-[16px] leading-[1.6]">
-                <a
-                  href={`mailto:${CONTACT_EMAIL}`}
-                  className="text-deep/80 transition-colors duration-300 hover:text-brown focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
-                >
-                  {CONTACT_EMAIL}
-                </a>
-              </dd>
-            </div>
-          </div>
-        )}
-
-        {withDirectChannels && WHATSAPP && (
-          <div className="flex items-start gap-4">
-            <Phone
-              className="mt-0.5 h-5 w-5 shrink-0 text-clay"
-              strokeWidth={1.5}
-              aria-hidden
-            />
-            <div>
-              <dt className="text-[11px] uppercase tracking-[0.16em] text-brown">
-                {t("phoneTitle")}
-              </dt>
-              <dd className="mt-1 text-[16px] leading-[1.6]">
-                <a
-                  href={`tel:+${WHATSAPP}`}
-                  className="text-deep/80 transition-colors duration-300 hover:text-brown focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
-                >
-                  {`+${WHATSAPP}`}
-                </a>
-              </dd>
-            </div>
-          </div>
-        )}
-
         <div className="flex items-start gap-4">
           <Clock
             className="mt-0.5 h-5 w-5 shrink-0 text-clay"
@@ -135,23 +68,6 @@ export function ContactDetails({
           </div>
         </div>
 
-        {/* Direct channel — the single prominent WhatsApp CTA. Email + phone live
-          once in the details block below to avoid repeating contact mechanisms. */}
-          {withDirectChannels && WHATSAPP && (
-            <a
-              href={`https://wa.me/${WHATSAPP}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 self-start border border-brown px-7 py-3.5 text-[11px] uppercase tracking-[0.16em] text-brown transition-colors duration-500 ease-out hover:bg-brown hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
-            >
-              <MessageCircle
-                className="h-4 w-4"
-                strokeWidth={1.5}
-                aria-hidden
-              />
-              {t("whatsapp")}
-            </a>
-          )}
       </dl>
 
       {/* Static map card — links out to the user's maps app (no embedded map JS). */}
