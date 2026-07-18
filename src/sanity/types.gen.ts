@@ -22,6 +22,48 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
+export type Agent = {
+  _id: string;
+  _type: "agent";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  title?: InternationalizedArrayString;
+  email?: string;
+  phone: string;
+  photo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  order?: number;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
+export type InternationalizedArrayString = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayStringValue
+>;
+
 export type JournalPost = {
   _id: string;
   _type: "journalPost";
@@ -119,22 +161,6 @@ export type JournalPost = {
   isPublished?: boolean;
 };
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
-};
-
 export type InternationalizedArrayText = Array<
   {
     _key: string;
@@ -146,12 +172,6 @@ export type Slug = {
   current: string;
   source?: string;
 };
-
-export type InternationalizedArrayString = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayStringValue
->;
 
 export type Testimonial = {
   _id: string;
@@ -429,12 +449,13 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
-  | JournalPost
+  | Agent
   | SanityImageCrop
   | SanityImageHotspot
+  | InternationalizedArrayString
+  | JournalPost
   | InternationalizedArrayText
   | Slug
-  | InternationalizedArrayString
   | Testimonial
   | NeighbourhoodReference
   | Property
@@ -474,6 +495,24 @@ export type PROPERTIES_QUERY_RESULT = Array<{
     alt?: string;
     _type: "image";
     _key: string;
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
+// Variable: AGENTS_QUERY
+// Query: *[_type == "agent"] | order(order asc) {    _id,    name,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    email,    phone,    photo  }
+export type AGENTS_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  title: string | null;
+  email: string | null;
+  phone: string;
+  photo: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
   } | null;
 }>;
 
@@ -735,6 +774,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "property" && isPublic == true] | order(price desc) {\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "slug": slug.current,\n    operation,\n    propertyType,\n    "neighbourhood": neighbourhood->name,\n    price,\n    surface,\n    bedrooms,\n    bathrooms,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    "image": gallery[0]\n  }\n': PROPERTIES_QUERY_RESULT;
+    '\n  *[_type == "agent"] | order(order asc) {\n    _id,\n    name,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    email,\n    phone,\n    photo\n  }\n': AGENTS_QUERY_RESULT;
     '\n  *[_type == "neighbourhood"] | order(order asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    "blurb": coalesce(\n      blurb[language == $locale][0].value,\n      blurb[language == "es"][0].value\n    ),\n    image\n  }\n': NEIGHBOURHOODS_QUERY_RESULT;
     '\n  *[_type == "neighbourhood" && defined(slug.current)] {\n    "slug": slug.current\n  }\n': NEIGHBOURHOOD_SLUGS_QUERY_RESULT;
     '\n  *[_type == "neighbourhood" && slug.current == $slug][0] {\n    _id,\n    name,\n    "slug": slug.current,\n    "blurb": coalesce(\n      blurb[language == $locale][0].value,\n      blurb[language == "es"][0].value\n    ),\n    "intro": coalesce(\n      intro[language == $locale][0].value,\n      intro[language == "es"][0].value\n    ),\n    heroImage,\n    image,\n    gallery[]{ ... },\n    "highlights": highlights[]{\n      "label": coalesce(\n        label[language == $locale][0].value,\n        label[language == "es"][0].value\n      ),\n      "value": coalesce(\n        value[language == $locale][0].value,\n        value[language == "es"][0].value\n      )\n    },\n    "body": select(\n      $locale == "en" && defined(bodyEn) => bodyEn,\n      bodyEs\n    )\n  }\n': NEIGHBOURHOOD_BY_SLUG_QUERY_RESULT;

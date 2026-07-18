@@ -437,6 +437,10 @@
       "directions": "Get directions",
       "whatsapp": "Message us on WhatsApp"
     },
+    "agents": {
+      "title": "Talk to us",
+      "whatsapp": "WhatsApp"
+    },
     "referencia": {
       "pill": "Regarding",
       "zona": "Area of interest",

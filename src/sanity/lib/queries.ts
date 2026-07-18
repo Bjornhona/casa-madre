@@ -31,6 +31,23 @@ export const PROPERTIES_QUERY = defineQuery(`
   }
 `)
 
+// Team members for the contact page's personal agent cards, in the order the
+// client sets in the Studio. The localized job title resolves with the same
+// coalesce-to-Spanish fallback used everywhere else.
+export const AGENTS_QUERY = defineQuery(`
+  *[_type == "agent"] | order(order asc) {
+    _id,
+    name,
+    "title": coalesce(
+      title[language == $locale][0].value,
+      title[language == "es"][0].value
+    ),
+    email,
+    phone,
+    photo
+  }
+`)
+
 export const NEIGHBOURHOODS_QUERY = defineQuery(`
   *[_type == "neighbourhood"] | order(order asc) {
     _id,

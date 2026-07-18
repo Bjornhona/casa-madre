@@ -437,6 +437,10 @@
       "directions": "Cómo llegar",
       "whatsapp": "Escríbenos por WhatsApp"
     },
+    "agents": {
+      "title": "Habla con nosotras",
+      "whatsapp": "WhatsApp"
+    },
     "referencia": {
       "pill": "En referencia a",
       "zona": "Zona de interés",

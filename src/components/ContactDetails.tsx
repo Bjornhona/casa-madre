@@ -13,13 +13,10 @@ import {
 } from "lucide-react";
 import { fadeUp } from "@/lib/motion";
 
+// Fallback-only contact channels (see `withDirectChannels`); per-person data
+// now lives in Sanity `agent` documents.
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP;
 const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
-
-const CONTACT_EMAIL_EVELYN = process.env.NEXT_PUBLIC_CONTACT_EMAIL_EVELYN;
-const CONTACT_PHONE_EVELYN = process.env.NEXT_PUBLIC_CONTACT_PHONE_EVELYN;
-const CONTACT_EMAIL_EUGENIA = process.env.NEXT_PUBLIC_CONTACT_EMAIL_EUGENIA;
-const CONTACT_PHONE_EUGENIA = process.env.NEXT_PUBLIC_CONTACT_PHONE_EUGENIA;
 
 // Where the map card links out to. Swap the query for the real street address
 // once the client confirms it (kept in one place for an easy edit).
@@ -33,8 +30,17 @@ const MAPS_URL =
  * used: it loads third-party scripts and sets cookies before consent (GDPR) and
  * hurts performance. The card is a plain styled image that links out to the
  * user's maps app. Revisit an embedded map in Phase 2, behind cookie consent.
+ *
+ * `withDirectChannels` renders the generic env-var email/phone rows and the
+ * WhatsApp CTA. It is only a fallback for when no agents exist in Sanity yet —
+ * once agent cards are shown, they own the human channels and this block keeps
+ * just address · hours · map.
  */
-export function ContactDetails() {
+export function ContactDetails({
+  withDirectChannels = true,
+}: {
+  withDirectChannels?: boolean;
+}) {
   const t = useTranslations("contacto.details");
   const reduce = useReducedMotion();
   const item = fadeUp(reduce);
@@ -45,7 +51,9 @@ export function ContactDetails() {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
-      className="mt-16 grid gap-12 border-t border-line pt-16 lg:grid-cols-2 lg:gap-20"
+      className={`mt-16 grid gap-12 border-t border-line pt-16 lg:grid-cols-2 lg:gap-20 ${
+        withDirectChannels ? "" : "lg:items-center"
+      }`}
     >
       {/* Details */}
       <dl className="flex flex-col gap-8">
@@ -65,7 +73,7 @@ export function ContactDetails() {
           </div>
         </div>
 
-        {CONTACT_EMAIL && (
+        {withDirectChannels && CONTACT_EMAIL && (
           <div className="flex items-start gap-4">
             <Mail
               className="mt-0.5 h-5 w-5 shrink-0 text-clay"
@@ -88,7 +96,7 @@ export function ContactDetails() {
           </div>
         )}
 
-        {WHATSAPP && (
+        {withDirectChannels && WHATSAPP && (
           <div className="flex items-start gap-4">
             <Phone
               className="mt-0.5 h-5 w-5 shrink-0 text-clay"
@@ -129,7 +137,7 @@ export function ContactDetails() {
 
         {/* Direct channel — the single prominent WhatsApp CTA. Email + phone live
           once in the details block below to avoid repeating contact mechanisms. */}
-          {WHATSAPP && (
+          {withDirectChannels && WHATSAPP && (
             <a
               href={`https://wa.me/${WHATSAPP}`}
               target="_blank"

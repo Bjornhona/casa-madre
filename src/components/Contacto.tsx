@@ -11,9 +11,11 @@ import { Loader2, CheckCircle2 } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
+import { AgentCards } from "@/components/AgentCards";
 import { ContactDetails } from "@/components/ContactDetails";
 import { EASE, fadeUp } from "@/lib/motion";
 import { contactSchema, type ContactFormValues } from "@/lib/contact-schema";
+import type { AGENTS_QUERY_RESULT } from "@/sanity/types.gen";
 
 // Functional microcopy that has no entry in the message catalog yet.
 // TODO(copy): promote to `contacto.*` keys once approved by the client.
@@ -58,8 +60,9 @@ const SERVICE_SLUG_TO_INDEX: Record<string, number> = {
   juridico: 5,
 };
 
-export function Contacto() {
+export function Contacto({ agents = [] }: { agents?: AGENTS_QUERY_RESULT }) {
   const t = useTranslations("contacto");
+  const hasAgents = agents.length > 0;
 
   return (
     <Section id="contacto" aria-labelledby="contacto-kicker">
@@ -76,7 +79,11 @@ export function Contacto() {
         <ContactoForm />
       </Suspense>
 
-      <ContactDetails />
+      {hasAgents && <AgentCards agents={agents} />}
+
+      {/* Without agents the details block reverts to the generic env-var
+        email/phone/WhatsApp rows so the page never loses its channels. */}
+      <ContactDetails withDirectChannels={!hasAgents} />
     </Section>
   );
 }

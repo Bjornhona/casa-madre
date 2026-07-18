@@ -5,6 +5,8 @@ import { Footer } from "@/components/Footer";
 import { PageHero } from "@/components/ui/PageHero";
 import { Contacto } from "@/components/Contacto";
 import { pageMetadata } from "@/lib/page-metadata";
+import { sanityFetch } from "@/sanity/lib/live";
+import { AGENTS_QUERY } from "@/sanity/lib/queries";
 
 export async function generateMetadata({
   params,
@@ -23,12 +25,17 @@ export default async function ContactoPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
+  const { data: agents } = await sanityFetch({
+    query: AGENTS_QUERY,
+    params: { locale },
+  });
+
   return (
     <>
       <SiteNav />
       <main>
         <PageHero pageKey="contacto" />
-        <Contacto />
+        <Contacto agents={agents} />
       </main>
       <Footer />
     </>
