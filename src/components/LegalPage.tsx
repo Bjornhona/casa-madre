@@ -83,7 +83,7 @@ export function LegalPage({
                         <dt className="text-[12px] uppercase tracking-[0.16em] text-clay sm:pt-1">
                           {row.label}
                         </dt>
-                        <dd className="text-[16px] leading-[1.6] text-deep/85">
+                        <dd className="text-[16px] leading-[1.6] text-deep/85 whitespace-pre-line">
                           {row.value}
                         </dd>
                       </Fragment>

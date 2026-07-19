@@ -8,32 +8,37 @@ export const LEGAL_DATA = {
   brandName: "Casa Madre",
 
   // Registered legal name (razón social) — PENDIENTE: confirmar
-  legalName: "[PENDIENTE: razón social / nombre fiscal]",
+  legalName: "Evelyn Ribera",
 
-  // NIF / CIF — PENDIENTE: confirmar
-  taxId: "[PENDIENTE: NIF/CIF]",
+  // NIF
+  taxId: "38110222G",
 
   // Registered address — PENDIENTE: confirmar
   address: {
-    street: "[PENDIENTE: dirección]",
+    street: "",
     city: "Barcelona",
-    postalCode: "[PENDIENTE: CP]",
+    postalCode: "",
     region: "Barcelona",
     country: "España",
   },
 
   // Contact (reuse env where the site already uses them)
-  email: "[PENDIENTE: hola@casamadre…]",
-  phone: "[PENDIENTE: teléfono]",
+  email: "info@casamadreliving.com",
+  phone: "+34619317312",
 
   // Mercantile registry data, if applicable — PENDIENTE (may not apply if autónoma)
-  registry: "[PENDIENTE: datos registrales si aplica]",
+  registry: "",
 
   // Domain (no protocol)
-  domain: "casamadre.es", // PENDIENTE: confirmar dominio final
+  domain: "casamadreliving.es",
 
   // Date these texts were last reviewed — update on each legal change
-  lastUpdated: "2026-06-25",
+  lastUpdated: "2026-07-19",
+
+  credentials: {
+    aicat: "14044",
+    npiff: "2213"
+  }
 } as const;
 
 /** True for unfilled fields (e.g. "[PENDIENTE: NIF/CIF]"). */
@@ -43,5 +48,6 @@ export const isPending = (value: string): boolean =>
 /** One-line postal address built from LEGAL_DATA (PENDIENTE parts stay visible). */
 export const formatLegalAddress = (): string => {
   const a = LEGAL_DATA.address;
-  return `${a.street}, ${a.postalCode} ${a.city}, ${a.region}, ${a.country}`;
+  // return `${a.street}, ${a.postalCode} ${a.city}, ${a.region}, ${a.country}`;
+  return (a.street && a.street + ", ") + a.postalCode + " " + a.city + ", " + a.region + ", " + a.country;
 };

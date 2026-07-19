@@ -523,7 +523,12 @@
       "email": "Email",
       "phone": "Phone",
       "registry": "Registry details",
-      "domain": "Domain"
+      "domain": "Domain",
+      "credentials": {
+        "title": "Identifying details",
+        "aicat": "Registered real estate agent in the Register of Real Estate Agents of Catalonia, number AICAT ",
+        "anpiff": "Registered in the Register of the National Association of Real Estate Professionals, Financial and Fiscal Professionals, number ANPIFF "
+      }
     },
     "aviso": {
       "title": "Legal Notice",

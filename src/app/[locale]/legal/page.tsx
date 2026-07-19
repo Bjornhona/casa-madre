@@ -28,16 +28,17 @@ export default async function LegalNoticePage({
   // Owner block — company data from LEGAL_DATA (single source of truth).
   const ownerDetails = [
     { label: t("fields.legalName"), value: LEGAL_DATA.legalName },
-    { label: t("fields.taxId"), value: LEGAL_DATA.taxId },
+    { label: t("fields.taxId"), value: LEGAL_DATA.taxId && LEGAL_DATA.taxId},
     { label: t("fields.address"), value: formatLegalAddress() },
     { label: t("fields.email"), value: LEGAL_DATA.email },
     { label: t("fields.phone"), value: LEGAL_DATA.phone },
     { label: t("fields.registry"), value: LEGAL_DATA.registry },
     { label: t("fields.domain"), value: LEGAL_DATA.domain },
+    { label: t("fields.credentials.title"), value: t("fields.credentials.aicat") + LEGAL_DATA.credentials.aicat + "\n\n" + t("fields.credentials.anpiff") + LEGAL_DATA.credentials.npiff }
   ];
 
   const sections: LegalSection[] = [
-    { heading: t("aviso.ownerTitle"), details: ownerDetails },
+    { heading: t("aviso.ownerTitle"), details: ownerDetails.filter(item => item.value) },
     { heading: t("aviso.objectTitle"), paragraphs: [t("aviso.objectBody")] },
     { heading: t("aviso.useTitle"), paragraphs: [t("aviso.useBody")] },
     { heading: t("aviso.ipTitle"), paragraphs: [t("aviso.ipBody")] },

@@ -523,7 +523,12 @@
       "email": "Email",
       "phone": "Teléfono",
       "registry": "Datos registrales",
-      "domain": "Dominio"
+      "domain": "Dominio",
+      "credentials": {
+        "title": "Datos identificativos",
+        "aicat": "Agente inmobiliario inscrito en el Registro de Agentes Inmobiliarios de Catalunya, núm. AICAT ",
+        "anpiff": "Inscrito en el Registro de Asociación Nacional de Profesionales Inmobiliarios, Financieros y Fiscales, núm. ANPIFF "
+      }
     },
     "aviso": {
       "title": "Aviso Legal",

@@ -34,10 +34,11 @@ export default async function PrivacidadPage({
     { label: t("fields.phone"), value: LEGAL_DATA.phone },
     { label: t("fields.registry"), value: LEGAL_DATA.registry },
     { label: t("fields.domain"), value: LEGAL_DATA.domain },
+    { label: t("fields.credentials.title"), value: t("fields.credentials.aicat") + LEGAL_DATA.credentials.aicat + "\n\n" + t("fields.credentials.anpiff") + LEGAL_DATA.credentials.npiff }
   ];
 
   const sections: LegalSection[] = [
-    { heading: t("privacidad.responsibleTitle"), details: controllerDetails },
+    { heading: t("privacidad.responsibleTitle"), details: controllerDetails.filter(item => item.value) },
     { heading: t("privacidad.dataTitle"), paragraphs: [t("privacidad.dataBody")] },
     { heading: t("privacidad.purposeTitle"), paragraphs: [t("privacidad.purposeBody")] },
     { heading: t("privacidad.legalBasisTitle"), paragraphs: [t("privacidad.legalBasisBody")] },
