@@ -7,6 +7,7 @@ import type { PortableTextBlock } from "@portabletext/react";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
 import { JournalPortableText } from "@/components/JournalPortableText";
+import { JournalVideo } from "@/components/JournalVideo";
 import { EASE } from "@/lib/motion";
 import { urlFor } from "@/sanity/lib/image";
 import type { JOURNAL_POST_BY_SLUG_QUERY_RESULT } from "@/sanity/types.gen";
@@ -35,13 +36,21 @@ export function JournalArticle({ post }: { post: Post }) {
     : null;
   const coverAlt = post.coverImage?.alt ?? "";
 
+  // A vertical interview can't share the stage with the landscape full-bleed
+  // hero — it would pillarbox behind huge black bars or crop the speaker's
+  // head. Video articles take the compact header instead and lead with the
+  // video. The cover image is still the card thumbnail and the OG image; only
+  // its hero rendering is skipped here.
+  const hasVideo = Boolean(post.video?.publicId);
+  const showCoverHero = Boolean(cover) && !hasVideo;
+
   const restrained = restrainedAnimation(reduce);
   const heroScale = heroScaleAnimation(reduce);
 
   return (
     <article>
       {/* COVER HERO */}
-      {cover ? (
+      {showCoverHero && cover ? (
         <section className="relative h-[58vh] min-h-[420px] w-full overflow-hidden text-cream">
           <motion.div
             variants={heroScale}
@@ -94,7 +103,7 @@ export function JournalArticle({ post }: { post: Post }) {
             animate="show"
             className="mt-8"
           >
-            {!cover && (
+            {!showCoverHero && (
               <Kicker>
                 {[categoryLabel, formattedDate].filter(Boolean).join(" · ")}
               </Kicker>
@@ -118,6 +127,23 @@ export function JournalArticle({ post }: { post: Post }) {
               </p>
             )}
           </motion.div>
+
+          {/* VIDEO — the interview leads the article, above the written body */}
+          {post.video?.publicId && (
+            <motion.div
+              variants={restrained}
+              initial="hidden"
+              animate="show"
+              className="mt-10 max-w-[65ch]"
+            >
+              <JournalVideo
+                video={post.video}
+                poster={post.videoPoster}
+                caption={post.videoCaption}
+                title={post.title}
+              />
+            </motion.div>
+          )}
 
           {/* BODY — generous editorial measure (~65ch) */}
           {post.body && post.body.length > 0 && (

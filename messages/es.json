@@ -397,6 +397,9 @@
     "empty": "Pronto compartiremos historias, guías y miradas sobre vivir en Barcelona.",
     "teaserTitle": "Journal",
     "teaserIntro": "Historias, guías y una mirada cercana a la vida en Barcelona.",
+    "hasVideo": "Vídeo",
+    "videoLabel": "Vídeo: entrevista sobre «{title}»",
+    "videoLabelGeneric": "Vídeo de la entrevista",
     "categories": {
       "barrios": "Barrios",
       "lifestyle": "Lifestyle",

@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Section } from "@/components/ui/Section";
-import { JournalCard, type JournalCardPost } from "@/components/JournalCard";
+import { JournalCard } from "@/components/JournalCard";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 import type { JOURNAL_POSTS_QUERY_RESULT } from "@/sanity/types.gen";
 
@@ -37,7 +37,7 @@ export function JournalIndex({ posts }: { posts: JOURNAL_POSTS_QUERY_RESULT }) {
       >
         {posts.map((post) => (
           <motion.li key={post._id} variants={item}>
-            <JournalCard post={post as JournalCardPost} />
+            <JournalCard post={post} />
           </motion.li>
         ))}
       </motion.ul>

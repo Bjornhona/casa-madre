@@ -1,22 +1,35 @@
 "use client";
 
 import Image from "next/image";
+import { Play } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { urlFor } from "@/sanity/lib/image";
+import type {
+  JOURNAL_POSTS_QUERY_RESULT,
+  RECENT_JOURNAL_POSTS_QUERY_RESULT,
+} from "@/sanity/types.gen";
 
-export type JournalCardPost = {
-  _id: string;
-  slug: string | null;
-  category: string | null;
-  publishedAt: string | null;
-  title: string | null;
-  excerpt: string | null;
-  coverImage: { asset?: { _ref?: string }; alt?: string | null } | null;
-};
+/**
+ * Derived from the generated query results rather than hand-written, so a field
+ * added to either card query shows up here instead of being silently dropped.
+ * The teaser query omits `author`, which this card never reads, so a union of
+ * the two element types covers both call sites without a cast.
+ */
+export type JournalCardPost =
+  | JOURNAL_POSTS_QUERY_RESULT[number]
+  | RECENT_JOURNAL_POSTS_QUERY_RESULT[number];
+
+/** Clip length as m:ss — these run a couple of minutes at most. */
+function formatDuration(seconds: number): string {
+  const total = Math.round(seconds);
+  const minutes = Math.floor(total / 60);
+  return `${minutes}:${String(total % 60).padStart(2, "0")}`;
+}
 
 /**
  * Editorial article card — cover image, category kicker, serif title, excerpt
- * and date. Shared by the Journal index grid and the home-page teaser.
+ * and date. Shared by the Journal index grid and the home-page teaser. Articles
+ * carrying an owner-interview video get a play icon and duration badge.
  */
 export function JournalCard({ post }: { post: JournalCardPost }) {
   const locale = useLocale();
@@ -55,6 +68,14 @@ export function JournalCard({ post }: { post: JournalCardPost }) {
             />
           ) : (
             <div className="absolute inset-0 bg-sand/40" aria-hidden />
+          )}
+
+          {post.videoDuration != null && (
+            <p className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-card bg-deep/70 px-2 py-1 text-[11px] tracking-[0.08em] text-cream">
+              <span className="sr-only">{t("hasVideo")}</span>
+              <Play className="h-3 w-3 fill-current" aria-hidden />
+              {formatDuration(post.videoDuration)}
+            </p>
           )}
         </div>
 
