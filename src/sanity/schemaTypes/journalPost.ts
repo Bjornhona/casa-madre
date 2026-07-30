@@ -101,6 +101,7 @@ export const journalPost = defineType({
             defineField({name: 'alt', title: 'Texto alternativo', type: 'string'}),
           ],
         }),
+        defineArrayMember({type: 'videoBlock'}),
       ],
     }),
     defineField({
@@ -118,6 +119,7 @@ export const journalPost = defineType({
             defineField({name: 'alt', title: 'Texto alternativo', type: 'string'}),
           ],
         }),
+        defineArrayMember({type: 'videoBlock'}),
       ],
     }),
     defineField({

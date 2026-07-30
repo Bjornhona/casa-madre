@@ -15,11 +15,36 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type CloudinaryAsset = {
+  _type: "cloudinaryAsset";
+  publicId?: string;
+  secureUrl?: string;
+  format?: string;
+  width?: number;
+  height?: number;
+  duration?: number;
+  bytes?: number;
+};
+
 export type SanityImageAssetReference = {
   _ref: string;
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type VideoBlock = {
+  _type: "videoBlock";
+  video: CloudinaryAsset;
+  caption?: string;
+  poster?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
 };
 
 export type Agent = {
@@ -118,6 +143,9 @@ export type JournalPost = {
         _type: "image";
         _key: string;
       }
+    | ({
+        _key: string;
+      } & VideoBlock)
   >;
   bodyEn?: Array<
     | {
@@ -155,6 +183,9 @@ export type JournalPost = {
         _type: "image";
         _key: string;
       }
+    | ({
+        _key: string;
+      } & VideoBlock)
   >;
   author?: string;
   publishedAt?: string;
@@ -448,7 +479,9 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | CloudinaryAsset
   | SanityImageAssetReference
+  | VideoBlock
   | Agent
   | SanityImageCrop
   | SanityImageHotspot
@@ -730,6 +763,9 @@ export type JOURNAL_POST_BY_SLUG_QUERY_RESULT = {
   title: string | null;
   excerpt: string | null;
   body: Array<
+    | ({
+        _key: string;
+      } & VideoBlock)
     | {
         children?: Array<{
           marks?: Array<string>;

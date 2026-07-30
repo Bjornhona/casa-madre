@@ -5,8 +5,6 @@
   --color-ivory: #f4ede3;
   --color-bone: #F2E8DD;
   --color-sand: #d7c1a8;
-  /* Terracotta accent. Darkened from #A06A43 to clear WCAG AA (4.5:1) for small
-     text on ivory/cream — used for kickers, error text and meta labels. */
   --color-clay: #915c39;
   --color-brown: #6b3e21;
   --color-deep: #2b211b;
