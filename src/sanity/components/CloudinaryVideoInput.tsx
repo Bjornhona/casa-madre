@@ -27,8 +27,8 @@ const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
 
 /**
  * Hard ceiling handed to the widget so an editor is told before spending ten
- * minutes uploading. The schema rules in videoBlock.ts remain the backstop for
- * anything that arrives by another route (import, direct patch).
+ * minutes uploading. The schema rules on journalPost's `video` field remain the
+ * backstop for anything that arrives by another route (import, direct patch).
  */
 const MAX_BYTES = 50 * 1024 * 1024
 

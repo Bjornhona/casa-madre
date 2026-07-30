@@ -33,20 +33,6 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
-export type VideoBlock = {
-  _type: "videoBlock";
-  video: CloudinaryAsset;
-  caption?: string;
-  poster?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
-};
-
 export type Agent = {
   _id: string;
   _type: "agent";
@@ -107,6 +93,16 @@ export type JournalPost = {
     alt?: string;
     _type: "image";
   };
+  video?: CloudinaryAsset;
+  videoCaption?: InternationalizedArrayString;
+  videoPoster?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
   bodyEs?: Array<
     | {
         children?: Array<{
@@ -143,9 +139,6 @@ export type JournalPost = {
         _type: "image";
         _key: string;
       }
-    | ({
-        _key: string;
-      } & VideoBlock)
   >;
   bodyEn?: Array<
     | {
@@ -183,9 +176,6 @@ export type JournalPost = {
         _type: "image";
         _key: string;
       }
-    | ({
-        _key: string;
-      } & VideoBlock)
   >;
   author?: string;
   publishedAt?: string;
@@ -481,7 +471,6 @@ export type Geopoint = {
 export type AllSanitySchemaTypes =
   | CloudinaryAsset
   | SanityImageAssetReference
-  | VideoBlock
   | Agent
   | SanityImageCrop
   | SanityImageHotspot
@@ -697,7 +686,7 @@ export type PROPERTY_BY_SLUG_QUERY_RESULT = {
 
 // Source: src/sanity/lib/queries.ts
 // Variable: JOURNAL_POSTS_QUERY
-// Query: *[_type == "journalPost" && isPublished == true && defined(slug.current)]    | order(publishedAt desc) {    _id,    "slug": slug.current,    category,    publishedAt,    author,    coverImage,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    "excerpt": coalesce(      excerpt[language == $locale][0].value,      excerpt[language == "es"][0].value    )  }
+// Query: *[_type == "journalPost" && isPublished == true && defined(slug.current)]    | order(publishedAt desc) {    _id,    "slug": slug.current,    category,    publishedAt,    author,    coverImage,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    "excerpt": coalesce(      excerpt[language == $locale][0].value,      excerpt[language == "es"][0].value    ),    "videoDuration": video.duration  }
 export type JOURNAL_POSTS_QUERY_RESULT = Array<{
   _id: string;
   slug: string;
@@ -714,11 +703,12 @@ export type JOURNAL_POSTS_QUERY_RESULT = Array<{
   } | null;
   title: string | null;
   excerpt: string | null;
+  videoDuration: number | null;
 }>;
 
 // Source: src/sanity/lib/queries.ts
 // Variable: RECENT_JOURNAL_POSTS_QUERY
-// Query: *[_type == "journalPost" && isPublished == true && defined(slug.current)]    | order(publishedAt desc)[0...3] {    _id,    "slug": slug.current,    category,    publishedAt,    coverImage,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    "excerpt": coalesce(      excerpt[language == $locale][0].value,      excerpt[language == "es"][0].value    )  }
+// Query: *[_type == "journalPost" && isPublished == true && defined(slug.current)]    | order(publishedAt desc)[0...3] {    _id,    "slug": slug.current,    category,    publishedAt,    coverImage,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    "excerpt": coalesce(      excerpt[language == $locale][0].value,      excerpt[language == "es"][0].value    ),    "videoDuration": video.duration  }
 export type RECENT_JOURNAL_POSTS_QUERY_RESULT = Array<{
   _id: string;
   slug: string;
@@ -734,6 +724,7 @@ export type RECENT_JOURNAL_POSTS_QUERY_RESULT = Array<{
   } | null;
   title: string | null;
   excerpt: string | null;
+  videoDuration: number | null;
 }>;
 
 // Source: src/sanity/lib/queries.ts
@@ -745,7 +736,7 @@ export type JOURNAL_SLUGS_QUERY_RESULT = Array<{
 
 // Source: src/sanity/lib/queries.ts
 // Variable: JOURNAL_POST_BY_SLUG_QUERY
-// Query: *[_type == "journalPost" && slug.current == $slug && isPublished == true][0] {    _id,    "slug": slug.current,    category,    publishedAt,    author,    coverImage,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    "excerpt": coalesce(      excerpt[language == $locale][0].value,      excerpt[language == "es"][0].value    ),    "body": select(      $locale == "en" && defined(bodyEn) => bodyEn,      bodyEs    ),    isPublished  }
+// Query: *[_type == "journalPost" && slug.current == $slug && isPublished == true][0] {    _id,    "slug": slug.current,    category,    publishedAt,    author,    coverImage,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    "excerpt": coalesce(      excerpt[language == $locale][0].value,      excerpt[language == "es"][0].value    ),    video,    videoPoster,    "videoCaption": coalesce(      videoCaption[language == $locale][0].value,      videoCaption[language == "es"][0].value    ),    "body": select(      $locale == "en" && defined(bodyEn) => bodyEn,      bodyEs    ),    isPublished  }
 export type JOURNAL_POST_BY_SLUG_QUERY_RESULT = {
   _id: string;
   slug: string;
@@ -762,10 +753,17 @@ export type JOURNAL_POST_BY_SLUG_QUERY_RESULT = {
   } | null;
   title: string | null;
   excerpt: string | null;
+  video: CloudinaryAsset | null;
+  videoPoster: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  videoCaption: string | null;
   body: Array<
-    | ({
-        _key: string;
-      } & VideoBlock)
     | {
         children?: Array<{
           marks?: Array<string>;
@@ -817,9 +815,9 @@ declare module "@sanity/client" {
     '\n  *[_type == "testimonial" && isPublished == true] | order(_createdAt desc) {\n    _id,\n    "quote": coalesce(\n      quote[language == $locale][0].value,\n      quote[language == "es"][0].value\n    ),\n    attribution\n  }\n': PUBLISHED_TESTIMONIALS_QUERY_RESULT;
     '\n  *[_type == "property" && isPublic == true && defined(slug.current)] {\n    "slug": slug.current\n  }\n': PROPERTY_SLUGS_QUERY_RESULT;
     '\n  *[_type == "property" && slug.current == $slug && isPublic == true][0] {\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "slug": slug.current,\n    price,\n    operation,\n    propertyType,\n    "neighbourhood": neighbourhood->name,\n    surface,\n    bedrooms,\n    bathrooms,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    gallery[]{ ... },\n    isPublic\n  }\n': PROPERTY_BY_SLUG_QUERY_RESULT;
-    '\n  *[_type == "journalPost" && isPublished == true && defined(slug.current)]\n    | order(publishedAt desc) {\n    _id,\n    "slug": slug.current,\n    category,\n    publishedAt,\n    author,\n    coverImage,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "excerpt": coalesce(\n      excerpt[language == $locale][0].value,\n      excerpt[language == "es"][0].value\n    )\n  }\n': JOURNAL_POSTS_QUERY_RESULT;
-    '\n  *[_type == "journalPost" && isPublished == true && defined(slug.current)]\n    | order(publishedAt desc)[0...3] {\n    _id,\n    "slug": slug.current,\n    category,\n    publishedAt,\n    coverImage,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "excerpt": coalesce(\n      excerpt[language == $locale][0].value,\n      excerpt[language == "es"][0].value\n    )\n  }\n': RECENT_JOURNAL_POSTS_QUERY_RESULT;
+    '\n  *[_type == "journalPost" && isPublished == true && defined(slug.current)]\n    | order(publishedAt desc) {\n    _id,\n    "slug": slug.current,\n    category,\n    publishedAt,\n    author,\n    coverImage,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "excerpt": coalesce(\n      excerpt[language == $locale][0].value,\n      excerpt[language == "es"][0].value\n    ),\n    "videoDuration": video.duration\n  }\n': JOURNAL_POSTS_QUERY_RESULT;
+    '\n  *[_type == "journalPost" && isPublished == true && defined(slug.current)]\n    | order(publishedAt desc)[0...3] {\n    _id,\n    "slug": slug.current,\n    category,\n    publishedAt,\n    coverImage,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "excerpt": coalesce(\n      excerpt[language == $locale][0].value,\n      excerpt[language == "es"][0].value\n    ),\n    "videoDuration": video.duration\n  }\n': RECENT_JOURNAL_POSTS_QUERY_RESULT;
     '\n  *[_type == "journalPost" && isPublished == true && defined(slug.current)] {\n    "slug": slug.current\n  }\n': JOURNAL_SLUGS_QUERY_RESULT;
-    '\n  *[_type == "journalPost" && slug.current == $slug && isPublished == true][0] {\n    _id,\n    "slug": slug.current,\n    category,\n    publishedAt,\n    author,\n    coverImage,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "excerpt": coalesce(\n      excerpt[language == $locale][0].value,\n      excerpt[language == "es"][0].value\n    ),\n    "body": select(\n      $locale == "en" && defined(bodyEn) => bodyEn,\n      bodyEs\n    ),\n    isPublished\n  }\n': JOURNAL_POST_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type == "journalPost" && slug.current == $slug && isPublished == true][0] {\n    _id,\n    "slug": slug.current,\n    category,\n    publishedAt,\n    author,\n    coverImage,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "excerpt": coalesce(\n      excerpt[language == $locale][0].value,\n      excerpt[language == "es"][0].value\n    ),\n    video,\n    videoPoster,\n    "videoCaption": coalesce(\n      videoCaption[language == $locale][0].value,\n      videoCaption[language == "es"][0].value\n    ),\n    "body": select(\n      $locale == "en" && defined(bodyEn) => bodyEn,\n      bodyEs\n    ),\n    isPublished\n  }\n': JOURNAL_POST_BY_SLUG_QUERY_RESULT;
   }
 }

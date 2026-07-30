@@ -178,7 +178,8 @@ export const JOURNAL_POSTS_QUERY = defineQuery(`
     "excerpt": coalesce(
       excerpt[language == $locale][0].value,
       excerpt[language == "es"][0].value
-    )
+    ),
+    "videoDuration": video.duration
   }
 `)
 
@@ -198,7 +199,8 @@ export const RECENT_JOURNAL_POSTS_QUERY = defineQuery(`
     "excerpt": coalesce(
       excerpt[language == $locale][0].value,
       excerpt[language == "es"][0].value
-    )
+    ),
+    "videoDuration": video.duration
   }
 `)
 
@@ -227,6 +229,12 @@ export const JOURNAL_POST_BY_SLUG_QUERY = defineQuery(`
     "excerpt": coalesce(
       excerpt[language == $locale][0].value,
       excerpt[language == "es"][0].value
+    ),
+    video,
+    videoPoster,
+    "videoCaption": coalesce(
+      videoCaption[language == $locale][0].value,
+      videoCaption[language == "es"][0].value
     ),
     "body": select(
       $locale == "en" && defined(bodyEn) => bodyEn,

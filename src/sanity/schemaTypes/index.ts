@@ -6,7 +6,6 @@ import {neighbourhood} from './neighbourhood'
 import {property} from './property'
 import {testimonial} from './testimonial'
 import {cloudinaryAsset} from './objects/cloudinaryAsset'
-import {videoBlock} from './objects/videoBlock'
 
 export const schema: {types: SchemaTypeDefinition[]} = {
   types: [
@@ -15,7 +14,6 @@ export const schema: {types: SchemaTypeDefinition[]} = {
     testimonial,
     journalPost,
     agent,
-    videoBlock,
     cloudinaryAsset,
   ],
 }

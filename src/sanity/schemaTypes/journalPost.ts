@@ -1,16 +1,28 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {DocumentTextIcon} from '@sanity/icons'
 
+import {type CloudinaryAssetValue} from '../components/CloudinaryVideoInput'
+
 /**
  * Journal article (Artículo del Journal) — editorial content for the Journal
  * section. Studio labels are in Spanish (the team writes in Spanish); the slug
  * is in English for international SEO. Title, excerpt and body are bilingual
  * (ES + EN): ES is the approved text, EN a natural adaptation.
  *
+ * An article may carry one owner-interview video (`video`), which sits at
+ * document level rather than inside the body: it's the primary content, it's
+ * language-independent so the editor uploads it once, and the index/teaser
+ * queries can surface its duration on the card without fetching the body.
+ *
  * The "✦ Generar borrador con IA" document action (registered in
  * sanity.config.ts) can pre-fill these fields with an AI-drafted article that
  * the team then reviews, edits and publishes manually.
  */
+
+const MB = 1024 * 1024
+const WARN_BYTES = 25 * MB
+const MAX_BYTES = 50 * MB
+
 export const journalPost = defineType({
   name: 'journalPost',
   title: 'Artículos del Journal',
@@ -87,6 +99,55 @@ export const journalPost = defineType({
       ],
     }),
     defineField({
+      name: 'video',
+      title: 'Vídeo (entrevista)',
+      description:
+        'Opcional. La entrevista con el propietario, que aparece cerca del inicio del artículo. Se sube una sola vez y sirve para las dos versiones (ES y EN).',
+      type: 'cloudinaryAsset',
+      group: 'content',
+      validation: (rule) => [
+        rule.custom<CloudinaryAssetValue>((value) => {
+          if (typeof value?.bytes === 'number' && value.bytes > MAX_BYTES) {
+            return 'El vídeo supera los 50 MB. Recórtalo o vuelve a exportarlo con menos calidad antes de publicarlo.'
+          }
+          return true
+        }),
+        rule
+          .custom<CloudinaryAssetValue>((value) => {
+            if (typeof value?.bytes === 'number' && value.bytes > WARN_BYTES) {
+              return 'El vídeo pesa más de 25 MB y tardará en cargar. Considera recortarlo o volver a exportarlo con menos calidad.'
+            }
+            return true
+          })
+          .warning(),
+      ],
+    }),
+    defineField({
+      name: 'videoCaption',
+      title: 'Pie de vídeo',
+      description: 'Texto que acompaña al vídeo (ES + EN).',
+      type: 'internationalizedArrayString',
+      group: 'content',
+      hidden: ({parent}) => !parent?.video?.publicId,
+    }),
+    defineField({
+      name: 'videoPoster',
+      title: 'Portada del vídeo (opcional)',
+      description:
+        'Déjala vacía para usar un fotograma automático del vídeo.',
+      type: 'image',
+      group: 'content',
+      options: {hotspot: true},
+      hidden: ({parent}) => !parent?.video?.publicId,
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Texto alternativo',
+          type: 'string',
+        }),
+      ],
+    }),
+    defineField({
       name: 'bodyEs',
       title: 'Contenido (ES)',
       description: 'Cuerpo del artículo en español.',
@@ -101,7 +162,6 @@ export const journalPost = defineType({
             defineField({name: 'alt', title: 'Texto alternativo', type: 'string'}),
           ],
         }),
-        defineArrayMember({type: 'videoBlock'}),
       ],
     }),
     defineField({
@@ -119,7 +179,6 @@ export const journalPost = defineType({
             defineField({name: 'alt', title: 'Texto alternativo', type: 'string'}),
           ],
         }),
-        defineArrayMember({type: 'videoBlock'}),
       ],
     }),
     defineField({
