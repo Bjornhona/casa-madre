@@ -11,6 +11,12 @@ type JournalVideoProps = {
   caption: Post["videoCaption"];
   /** Article title, used to build the accessible label. */
   title: Post["title"];
+  /**
+   * Tailwind max-width cap for portrait clips. Owned by the caller so the
+   * component doesn't assume one context — the hero band is tighter than a
+   * full editorial measure would be.
+   */
+  portraitMaxWidth: string;
 };
 
 /**
@@ -23,10 +29,17 @@ type JournalVideoProps = {
  * control bar gives them for free.
  *
  * Width is derived from the stored dimensions rather than chosen by the editor.
- * The article measure is ~65ch; a 9:16 clip at that width would stand over
- * 1200px tall, so portrait clips are capped and centred instead.
+ * A 9:16 clip at a full editorial measure would stand over 1200px tall, so
+ * portrait clips are capped and centred instead.
+ *
+ * It renders on the dark hero band, hence the light caption and focus tones.
  */
-export function JournalVideo({ video, caption, title }: JournalVideoProps) {
+export function JournalVideo({
+  video,
+  caption,
+  title,
+  portraitMaxWidth,
+}: JournalVideoProps) {
   const t = useTranslations("journal");
 
   const publicId = video.publicId;
@@ -44,7 +57,9 @@ export function JournalVideo({ video, caption, title }: JournalVideoProps) {
   const label = title ? t("videoLabel", { title }) : t("videoLabelGeneric");
 
   return (
-    <figure className={isPortrait ? "mx-auto w-full max-w-[420px]" : "w-full"}>
+    <figure
+      className={isPortrait ? `mx-auto w-full ${portraitMaxWidth}` : "w-full"}
+    >
       <div
         className="overflow-hidden rounded-card bg-cream"
         style={{ aspectRatio }}
@@ -56,12 +71,14 @@ export function JournalVideo({ video, caption, title }: JournalVideoProps) {
           playsInline
           preload="none"
           aria-label={label}
-          className="h-full w-full object-cover"
+          // Ring offset sits against the band rather than the backdrop image,
+          // so focus stays legible however bright the editor's cover photo is.
+          className="h-full w-full object-cover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream focus-visible:ring-offset-2 focus-visible:ring-offset-deep"
         />
       </div>
 
       {caption && (
-        <figcaption className="mt-3 text-[14px] font-light leading-[1.6] text-muted">
+        <figcaption className="mt-3 text-[14px] font-light leading-[1.6] text-sand">
           {caption}
         </figcaption>
       )}

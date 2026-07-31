@@ -15,6 +15,17 @@ import { restrainedAnimation, heroScaleAnimation } from "@/lib/motion";
 
 type Post = NonNullable<JOURNAL_POST_BY_SLUG_QUERY_RESULT>;
 
+// Shared between the two heroes so the scrim over a cover image is identical
+// in both. Keeps the video's edge legible against a bright photo.
+const HERO_SCRIM = "bg-[linear-gradient(rgba(43,33,27,0.15),rgba(43,33,27,0.58))]";
+
+// One title scale, two tones: dark on the ivory content measure, cream on the
+// video band. Kept as whole literals so the no-video markup is untouched.
+const TITLE_ON_LIGHT =
+  "mt-4 max-w-[20ch] text-[40px] leading-[1.06] text-deep sm:text-[56px]";
+const TITLE_ON_DARK =
+  "mt-4 max-w-[20ch] text-[40px] leading-[1.06] text-cream sm:text-[56px]";
+
 export function JournalArticle({ post }: { post: Post }) {
   const t = useTranslations("journal");
   const locale = useLocale();
@@ -38,19 +49,71 @@ export function JournalArticle({ post }: { post: Post }) {
 
   // A vertical interview can't share the stage with the landscape full-bleed
   // hero — it would pillarbox behind huge black bars or crop the speaker's
-  // head. Video articles take the compact header instead and lead with the
-  // video. The cover image is still the card thumbnail and the OG image; only
-  // its hero rendering is skipped here.
+  // head. Video articles get their own band instead: the portrait clip sits
+  // over it, with the cover image behind on desktop only. The cover image is
+  // still the card thumbnail and the OG image either way.
   const hasVideo = Boolean(post.video?.publicId);
   const showCoverHero = Boolean(cover) && !hasVideo;
+
+  const kickerLine = [categoryLabel, formattedDate].filter(Boolean).join(" · ");
 
   const restrained = restrainedAnimation(reduce);
   const heroScale = heroScaleAnimation(reduce);
 
   return (
     <article>
-      {/* COVER HERO */}
-      {showCoverHero && cover ? (
+      {/* VIDEO HERO — landscape band, portrait clip contained over it */}
+      {hasVideo && post.video ? (
+        <section className="relative overflow-hidden bg-deep text-cream">
+          {/* Backdrop is desktop-only on purpose: a portrait clip nearly fills
+              a phone, so a cover image behind it would survive as slivers top
+              and bottom and read as a rendering bug. */}
+          {cover && (
+            <motion.div
+              variants={heroScale}
+              initial="hidden"
+              animate="show"
+              aria-hidden
+              className="absolute inset-0 hidden will-change-transform lg:block"
+            >
+              <Image src={cover} alt="" fill sizes="100vw" className="object-cover" />
+              <div className={`absolute inset-0 ${HERO_SCRIM}`} />
+            </motion.div>
+          )}
+
+          {/* Height comes from the video plus padding — never a fixed vh, so a
+              tall portrait clip is never cropped. */}
+          <div className="relative z-10 mx-auto grid w-full max-w-[1240px] grid-cols-1 items-center gap-10 px-6 pt-36 pb-12 sm:px-10 lg:grid-cols-[1fr_auto] lg:gap-16 lg:px-12 lg:pt-40 lg:pb-20">
+            {/* Beside the video on desktop; below the band on smaller screens,
+                where there's no room for text next to a portrait clip. */}
+            <motion.div
+              variants={restrained}
+              initial="hidden"
+              animate="show"
+              className="hidden lg:block"
+            >
+              <Kicker tone="sand">{kickerLine}</Kicker>
+              <SerifHeading as="h1" className={TITLE_ON_DARK}>
+                {post.title}
+              </SerifHeading>
+            </motion.div>
+
+            <motion.div
+              variants={restrained}
+              initial="hidden"
+              animate="show"
+              className="w-full lg:justify-self-end"
+            >
+              <JournalVideo
+                video={post.video}
+                caption={post.videoCaption}
+                title={post.title}
+                portraitMaxWidth="max-w-[360px]"
+              />
+            </motion.div>
+          </div>
+        </section>
+      ) : showCoverHero && cover ? (
         <section className="relative h-[58vh] min-h-[420px] w-full overflow-hidden text-cream">
           <motion.div
             variants={heroScale}
@@ -103,17 +166,23 @@ export function JournalArticle({ post }: { post: Post }) {
             animate="show"
             className="mt-8"
           >
-            {!showCoverHero && (
-              <Kicker>
-                {[categoryLabel, formattedDate].filter(Boolean).join(" · ")}
-              </Kicker>
+            {hasVideo ? (
+              // On desktop these live in the band; only one of the two copies
+              // is ever displayed, so only one reaches the a11y tree.
+              <div className="lg:hidden">
+                <Kicker>{kickerLine}</Kicker>
+                <SerifHeading as="h1" className={TITLE_ON_LIGHT}>
+                  {post.title}
+                </SerifHeading>
+              </div>
+            ) : (
+              <>
+                {!showCoverHero && <Kicker>{kickerLine}</Kicker>}
+                <SerifHeading as="h1" className={TITLE_ON_LIGHT}>
+                  {post.title}
+                </SerifHeading>
+              </>
             )}
-            <SerifHeading
-              as="h1"
-              className="mt-4 max-w-[20ch] text-[40px] leading-[1.06] text-deep sm:text-[56px]"
-            >
-              {post.title}
-            </SerifHeading>
 
             {post.author && (
               <p className="mt-5 text-[12px] uppercase tracking-[0.18em] text-clay">
@@ -127,22 +196,6 @@ export function JournalArticle({ post }: { post: Post }) {
               </p>
             )}
           </motion.div>
-
-          {/* VIDEO — the interview leads the article, above the written body */}
-          {post.video?.publicId && (
-            <motion.div
-              variants={restrained}
-              initial="hidden"
-              animate="show"
-              className="mt-10 max-w-[65ch]"
-            >
-              <JournalVideo
-                video={post.video}
-                caption={post.videoCaption}
-                title={post.title}
-              />
-            </motion.div>
-          )}
 
           {/* BODY — generous editorial measure (~65ch) */}
           {post.body && post.body.length > 0 && (
