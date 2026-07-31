@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Play } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { posterUrl } from "@/lib/cloudinary";
 import { urlFor } from "@/sanity/lib/image";
 import type {
   JOURNAL_POSTS_QUERY_RESULT,
@@ -45,9 +46,23 @@ export function JournalCard({ post }: { post: JournalCardPost }) {
       }).format(new Date(post.publishedAt))
     : "";
 
+  // Image cascade: cover image → editor's video poster → a frame pulled from
+  // the video itself. Video-led articles often have no cover image at all, and
+  // an empty placeholder on the card would misrepresent them. The Cloudinary
+  // frame is vertical and gets object-cover cropped by the 4/3 container, which
+  // is the right trade here — a letterboxed thumbnail would look broken in the
+  // grid.
   const src = post.coverImage?.asset
     ? urlFor(post.coverImage).width(1000).height(750).fit("crop").url()
-    : null;
+    : post.videoPoster?.asset
+      ? urlFor(post.videoPoster).width(1000).height(750).fit("crop").url()
+      : post.videoPublicId
+        ? posterUrl(post.videoPublicId)
+        : null;
+
+  const alt = post.coverImage?.asset
+    ? (post.coverImage.alt ?? "")
+    : (post.videoPoster?.alt ?? "");
 
   const href = post.slug ? `/${locale}/journal/${post.slug}` : `/${locale}/journal`;
 
@@ -61,7 +76,7 @@ export function JournalCard({ post }: { post: JournalCardPost }) {
           {src ? (
             <Image
               src={src}
-              alt={post.coverImage?.alt ?? ""}
+              alt={alt}
               fill
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"

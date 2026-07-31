@@ -72,6 +72,13 @@ const nextConfig: NextConfig = {
         hostname: "cdn.sanity.io",
         pathname: "/images/**",
       },
+      // Journal video poster frames. Without this, next/image rejects the
+      // auto-frame fallback on JournalCard at runtime.
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -34,3 +34,19 @@ export function videoUrl(publicId: string): string {
 export function posterUrl(publicId: string): string {
   return `${BASE}/so_2,f_auto,q_auto,w_720/${publicId}.jpg`
 }
+
+/**
+ * The `--color-deep` token, as a bare hex for Cloudinary's `b_rgb:` parameter.
+ * A transformation string can't read a CSS variable, so this is the one place
+ * the value is repeated — keep it in step with globals.css.
+ */
+const OG_PAD_COLOUR = '2B211B'
+
+/**
+ * A 1200×630 social card frame. Padded onto the brand background rather than
+ * cropped: these clips are vertical, and cropping a talking head to a landscape
+ * card cuts the speaker's head off.
+ */
+export function ogPosterUrl(publicId: string): string {
+  return `${BASE}/so_2,c_pad,b_rgb:${OG_PAD_COLOUR},w_1200,h_630,f_auto,q_auto/${publicId}.jpg`
+}

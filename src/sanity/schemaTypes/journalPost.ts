@@ -87,6 +87,8 @@ export const journalPost = defineType({
     defineField({
       name: 'coverImage',
       title: 'Imagen de portada',
+      description:
+        'Opcional si el artículo tiene vídeo: en ese caso se usa un fotograma del vídeo como imagen del artículo.',
       type: 'image',
       group: 'content',
       options: {hotspot: true},
@@ -134,7 +136,7 @@ export const journalPost = defineType({
       name: 'videoPoster',
       title: 'Portada del vídeo (opcional)',
       description:
-        'Déjala vacía para usar un fotograma automático del vídeo.',
+        'Déjala vacía para usar un fotograma automático del vídeo, tanto en el reproductor como en la tarjeta del artículo.',
       type: 'image',
       group: 'content',
       options: {hotspot: true},

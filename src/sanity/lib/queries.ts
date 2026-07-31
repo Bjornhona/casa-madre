@@ -179,7 +179,9 @@ export const JOURNAL_POSTS_QUERY = defineQuery(`
       excerpt[language == $locale][0].value,
       excerpt[language == "es"][0].value
     ),
-    "videoDuration": video.duration
+    "videoDuration": video.duration,
+    "videoPublicId": video.publicId,
+    videoPoster
   }
 `)
 
@@ -200,7 +202,9 @@ export const RECENT_JOURNAL_POSTS_QUERY = defineQuery(`
       excerpt[language == $locale][0].value,
       excerpt[language == "es"][0].value
     ),
-    "videoDuration": video.duration
+    "videoDuration": video.duration,
+    "videoPublicId": video.publicId,
+    videoPoster
   }
 `)
 
