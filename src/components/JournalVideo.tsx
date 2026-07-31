@@ -2,14 +2,12 @@
 
 import { useTranslations } from "next-intl";
 import { posterUrl, videoUrl } from "@/lib/cloudinary";
-import { urlFor } from "@/sanity/lib/image";
 import type { JOURNAL_POST_BY_SLUG_QUERY_RESULT } from "@/sanity/types.gen";
 
 type Post = NonNullable<JOURNAL_POST_BY_SLUG_QUERY_RESULT>;
 
 type JournalVideoProps = {
   video: NonNullable<Post["video"]>;
-  poster: Post["videoPoster"];
   caption: Post["videoCaption"];
   /** Article title, used to build the accessible label. */
   title: Post["title"];
@@ -28,12 +26,7 @@ type JournalVideoProps = {
  * The article measure is ~65ch; a 9:16 clip at that width would stand over
  * 1200px tall, so portrait clips are capped and centred instead.
  */
-export function JournalVideo({
-  video,
-  poster,
-  caption,
-  title,
-}: JournalVideoProps) {
+export function JournalVideo({ video, caption, title }: JournalVideoProps) {
   const t = useTranslations("journal");
 
   const publicId = video.publicId;
@@ -48,10 +41,6 @@ export function JournalVideo({
   // these are vertical interviews.
   const aspectRatio = ratio !== null ? `${width} / ${height}` : "9 / 16";
 
-  const posterSrc = poster?.asset
-    ? urlFor(poster).width(720).url()
-    : posterUrl(publicId);
-
   const label = title ? t("videoLabel", { title }) : t("videoLabelGeneric");
 
   return (
@@ -62,7 +51,7 @@ export function JournalVideo({
       >
         <video
           src={videoUrl(publicId)}
-          poster={posterSrc}
+          poster={posterUrl(publicId)}
           controls
           playsInline
           preload="none"

@@ -180,8 +180,7 @@ export const JOURNAL_POSTS_QUERY = defineQuery(`
       excerpt[language == "es"][0].value
     ),
     "videoDuration": video.duration,
-    "videoPublicId": video.publicId,
-    videoPoster
+    "videoPublicId": video.publicId
   }
 `)
 
@@ -203,8 +202,7 @@ export const RECENT_JOURNAL_POSTS_QUERY = defineQuery(`
       excerpt[language == "es"][0].value
     ),
     "videoDuration": video.duration,
-    "videoPublicId": video.publicId,
-    videoPoster
+    "videoPublicId": video.publicId
   }
 `)
 
@@ -235,7 +233,6 @@ export const JOURNAL_POST_BY_SLUG_QUERY = defineQuery(`
       excerpt[language == "es"][0].value
     ),
     video,
-    videoPoster,
     "videoCaption": coalesce(
       videoCaption[language == $locale][0].value,
       videoCaption[language == "es"][0].value

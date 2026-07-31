@@ -46,23 +46,20 @@ export function JournalCard({ post }: { post: JournalCardPost }) {
       }).format(new Date(post.publishedAt))
     : "";
 
-  // Image cascade: cover image → editor's video poster → a frame pulled from
-  // the video itself. Video-led articles often have no cover image at all, and
-  // an empty placeholder on the card would misrepresent them. The Cloudinary
-  // frame is vertical and gets object-cover cropped by the 4/3 container, which
-  // is the right trade here — a letterboxed thumbnail would look broken in the
-  // grid.
+  // Image cascade: cover image → a frame pulled from the video itself.
+  // Video-led articles often have no cover image at all, and an empty
+  // placeholder on the card would misrepresent them. The Cloudinary frame is
+  // vertical and gets object-cover cropped by the 4/3 container, which is the
+  // right trade here — a letterboxed thumbnail would look broken in the grid.
   const src = post.coverImage?.asset
     ? urlFor(post.coverImage).width(1000).height(750).fit("crop").url()
-    : post.videoPoster?.asset
-      ? urlFor(post.videoPoster).width(1000).height(750).fit("crop").url()
-      : post.videoPublicId
-        ? posterUrl(post.videoPublicId)
-        : null;
+    : post.videoPublicId
+      ? posterUrl(post.videoPublicId)
+      : null;
 
-  const alt = post.coverImage?.asset
-    ? (post.coverImage.alt ?? "")
-    : (post.videoPoster?.alt ?? "");
+  // The auto-frame has no editorial alt text of its own; the badge and title
+  // already say what it is, so it stays decorative.
+  const alt = post.coverImage?.alt ?? "";
 
   const href = post.slug ? `/${locale}/journal/${post.slug}` : `/${locale}/journal`;
 

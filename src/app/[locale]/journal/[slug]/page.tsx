@@ -24,23 +24,20 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "";
 const BCP47: Record<string, string> = { es: "es-ES", en: "en-GB" };
 
 /**
- * The 1200×630 share image: cover image → the editor's video poster → a frame
- * from the video itself. Video-led articles often carry no cover image, and
- * without the cascade they'd be shared with no image at all.
+ * The 1200×630 share image: cover image → a frame from the video itself.
+ * Video-led articles often carry no cover image, and without the fallback
+ * they'd be shared with no image at all.
  *
- * The two Sanity paths crop, which is safe because both fields have hotspot
- * enabled so the editor's focal point survives. The Cloudinary frame has no
- * hotspot to go by and is vertical, so it pads onto the brand background
- * instead — cropping a talking head to a landscape card decapitates it.
+ * The cover image crops, which is safe because the field has hotspot enabled so
+ * the editor's focal point survives. The Cloudinary frame has no hotspot to go
+ * by and is vertical, so it pads onto the brand background instead — cropping a
+ * talking head to a landscape card decapitates it.
  */
 function articleImage(
   post: NonNullable<JOURNAL_POST_BY_SLUG_QUERY_RESULT>,
 ): string | undefined {
   if (post.coverImage?.asset) {
     return urlFor(post.coverImage).width(1200).height(630).fit("crop").url();
-  }
-  if (post.videoPoster?.asset) {
-    return urlFor(post.videoPoster).width(1200).height(630).fit("crop").url();
   }
   if (post.video?.publicId) {
     return ogPosterUrl(post.video.publicId);

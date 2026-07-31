@@ -138,7 +138,6 @@ export function JournalArticle({ post }: { post: Post }) {
             >
               <JournalVideo
                 video={post.video}
-                poster={post.videoPoster}
                 caption={post.videoCaption}
                 title={post.title}
               />
