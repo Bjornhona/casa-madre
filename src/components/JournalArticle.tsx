@@ -83,7 +83,7 @@ export function JournalArticle({ post }: { post: Post }) {
 
           {/* Height comes from the video plus padding — never a fixed vh, so a
               tall portrait clip is never cropped. */}
-          <div className="relative z-10 mx-auto grid w-full max-w-[1240px] grid-cols-1 items-center gap-10 px-6 pt-36 pb-12 sm:px-10 lg:grid-cols-[1fr_auto] lg:gap-16 lg:px-12 lg:pt-40 lg:pb-20">
+          <div className="relative z-10 mx-auto grid w-full max-w-[1240px] grid-cols-1 items-center gap-10 pt-16 pb-0 sm:px-6 lg:grid-cols-[1fr_auto] lg:gap-16 sm:pt-22 lg:px-10">
             {/* Beside the video on desktop; below the band on smaller screens,
                 where there's no room for text next to a portrait clip. */}
             <motion.div
