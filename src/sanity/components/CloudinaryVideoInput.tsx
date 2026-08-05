@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useRef, useState} from 'react'
 import {Box, Button, Card, Flex, Spinner, Stack, Text} from '@sanity/ui'
 import {UploadIcon} from '@sanity/icons'
-import {set, type ObjectInputProps} from 'sanity'
+import {set, unset, type ObjectInputProps} from 'sanity'
 
 /**
  * Custom input for the `cloudinaryAsset` object type.
@@ -263,6 +263,21 @@ export function CloudinaryVideoInput(props: ObjectInputProps<CloudinaryAssetValu
     widgetRef.current.open()
   }, [onChange])
 
+  /**
+   * `unset()` clears the whole field, rather than setting an empty object: a
+   * `{_type: 'cloudinaryAsset'}` shell with no publicId would still read as a
+   * present value to anything testing `video` for truthiness, while failing to
+   * satisfy the field's own shape. Unsetting keeps "no video" a single state.
+   *
+   * The patch is relative to this input's own path, so it stays correct
+   * wherever the cloudinaryAsset type is used. It does NOT touch Cloudinary —
+   * see the note rendered below the buttons.
+   */
+  const removeVideo = useCallback(() => {
+    setError(null)
+    onChange(unset())
+  }, [onChange])
+
   const publicId = value?.publicId
 
   return (
@@ -316,6 +331,15 @@ export function CloudinaryVideoInput(props: ObjectInputProps<CloudinaryAssetValu
           disabled={readOnly || uploading}
           onClick={openWidget}
         />
+        {publicId && (
+          <Button
+            text="Quitar"
+            mode="bleed"
+            tone="critical"
+            disabled={readOnly || uploading}
+            onClick={removeVideo}
+          />
+        )}
         {uploading && (
           <Flex align="center" gap={2}>
             <Spinner muted size={1} />
@@ -336,6 +360,15 @@ export function CloudinaryVideoInput(props: ObjectInputProps<CloudinaryAssetValu
         <Box>
           <Text size={1} muted>
             Formatos aceptados: MP4, MOV, M4V y WEBM. Máximo 50 MB.
+          </Text>
+        </Box>
+      )}
+
+      {publicId && !error && (
+        <Box>
+          <Text size={1} muted>
+            «Quitar» solo desvincula el vídeo de este artículo: el archivo no se
+            borra de Cloudinary.
           </Text>
         </Box>
       )}

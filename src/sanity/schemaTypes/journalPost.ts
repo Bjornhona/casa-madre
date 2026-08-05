@@ -23,6 +23,17 @@ const MB = 1024 * 1024
 const WARN_BYTES = 25 * MB
 const MAX_BYTES = 50 * MB
 
+/**
+ * Does `videoCaption` hold any text? It's an internationalizedArrayString, so
+ * the value is one entry per language and an emptied entry can linger with a
+ * blank string.
+ */
+const hasCaptionText = (value: unknown): boolean =>
+  Array.isArray(value) &&
+  value.some(
+    (item) => ((item as {value?: string} | null)?.value ?? '').trim() !== '',
+  )
+
 export const journalPost = defineType({
   name: 'journalPost',
   title: 'Artículos del Journal',
@@ -127,10 +138,28 @@ export const journalPost = defineType({
     defineField({
       name: 'videoCaption',
       title: 'Pie de vídeo',
-      description: 'Texto que acompaña al vídeo (ES + EN).',
+      description:
+        'Texto que acompaña al vídeo (ES + EN). Si quitas el vídeo, este campo sigue visible mientras tenga texto, para que puedas borrarlo o reutilizarlo con el vídeo nuevo.',
       type: 'internationalizedArrayString',
       group: 'content',
-      hidden: ({parent}) => !parent?.video?.publicId,
+      // Stay visible while there's text but no video. Hiding an orphaned
+      // caption is what let it reappear silently under a different video
+      // later; this way the editor can see it and decide. Covers every route
+      // a video can leave by, not just the input's "Quitar" button.
+      hidden: ({parent}) =>
+        !parent?.video?.publicId && !hasCaptionText(parent?.videoCaption),
+      validation: (rule) =>
+        rule
+          .custom((value, context) => {
+            const parent = context.parent as
+              | {video?: {publicId?: string}}
+              | undefined
+            if (hasCaptionText(value) && !parent?.video?.publicId) {
+              return 'Este pie quedó sin vídeo. Bórralo o sube un vídeo nuevo.'
+            }
+            return true
+          })
+          .warning(),
     }),
     defineField({
       name: 'bodyEs',
