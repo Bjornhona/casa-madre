@@ -15,10 +15,6 @@ import { restrainedAnimation, heroScaleAnimation } from "@/lib/motion";
 
 type Post = NonNullable<JOURNAL_POST_BY_SLUG_QUERY_RESULT>;
 
-// Shared between the two heroes so the scrim over a cover image is identical
-// in both. Keeps the video's edge legible against a bright photo.
-const HERO_SCRIM = "bg-[linear-gradient(rgba(43,33,27,0.15),rgba(43,33,27,0.58))]";
-
 // One title scale, two tones: dark on the ivory content measure, cream on the
 // video band. Kept as whole literals so the no-video markup is untouched.
 const TITLE_ON_LIGHT =
@@ -49,9 +45,9 @@ export function JournalArticle({ post }: { post: Post }) {
 
   // A vertical interview can't share the stage with the landscape full-bleed
   // hero — it would pillarbox behind huge black bars or crop the speaker's
-  // head. Video articles get their own band instead: the portrait clip sits
-  // over it, with the cover image behind on desktop only. The cover image is
-  // still the card thumbnail and the OG image either way.
+  // head. Video articles get their own plain band instead, so the clip is the
+  // only thing on it at every breakpoint. `cover` is still read here because
+  // it remains the card thumbnail and the OG image.
   const hasVideo = Boolean(post.video?.publicId);
   const showCoverHero = Boolean(cover) && !hasVideo;
 
@@ -65,22 +61,6 @@ export function JournalArticle({ post }: { post: Post }) {
       {/* VIDEO HERO — landscape band, portrait clip contained over it */}
       {hasVideo && post.video ? (
         <section className="relative overflow-hidden bg-deep text-cream">
-          {/* Backdrop is desktop-only on purpose: a portrait clip nearly fills
-              a phone, so a cover image behind it would survive as slivers top
-              and bottom and read as a rendering bug. */}
-          {cover && (
-            <motion.div
-              variants={heroScale}
-              initial="hidden"
-              animate="show"
-              aria-hidden
-              className="absolute inset-0 hidden will-change-transform lg:block"
-            >
-              <Image src={cover} alt="" fill sizes="100vw" className="object-cover" />
-              <div className={`absolute inset-0 ${HERO_SCRIM}`} />
-            </motion.div>
-          )}
-
           {/* Height comes from the video plus padding — never a fixed vh, so a
               tall portrait clip is never cropped. */}
           <div className="relative z-10 mx-auto grid w-full max-w-[1240px] grid-cols-1 items-center gap-10 pt-16 pb-0 sm:px-6 lg:grid-cols-[1fr_auto] lg:gap-16 sm:pt-22 lg:px-10">

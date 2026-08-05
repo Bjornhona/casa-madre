@@ -88,7 +88,7 @@ export const journalPost = defineType({
       name: 'coverImage',
       title: 'Imagen de portada',
       description:
-        'La imagen del artículo: se usa en la tarjeta del Journal y al compartirlo en redes. Si el artículo tiene vídeo, además aparece de fondo detrás del vídeo en la cabecera (solo en ordenador); elige una foto amplia y despejada, que funcione bien en pequeño. Es opcional cuando hay vídeo: en ese caso se usa un fotograma del vídeo.',
+        'La imagen del artículo: se usa en la tarjeta del Journal y al compartirlo en redes. Elige una foto amplia y despejada, que funcione bien en pequeño. Conviene ponerla también en los artículos con vídeo, aunque allí no aparezca en la cabecera. Es opcional cuando hay vídeo: en ese caso se usa un fotograma del vídeo.',
       type: 'image',
       group: 'content',
       options: {hotspot: true},
