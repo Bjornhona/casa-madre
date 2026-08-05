@@ -13,7 +13,7 @@ import {
   type ActiveComposer,
 } from './composerStore'
 import {PropertyComposerContent, type PropertyDoc} from './generatePropertyAction'
-import {JournalComposerContent} from './generateDraftAction'
+import {JournalComposerContent, type ArticleDoc} from './generateDraftAction'
 
 /**
  * Studio-level host for the AI composer dialogs (registered as
@@ -77,9 +77,7 @@ function ComposerDialog({active}: {active: ActiveComposer}) {
         ) : (
           <JournalComposerContent
             stateKey={stateKey}
-            initialCategory={
-              (doc as {category?: string} | null)?.category ?? 'barrios'
-            }
+            doc={(doc as ArticleDoc | null) ?? null}
             patch={patch}
             toast={toast}
             onClose={closeComposer}

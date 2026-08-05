@@ -46,6 +46,20 @@ const CATEGORIES = [
   {value: 'guias', title: 'Guías'},
 ]
 
+const DEFAULT_CATEGORY = 'barrios'
+const CATEGORY_VALUES = new Set(CATEGORIES.map((c) => c.value))
+
+/**
+ * Keep the <Select> controlled. An article carrying a legacy category that is
+ * no longer in the list would otherwise mount the field with no matching
+ * option — it renders blank, and generating would write that stale value
+ * straight back now that category uses `set`.
+ */
+const knownCategory = (value: unknown): string =>
+  typeof value === 'string' && CATEGORY_VALUES.has(value)
+    ? value
+    : DEFAULT_CATEGORY
+
 // Short, reasonably-unique keys for array members (_key) — Studio requires them.
 const key = () => Math.random().toString(36).slice(2, 10)
 
@@ -58,8 +72,31 @@ type Draft = {
   bodyEn: string[]
 }
 
+/** The parts of a journalPost this action reads before overwriting them. */
+export type ArticleDoc = {
+  category?: string
+  title?: {value?: string | null}[] | null
+  excerpt?: {value?: string | null}[] | null
+  bodyEs?: unknown[] | null
+  bodyEn?: unknown[] | null
+}
+
 type PatchOperation = {execute: (patches: unknown[]) => void}
 type Toast = ReturnType<typeof useToast>
+
+/**
+ * Does the document already hold work the generator would destroy?
+ *
+ * The body arrays count by length alone: a single inserted image or video
+ * block is editorial work even when there isn't a word of prose around it.
+ */
+const hasExistingContent = (doc: ArticleDoc | null): boolean => {
+  if (!doc) return false
+  if (doc.bodyEs?.length || doc.bodyEn?.length) return true
+  return [doc.title, doc.excerpt].some((field) =>
+    field?.some((item) => (item?.value ?? '').trim() !== ''),
+  )
+}
 
 // Build an internationalizedArray (string/text) value keyed + tagged by language.
 const intl = (typeName: string, es: string, en: string) => [
@@ -84,12 +121,12 @@ const toBlocks = (paragraphs: string[]) =>
  */
 export function JournalComposerContent(props: {
   stateKey: string
-  initialCategory: string
+  doc: ArticleDoc | null
   patch: PatchOperation
   toast: Toast
   onClose: () => void
 }) {
-  const {stateKey, initialCategory, patch, toast, onClose} = props
+  const {stateKey, doc, patch, toast, onClose} = props
 
   // Local state drives the inputs; the store is only a reopen backup.
   const [topic, setTopicState] = useState(() =>
@@ -99,9 +136,12 @@ export function JournalComposerContent(props: {
     getComposerField(stateKey, 'notes', ''),
   )
   const [category, setCategoryState] = useState(() =>
-    getComposerField(stateKey, 'category', initialCategory),
+    knownCategory(getComposerField(stateKey, 'category', doc?.category)),
   )
   const [loading, setLoading] = useState(false)
+  // Deliberately not mirrored to the store: reopening should land on the form,
+  // never on a primed "replace everything" screen.
+  const [confirming, setConfirming] = useState(false)
 
   const setTopic = (value: string) => {
     setTopicState(value)
@@ -148,7 +188,13 @@ export function JournalComposerContent(props: {
             bodyEn: toBlocks(d.bodyEn),
           },
         },
-        {setIfMissing: {category, author: 'Casa Madre'}},
+        // `category` is an explicit choice in this dialog, so it must `set`.
+        // Under `setIfMissing` it silently no-opped on any article that
+        // already had a category — the dropdown looked like it did nothing.
+        // `author` stays `setIfMissing`: it's a default, not a choice, and
+        // must never clobber a human-set byline.
+        {set: {category}},
+        {setIfMissing: {author: 'Casa Madre'}},
       ])
 
       toast.push({
@@ -167,6 +213,67 @@ export function JournalComposerContent(props: {
     } finally {
       setLoading(false)
     }
+  }
+
+  /**
+   * The guardrail. Generating patches `set` over title, excerpt and both
+   * bodies, so on a document that already has content it silently destroys
+   * prose, images and videos. Confirm BEFORE generating — there's no point
+   * spending a generation on a draft the editor is about to throw away.
+   */
+  const requestGenerate = () => {
+    if (!topic.trim()) {
+      toast.push({status: 'warning', title: 'Indica un tema para el artículo.'})
+      return
+    }
+    if (hasExistingContent(doc)) {
+      setConfirming(true)
+      return
+    }
+    void handleGenerate()
+  }
+
+  const confirmGenerate = () => {
+    setConfirming(false)
+    void handleGenerate()
+  }
+
+  if (confirming) {
+    return (
+      <Stack space={4}>
+        <Card padding={4} radius={2} tone="caution" border>
+          <Stack space={4}>
+            <Text size={1} weight="semibold">
+              Este artículo ya tiene contenido
+            </Text>
+            <Text size={1}>
+              Al generar un borrador nuevo se reemplazará todo lo que hay ahora
+              en el título, el extracto y el cuerpo (ES y EN) —el texto que
+              hayas escrito y también las imágenes y los vídeos insertados— y
+              la categoría.
+            </Text>
+            <Text size={1} muted>
+              Si solo quieres retocar el artículo, cancela y edítalo a mano.
+            </Text>
+          </Stack>
+        </Card>
+
+        <Flex justify="flex-end" gap={3}>
+          <Button
+            text="Reemplazar contenido"
+            mode="ghost"
+            tone="critical"
+            onClick={confirmGenerate}
+          />
+          <Button
+            text="Cancelar"
+            tone="primary"
+            autoFocus
+            onClick={() => setConfirming(false)}
+          />
+        </Flex>
+      </Stack>
+    )
   }
 
   return (
@@ -226,7 +333,7 @@ export function JournalComposerContent(props: {
           text={loading ? 'Generando…' : 'Generar borrador'}
           tone="primary"
           icon={loading ? undefined : SparklesIcon}
-          onClick={handleGenerate}
+          onClick={requestGenerate}
           disabled={loading}
         />
       </Flex>
