@@ -49,6 +49,11 @@ export type PropertyDoc = {
   surface?: number
   bedrooms?: number
   bathrooms?: number
+  // The insert targets. Read only to label the buttons honestly — a field that
+  // already holds content is replaced, not filled.
+  title?: {value?: string | null}[] | null
+  description?: {value?: string | null}[] | null
+  highlights?: string[] | null
 }
 
 type PropertyDraft = {
@@ -61,6 +66,17 @@ type PropertyDraft = {
 
 type PatchOperation = {execute: (patches: unknown[]) => void}
 type Toast = ReturnType<typeof useToast>
+
+/** What a click actually did to a field, recorded at the moment it happened. */
+type InsertOutcome = 'inserted' | 'replaced'
+
+/**
+ * Captured at click time on purpose. `filled` is read from the live document,
+ * so it flips to true the instant the patch lands — reading it afterwards
+ * would label every insert as a replacement.
+ */
+const outcomeOf = (wasFilled: boolean): InsertOutcome =>
+  wasFilled ? 'replaced' : 'inserted'
 
 const OPERATION_LABELS: Record<string, string> = {
   venta: 'Venta',
@@ -85,23 +101,42 @@ const intl = (typeName: string, es: string, en: string) => [
 // Join generated paragraphs into the single text value the schema stores.
 const paragraphs = (parts: string[]) => parts.join('\n\n')
 
+// An internationalizedArray field counts as filled if any language has text.
+const hasIntlValue = (field?: {value?: string | null}[] | null): boolean =>
+  Boolean(field?.some((item) => (item?.value ?? '').trim() !== ''))
+
+const hasHighlights = (field?: string[] | null): boolean =>
+  Boolean(field?.some((item) => (item ?? '').trim() !== ''))
+
 function PreviewField(props: {
   label: string
   es: React.ReactNode
   en?: React.ReactNode
   onInsert: () => void
-  inserted: boolean
+  /** Set once this field has been written; says which it was. */
+  outcome?: InsertOutcome
+  /** The target field already holds content, so this click overwrites it. */
+  replaces: boolean
 }) {
-  const {label, es, en, onInsert, inserted} = props
+  const {label, es, en, onInsert, outcome, replaces} = props
+  const done = Boolean(outcome)
   return (
     <Card padding={3} radius={2} border>
       <Stack space={3}>
         <Flex align="center" justify="space-between">
           <Label size={1}>{label}</Label>
           <Button
-            text={inserted ? 'Insertado ✓' : 'Insertar'}
-            mode={inserted ? 'ghost' : 'default'}
-            tone={inserted ? 'positive' : 'primary'}
+            text={
+              outcome === 'replaced'
+                ? 'Reemplazado ✓'
+                : outcome === 'inserted'
+                  ? 'Insertado ✓'
+                  : replaces
+                    ? 'Reemplazar'
+                    : 'Insertar'
+            }
+            mode={done ? 'ghost' : 'default'}
+            tone={done ? 'positive' : 'primary'}
             fontSize={1}
             padding={2}
             onClick={onInsert}
@@ -158,6 +193,15 @@ export function PropertyComposerContent(props: {
   if (!doc?.neighbourhood?._ref) missing.push('Barrio')
   if (doc?.price == null) missing.push('Precio')
 
+  // Which targets already hold content. Read live from the document, so after
+  // an insert + "Volver a generar" the buttons correctly say "Reemplazar".
+  const filled = {
+    title: hasIntlValue(doc?.title),
+    description: hasIntlValue(doc?.description),
+    highlights: hasHighlights(doc?.highlights),
+  }
+  const anyFilled = filled.title || filled.description || filled.highlights
+
   const factsLine = doc
     ? [
         doc.operation && (OPERATION_LABELS[doc.operation] ?? doc.operation),
@@ -182,8 +226,10 @@ export function PropertyComposerContent(props: {
   const [result, setResultState] = useState<PropertyDraft | null>(() =>
     getComposerField(stateKey, 'result', null),
   )
-  const [inserted, setInsertedState] = useState<Record<string, boolean>>(() =>
-    getComposerField(stateKey, 'inserted', {}),
+  const [inserted, setInsertedState] = useState<
+    Record<string, InsertOutcome>
+  >(() =>
+    getComposerField<Record<string, InsertOutcome>>(stateKey, 'inserted', {}),
   )
   const [loading, setLoading] = useState(false)
 
@@ -196,7 +242,9 @@ export function PropertyComposerContent(props: {
     setComposerField(stateKey, 'result', value)
   }
   const setInserted = (
-    update: (state: Record<string, boolean>) => Record<string, boolean>,
+    update: (
+      state: Record<string, InsertOutcome>,
+    ) => Record<string, InsertOutcome>,
   ) => {
     setInsertedState((state) => {
       const next = update(state)
@@ -269,8 +317,11 @@ export function PropertyComposerContent(props: {
         },
       },
     ])
-    setInserted((s) => ({...s, title: true}))
-    toast.push({status: 'success', title: 'Título insertado'})
+    setInserted((s) => ({...s, title: outcomeOf(filled.title)}))
+    toast.push({
+      status: 'success',
+      title: filled.title ? 'Título reemplazado' : 'Título insertado',
+    })
   }
 
   const insertDescription = () => {
@@ -286,15 +337,25 @@ export function PropertyComposerContent(props: {
         },
       },
     ])
-    setInserted((s) => ({...s, description: true}))
-    toast.push({status: 'success', title: 'Descripción insertada'})
+    setInserted((s) => ({...s, description: outcomeOf(filled.description)}))
+    toast.push({
+      status: 'success',
+      title: filled.description
+        ? 'Descripción reemplazada'
+        : 'Descripción insertada',
+    })
   }
 
   const insertHighlights = () => {
     if (!result) return
     patch.execute([{set: {highlights: result.highlights}}])
-    setInserted((s) => ({...s, highlights: true}))
-    toast.push({status: 'success', title: 'Destacados insertados'})
+    setInserted((s) => ({...s, highlights: outcomeOf(filled.highlights)}))
+    toast.push({
+      status: 'success',
+      title: filled.highlights
+        ? 'Destacados reemplazados'
+        : 'Destacados insertados',
+    })
   }
 
   const insertAll = () => {
@@ -312,10 +373,17 @@ export function PropertyComposerContent(props: {
         },
       },
     ])
-    setInserted(() => ({title: true, description: true, highlights: true}))
+    // Per field, not per click: "Insertar todo" over a ficha that only has a
+    // título replaces that one and inserts the other two.
+    setInserted(() => ({
+      title: outcomeOf(filled.title),
+      description: outcomeOf(filled.description),
+      highlights: outcomeOf(filled.highlights),
+    }))
     toast.push({
       status: 'success',
-      title: 'Ficha insertada',
+      // Matches its own button, which reads "Reemplazar todo" on anyFilled.
+      title: anyFilled ? 'Ficha reemplazada' : 'Ficha insertada',
       description: 'Revisa y edita el contenido antes de publicar.',
     })
     clearComposer(stateKey)
@@ -359,6 +427,11 @@ export function PropertyComposerContent(props: {
                 Datos de la propiedad
               </Label>
               <Text size={1}>{factsLine}</Text>
+              <Text size={1} muted>
+                Estos datos se leen de la ficha de la propiedad; si algo no es
+                correcto, corrígelo allí. La IA solo puede escribir a partir de
+                ellos.
+              </Text>
             </Stack>
           </Card>
         )
@@ -415,14 +488,16 @@ export function PropertyComposerContent(props: {
             es={result.titleEs}
             en={result.titleEn}
             onInsert={insertTitle}
-            inserted={Boolean(inserted.title)}
+            outcome={inserted.title}
+            replaces={filled.title}
           />
           <PreviewField
             label="Descripción"
             es={<Paragraphs parts={result.descriptionEs} />}
             en={<Paragraphs parts={result.descriptionEn} />}
             onInsert={insertDescription}
-            inserted={Boolean(inserted.description)}
+            outcome={inserted.description}
+            replaces={filled.description}
           />
           <PreviewField
             label="Destacados"
@@ -436,10 +511,15 @@ export function PropertyComposerContent(props: {
               </Inline>
             }
             onInsert={insertHighlights}
-            inserted={Boolean(inserted.highlights)}
+            outcome={inserted.highlights}
+            replaces={filled.highlights}
           />
           <Flex justify="flex-end">
-            <Button text="Insertar todo" tone="positive" onClick={insertAll} />
+            <Button
+              text={anyFilled ? 'Reemplazar todo' : 'Insertar todo'}
+              tone="positive"
+              onClick={insertAll}
+            />
           </Flex>
         </Stack>
       )}
