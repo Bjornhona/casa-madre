@@ -205,9 +205,17 @@ export const journalPost = defineType({
     defineField({
       name: 'publishedAt',
       title: 'Fecha de publicación',
+      description:
+        'Marca la fecha que se muestra en el artículo y el orden del Journal, de más reciente a más antiguo. Se rellena sola con la fecha en que creas el documento: si lo has redactado con antelación, actualízala antes de publicarlo o saldrá con la fecha equivocada y enterrado en el índice.',
       type: 'datetime',
       group: 'meta',
       initialValue: () => new Date().toISOString(),
+      validation: (rule) =>
+        rule
+          .required()
+          .error(
+            'Indica la fecha de publicación: ordena el Journal y es la fecha que ve el lector.',
+          ),
     }),
     defineField({
       name: 'isPublished',
