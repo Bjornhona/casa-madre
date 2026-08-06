@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { useTranslations } from "next-intl";
 import { posterUrl, videoUrl } from "@/lib/cloudinary";
 import type { JOURNAL_POST_BY_SLUG_QUERY_RESULT } from "@/sanity/types.gen";
@@ -32,7 +33,16 @@ type JournalVideoProps = {
  * A 9:16 clip at a full editorial measure would stand over 1200px tall, so
  * portrait clips are capped and centred instead.
  *
- * It renders on the dark hero band, hence the light caption and focus tones.
+ * It renders on the dark hero band, hence the light focus tones.
+ *
+ * The caption is kept in a <figcaption> but visually hidden. These interviews
+ * have no subtitles or transcript, so it's the only text description of what
+ * the video contains — it has to survive for assistive tech and for crawlers,
+ * and sr-only keeps it real text in the server-rendered HTML rather than an
+ * attribute. It's wired to the <video> with aria-describedby so it's announced
+ * as the video's description, leaving aria-label short: the label already
+ * carries the article title, and appending the caption would make it a
+ * paragraph read out on every focus.
  */
 export function JournalVideo({
   video,
@@ -41,6 +51,7 @@ export function JournalVideo({
   portraitMaxWidth,
 }: JournalVideoProps) {
   const t = useTranslations("journal");
+  const captionId = useId();
 
   const publicId = video.publicId;
   if (!publicId) return null;
@@ -55,6 +66,11 @@ export function JournalVideo({
   const aspectRatio = ratio !== null ? `${width} / ${height}` : "9 / 16";
 
   const label = title ? t("videoLabel", { title }) : t("videoLabelGeneric");
+
+  // Most articles have no caption. Treating whitespace as absent keeps the
+  // empty case to a single state: no <figcaption>, and aria-describedby is
+  // omitted entirely rather than pointing at an id that isn't in the document.
+  const captionText = caption?.trim() ? caption.trim() : null;
 
   return (
     <figure
@@ -71,15 +87,16 @@ export function JournalVideo({
           playsInline
           preload="none"
           aria-label={label}
+          aria-describedby={captionText ? captionId : undefined}
           // Ring offset sits against the band rather than the backdrop image,
           // so focus stays legible however bright the editor's cover photo is.
           className="h-full w-full object-cover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream focus-visible:ring-offset-2 focus-visible:ring-offset-deep"
         />
       </div>
 
-      {caption && (
-        <figcaption className="mt-3 text-[14px] font-light leading-[1.6] text-sand">
-          {caption}
+      {captionText && (
+        <figcaption id={captionId} className="sr-only">
+          {captionText}
         </figcaption>
       )}
     </figure>

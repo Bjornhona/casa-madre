@@ -137,9 +137,9 @@ export const journalPost = defineType({
     }),
     defineField({
       name: 'videoCaption',
-      title: 'Pie de vídeo',
+      title: 'Descripción del vídeo',
       description:
-        'Texto que acompaña al vídeo (ES + EN). Si quitas el vídeo, este campo sigue visible mientras tenga texto, para que puedas borrarlo o reutilizarlo con el vídeo nuevo.',
+        'Describe en una o dos frases lo que se ve y se cuenta en el vídeo (ES + EN). No aparece en la página: lo leen los lectores de pantalla, para quien no puede ver el vídeo, y los buscadores. Como las entrevistas no llevan subtítulos, este texto es la única descripción de su contenido. Si quitas el vídeo, este campo sigue visible mientras tenga texto, para que puedas borrarlo o reutilizarlo con el vídeo nuevo.',
       type: 'internationalizedArrayString',
       group: 'content',
       // Stay visible while there's text but no video. Hiding an orphaned
@@ -155,7 +155,7 @@ export const journalPost = defineType({
               | {video?: {publicId?: string}}
               | undefined
             if (hasCaptionText(value) && !parent?.video?.publicId) {
-              return 'Este pie quedó sin vídeo. Bórralo o sube un vídeo nuevo.'
+              return 'Esta descripción quedó sin vídeo. Bórrala o sube un vídeo nuevo.'
             }
             return true
           })
