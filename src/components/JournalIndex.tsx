@@ -57,6 +57,22 @@ export function JournalIndex({ posts }: { posts: JOURNAL_POSTS_QUERY_RESULT }) {
   const [query, setQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
+  /**
+   * Has the user changed the filters or revealed more?
+   *
+   * The grid's first reveal is a `whileInView` stagger with `once: true`. Once
+   * that has fired the observer is done, and the parent has no `animate` prop
+   * for later children to inherit — so a card remounted by a filter change
+   * mounts at `initial="hidden"` and nothing ever drives it to `show`. It
+   * occupies layout and renders at opacity 0.
+   *
+   * After the first interaction the list is therefore driven by `animate`
+   * instead, which every newly mounted child inherits. The untouched
+   * page-load behaviour is unchanged: until this flips, it's still the same
+   * scroll-triggered stagger.
+   */
+  const [interacted, setInteracted] = useState(false);
+
   // Index of the first article revealed by the last "Ver más", so focus can
   // land there once it's rendered instead of being dropped at the top. A ref
   // rather than state: it's a one-shot instruction to the effect below, and
@@ -91,7 +107,9 @@ export function JournalIndex({ posts }: { posts: JOURNAL_POSTS_QUERY_RESULT }) {
   const visible = filtered.slice(0, visibleCount);
   const hasMore = filtered.length > visible.length;
 
+  // "Ver más" mounts fresh cards too, so it takes the same path.
   const showMore = () => {
+    setInteracted(true);
     pendingFocus.current = visibleCount;
     setVisibleCount((count) => count + PAGE_SIZE);
   };
@@ -100,16 +118,19 @@ export function JournalIndex({ posts }: { posts: JOURNAL_POSTS_QUERY_RESULT }) {
   // the point the filter changes rather than in an effect reacting to it —
   // these are the only three routes that can change either input.
   const selectCategory = (value: CategoryFilter) => {
+    setInteracted(true);
     setCategory(value);
     setVisibleCount(PAGE_SIZE);
   };
 
   const changeQuery = (value: string) => {
+    setInteracted(true);
     setQuery(value);
     setVisibleCount(PAGE_SIZE);
   };
 
   const resetFilters = () => {
+    setInteracted(true);
     setCategory("all");
     setQuery("");
     setVisibleCount(PAGE_SIZE);
@@ -161,7 +182,11 @@ export function JournalIndex({ posts }: { posts: JOURNAL_POSTS_QUERY_RESULT }) {
           <motion.ul
             variants={container}
             initial="hidden"
-            whileInView="show"
+            // Scroll-triggered on first paint; driven directly once the user
+            // has filtered, so remounted cards inherit a target. See the
+            // `interacted` comment above.
+            animate={interacted ? "show" : undefined}
+            whileInView={interacted ? undefined : "show"}
             viewport={{ once: true, amount: 0.1 }}
             className="mt-14 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3"
           >
