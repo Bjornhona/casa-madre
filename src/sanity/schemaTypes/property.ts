@@ -152,6 +152,36 @@ export const property = defineType({
       validation: (rule) => rule.min(1).warning("Añade al menos una imagen"),
     }),
     defineField({
+      name: "status",
+      title: "Estado",
+      description:
+        "Controla la etiqueta que se muestra sobre la foto en el listado. Una propiedad vendida sigue visible a propósito, como parte del historial de operaciones. Para retirar una propiedad por completo, desactiva «Publicado».",
+      type: "string",
+      group: "details",
+      options: {
+        list: [
+          { title: "Disponible (Available)", value: "disponible" },
+          { title: "Reservado (Reserved)", value: "reservado" },
+          { title: "Vendido o alquilado (Sold or rented)", value: "vendido" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "disponible",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "ocultarPrecio",
+      title: "Ocultar el precio",
+      description:
+        "El precio de una operación cerrada es información comercial sensible. Marca esta casilla para mostrar «Precio no disponible» en lugar de la cifra.",
+      type: "boolean",
+      group: "details",
+      initialValue: false,
+      // Only meaningful once an operation is closed or under offer.
+      hidden: ({ parent }) =>
+        parent?.status !== "reservado" && parent?.status !== "vendido",
+    }),
+    defineField({
       name: "isPublic",
       title: "Publicado",
       description: "Desactivado cuando es una propiedad privada.",
@@ -164,10 +194,11 @@ export const property = defineType({
     select: {
       title: "title",
       operation: "operation",
+      status: "status",
       neighbourhood: "neighbourhood.name",
       media: "gallery.0",
     },
-    prepare({ title, operation, neighbourhood, media }) {
+    prepare({ title, operation, status, neighbourhood, media }) {
       const titleArr = title as
         | Array<{ language?: string; value?: string }>
         | undefined;
@@ -176,9 +207,18 @@ export const property = defineType({
         titleArr?.[0]?.value ||
         "Propiedad sin título";
       const op = operation === "alquiler" ? "Alquiler" : "Venta";
+      // Only a closed or reserved operation is worth calling out in the list.
+      const statusLabel =
+        status === "reservado"
+          ? "Reservado"
+          : status === "vendido"
+            ? operation === "alquiler"
+              ? "Alquilado"
+              : "Vendido"
+            : null;
       return {
         title: label,
-        subtitle: [op, neighbourhood].filter(Boolean).join(" · "),
+        subtitle: [op, neighbourhood, statusLabel].filter(Boolean).join(" · "),
         media,
       };
     },

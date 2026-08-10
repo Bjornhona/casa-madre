@@ -8,6 +8,8 @@ import { BedDouble, Bath, Maximize2 } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { CTALink } from "@/components/ui/CTALink";
+import { StatusBadge } from "@/components/ui/StatusBadge";
+import { isClosed, statusLabelKey } from "@/lib/property-status";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 import { contactoHref } from "@/lib/contacto-href";
 import { urlFor } from "@/sanity/lib/image";
@@ -51,10 +53,14 @@ export function Propiedades({
     () => Array.from(new Set(properties.map((p) => p.neighbourhood))),
     [properties],
   );
-  const priceCeiling = useMemo(
-    () => (properties.length ? Math.max(...properties.map((p) => p.price)) : 0),
-    [properties],
-  );
+  // Properties with a hidden price come back with `price: null` from GROQ, so
+  // they can't set the ceiling and can't be measured against the slider.
+  const priceCeiling = useMemo(() => {
+    const known = properties
+      .map((p) => p.price)
+      .filter((price): price is number => price != null);
+    return known.length ? Math.max(...known) : 0;
+  }, [properties]);
 
   // Stable _id → fallback image, by the property's position in the full set.
   const fallbackFor = useMemo(() => {
@@ -83,7 +89,8 @@ export function Propiedades({
   const visible = properties.filter((p) => {
     if (operation !== "all" && p.operation !== operation) return false;
     if (zone !== "all" && p.neighbourhood !== zone) return false;
-    if (p.price > maxPrice) return false;
+    // A hidden price can't be compared, so it never fails the price filter.
+    if (p.price != null && p.price > maxPrice) return false;
     if (bedrooms !== "all") {
       const beds = p.bedrooms ?? 0;
       if (bedrooms === 4 ? beds < 4 : beds !== bedrooms) return false;
@@ -213,6 +220,9 @@ export function Propiedades({
             ? urlFor(p.image).width(1000).height(750).fit("crop").url()
             : (fallbackFor.get(p._id) ?? FALLBACK_POOL[0]);
 
+          const statusKey = statusLabelKey(p.status, p.operation);
+          const closed = isClosed(p.status);
+
           return (
             <motion.li
               key={p._id}
@@ -225,11 +235,18 @@ export function Propiedades({
                   alt={p.image?.alt ?? ""}
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover"
+                  // A closed operation sits a step back from the live listings:
+                  // slightly desaturated, still a real photograph.
+                  className={`object-cover ${closed ? "saturate-[0.65]" : ""}`}
                 />
                 <span className="absolute left-4 top-4 rounded-card bg-cream/90 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-brown backdrop-blur-sm">
                   {p.neighbourhood}
                 </span>
+                {statusKey && (
+                  <StatusBadge className="absolute right-4 top-4">
+                    {tp(`status.${statusKey}`)}
+                  </StatusBadge>
+                )}
               </div>
 
               <div className="flex flex-1 flex-col gap-4 p-6">
@@ -237,8 +254,14 @@ export function Propiedades({
                   <p className="text-[11px] uppercase tracking-[0.16em] text-clay">
                     {p.operation === "venta" ? tf("sale") : tf("rent")}
                   </p>
-                  <p className="mt-1 font-serif text-[26px] leading-none text-brown">
-                    {currency.format(p.price)}
+                  <p
+                    className={`mt-1 font-serif leading-none text-brown ${
+                      p.price == null ? "text-[20px] text-brown/70" : "text-[26px]"
+                    }`}
+                  >
+                    {p.price == null
+                      ? tp("status.priceHidden")
+                      : currency.format(p.price)}
                   </p>
                 </div>
 

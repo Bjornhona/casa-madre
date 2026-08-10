@@ -6,6 +6,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
 import { CTALink } from "@/components/ui/CTALink";
+import { StatusBadge } from "@/components/ui/StatusBadge";
+import { statusLabelKey } from "@/lib/property-status";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 import { contactoHref } from "@/lib/contacto-href";
 import { urlFor } from "@/sanity/lib/image";
@@ -30,6 +32,14 @@ export function PropertyView({ property }: { property: Property }) {
 
   const operationLabel = t(`operationLabels.${property.operation}`);
   const typeLabel = t(`typeLabels.${property.propertyType}`);
+  const statusKey = statusLabelKey(property.status, property.operation);
+
+  // `ocultarPrecio` is applied in GROQ, so a hidden price is null here and
+  // never reaches the client payload, the metadata or the structured data.
+  const priceLabel =
+    property.price == null
+      ? t("status.priceHidden")
+      : currency.format(property.price);
 
   // Real gallery images, or warm placeholders until the client supplies photos.
   const realGallery = (property.gallery ?? []).filter((g) => g?.asset);
@@ -96,14 +106,19 @@ export function PropertyView({ property }: { property: Property }) {
           className="absolute inset-0 bg-[linear-gradient(rgba(43,33,27,0.15),rgba(43,33,27,0.58))]"
         />
         <div className="relative z-10 mx-auto flex h-full max-w-[1240px] flex-col justify-end px-6 pb-10 sm:px-10 lg:px-12">
-          <motion.p
+          {/* The card puts the badge top-right; here the fixed SiteNav owns that
+              corner, so it sits opposite the caption on the same baseline. */}
+          <motion.div
             initial={reduce ? { opacity: 1 } : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-            className="font-serif text-[20px] tracking-[0.01em] text-sand [text-shadow:0_2px_24px_rgba(43,33,27,0.5)] sm:text-[24px]"
+            className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3"
           >
-            {property.neighbourhood} · {operationLabel}
-          </motion.p>
+            <p className="font-serif text-[20px] tracking-[0.01em] text-sand [text-shadow:0_2px_24px_rgba(43,33,27,0.5)] sm:text-[24px]">
+              {property.neighbourhood} · {operationLabel}
+            </p>
+            {statusKey && <StatusBadge>{t(`status.${statusKey}`)}</StatusBadge>}
+          </motion.div>
         </div>
       </section>
 
@@ -135,8 +150,14 @@ export function PropertyView({ property }: { property: Property }) {
             </motion.div>
 
             <motion.div variants={item} className="mt-5 flex items-baseline gap-3">
-              <span className="font-serif text-[34px] leading-none text-brown sm:text-[42px]">
-                {currency.format(property.price)}
+              <span
+                className={
+                  property.price == null
+                    ? "font-serif text-[24px] leading-none text-brown/70 sm:text-[28px]"
+                    : "font-serif text-[34px] leading-none text-brown sm:text-[42px]"
+                }
+              >
+                {priceLabel}
               </span>
               <span className="text-[11px] uppercase tracking-[0.16em] text-clay">
                 {operationLabel}

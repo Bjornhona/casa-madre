@@ -7,8 +7,25 @@ import {defineQuery} from 'next-sanity'
  * Pass `$locale` ("es" | "en") from the request.
  */
 
+/**
+ * Available properties first, closed ones last, keeping the price ordering
+ * within each group — a buyer scrolling a price-ordered list shouldn't hit
+ * dead listings at random. `order()` runs on the document before the
+ * projection, so nulling `price` below for hidden prices does not disturb
+ * the sort. A missing `status` (legacy documents) falls through to 0 and is
+ * treated as available.
+ *
+ * `ocultarPrecio` is honoured in GROQ rather than at render time: these
+ * results are serialized into the client payload, so a price merely left
+ * unrendered would still be readable in view-source.
+ */
 export const PROPERTIES_QUERY = defineQuery(`
-  *[_type == "property" && isPublic == true] | order(price desc) {
+  *[_type == "property" && isPublic == true]
+    | order(select(
+        status == "vendido" => 2,
+        status == "reservado" => 1,
+        0
+      ) asc, price desc) {
     _id,
     "title": coalesce(
       title[language == $locale][0].value,
@@ -17,8 +34,10 @@ export const PROPERTIES_QUERY = defineQuery(`
     "slug": slug.current,
     operation,
     propertyType,
+    status,
+    ocultarPrecio,
     "neighbourhood": neighbourhood->name,
-    price,
+    "price": select(ocultarPrecio == true => null, price),
     surface,
     bedrooms,
     bathrooms,
@@ -119,7 +138,9 @@ export const PUBLISHED_TESTIMONIALS_QUERY = defineQuery(`
 `)
 
 // Slugs of every public property — used by generateStaticParams for the
-// individual property pages.
+// individual property pages. Deliberately not filtered by `status`: a sold or
+// reserved property keeps its page and its sitemap entry, which is the whole
+// point of leaving it visible as a track record.
 export const PROPERTY_SLUGS_QUERY = defineQuery(`
   *[_type == "property" && isPublic == true && defined(slug.current)] {
     "slug": slug.current
@@ -137,9 +158,11 @@ export const PROPERTY_BY_SLUG_QUERY = defineQuery(`
       title[language == "es"][0].value
     ),
     "slug": slug.current,
-    price,
+    "price": select(ocultarPrecio == true => null, price),
     operation,
     propertyType,
+    status,
+    ocultarPrecio,
     "neighbourhood": neighbourhood->name,
     surface,
     bedrooms,

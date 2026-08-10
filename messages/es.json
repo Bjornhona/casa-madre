@@ -385,7 +385,13 @@
     "ctaBody": "Cuéntanos qué buscas y te acompañamos en cada paso del camino.",
     "ctaPrimary": "Solicitar información",
     "ctaWhatsapp": "Contactar por WhatsApp",
-    "cardViewLabel": "Ver propiedad"
+    "cardViewLabel": "Ver propiedad",
+    "status": {
+      "reservado": "Reservado",
+      "vendido": "Vendido",
+      "alquilado": "Alquilado",
+      "priceHidden": "Precio no disponible"
+    }
   },
   "journal": {
     "kicker": "Journal",

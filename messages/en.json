@@ -385,7 +385,13 @@
     "ctaBody": "Tell us what you're looking for and we'll guide you every step of the way.",
     "ctaPrimary": "Request information",
     "ctaWhatsapp": "Contact on WhatsApp",
-    "cardViewLabel": "View property"
+    "cardViewLabel": "View property",
+    "status": {
+      "reservado": "Reserved",
+      "vendido": "Sold",
+      "alquilado": "Rented",
+      "priceHidden": "Price on request"
+    }
   },
   "journal": {
     "kicker": "Journal",

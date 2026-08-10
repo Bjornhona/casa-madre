@@ -984,7 +984,7 @@
         "value": {
           "type": "string"
         },
-        "optional": true
+        "optional": false
       },
       "isPublished": {
         "type": "objectAttribute",
@@ -1356,6 +1356,34 @@
               }
             }
           }
+        },
+        "optional": true
+      },
+      "status": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "disponible"
+            },
+            {
+              "type": "string",
+              "value": "reservado"
+            },
+            {
+              "type": "string",
+              "value": "vendido"
+            }
+          ]
+        },
+        "optional": false
+      },
+      "ocultarPrecio": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
         },
         "optional": true
       },
