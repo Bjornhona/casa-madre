@@ -35,7 +35,7 @@ export const agent = defineType({
       name: 'phone',
       title: 'Teléfono',
       description:
-        'Formato internacional, solo dígitos, p. ej. +34676496919. Se usa para WhatsApp.',
+        'Formato internacional, solo dígitos, p. ej. +34123456789. Se usa para WhatsApp.',
       type: 'string',
       validation: (rule) =>
         rule

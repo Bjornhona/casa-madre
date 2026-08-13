@@ -8,10 +8,10 @@ export const LEGAL_DATA = {
   brandName: "Casa Madre",
 
   // Registered legal name (razón social) — PENDIENTE: confirmar
-  legalName: "Evelyn Ribera",
+  legalName: process.env.CLIENT_LEGAL_NAME,
 
   // NIF
-  taxId: "38110222G",
+  taxId: process.env.CLIENT_TAX_ID,
 
   // Registered address — PENDIENTE: confirmar
   address: {
@@ -23,27 +23,23 @@ export const LEGAL_DATA = {
   },
 
   // Contact (reuse env where the site already uses them)
-  email: "info@casamadreliving.com",
-  phone: "+34619317312",
+  email: process.env.CLIENT_CONTACT_EMAIL,
+  phone: "+" + process.env.CLIENT_CONTACT_PHONE,
 
   // Mercantile registry data, if applicable — PENDIENTE (may not apply if autónoma)
   registry: "",
 
   // Domain (no protocol)
-  domain: "casamadreliving.es",
+  domain: "casamadreliving.com",
 
   // Date these texts were last reviewed — update on each legal change
   lastUpdated: "2026-07-19",
 
   credentials: {
-    aicat: "14044",
-    npiff: "2213"
+    aicat: process.env.CLIENT_AICAT,
+    npiff: process.env.CLIENT_NPIFF
   }
 } as const;
-
-/** True for unfilled fields (e.g. "[PENDIENTE: NIF/CIF]"). */
-export const isPending = (value: string): boolean =>
-  value.startsWith("[PENDIENTE");
 
 /** One-line postal address built from LEGAL_DATA (PENDIENTE parts stay visible). */
 export const formatLegalAddress = (): string => {

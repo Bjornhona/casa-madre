@@ -1,4 +1,4 @@
-import { LEGAL_DATA, isPending } from "@/lib/legal-data";
+import { LEGAL_DATA } from "@/lib/legal-data";
 
 /**
  * RealEstateAgent + LocalBusiness structured data.
@@ -13,10 +13,10 @@ export function JsonLd({ description }: { description: string }) {
   const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP;
   const addr = LEGAL_DATA.address;
 
-  const email = isPending(LEGAL_DATA.email)
-    ? process.env.NEXT_PUBLIC_CONTACT_EMAIL
-    : LEGAL_DATA.email;
-  const telephone = !isPending(LEGAL_DATA.phone)
+  const email = LEGAL_DATA.email
+    ? LEGAL_DATA.email
+    : process.env.NEXT_PUBLIC_CONTACT_EMAIL;
+  const telephone = LEGAL_DATA.phone
     ? LEGAL_DATA.phone
     : whatsapp
       ? `+${whatsapp}`
@@ -26,15 +26,15 @@ export function JsonLd({ description }: { description: string }) {
     "@context": "https://schema.org",
     "@type": ["RealEstateAgent", "LocalBusiness"],
     name: LEGAL_DATA.brandName,
-    ...(isPending(LEGAL_DATA.legalName) ? {} : { legalName: LEGAL_DATA.legalName }),
-    ...(isPending(LEGAL_DATA.taxId) ? {} : { taxID: LEGAL_DATA.taxId }),
+    ...(LEGAL_DATA.legalName ? { legalName: LEGAL_DATA.legalName } : {}),
+    ...(LEGAL_DATA.taxId ? { taxID: LEGAL_DATA.taxId } : {}),
     description,
     url: siteUrl,
     areaServed: "Barcelona",
     address: {
       "@type": "PostalAddress",
-      ...(isPending(addr.street) ? {} : { streetAddress: addr.street }),
-      ...(isPending(addr.postalCode) ? {} : { postalCode: addr.postalCode }),
+      ...(addr.street ? { streetAddress: addr.street } : {}),
+      ...(addr.postalCode ? { postalCode: addr.postalCode } : {}),
       addressLocality: addr.city,
       addressRegion: addr.region,
       addressCountry: "ES",
