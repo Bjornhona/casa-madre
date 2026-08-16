@@ -69,9 +69,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ivory:  #F4EDE3;
+  --color-ivory:  #D9C6AE; // #F4EDE3
   --color-cream:  #FBF6EF;
-  --color-sand:   #D7C1A8;
+  --color-sand: #D9C6AE;  // #D7C1A8
+  --color-taupe: #A88E73;
+    --color-olive: #74775B;
+  --color-terracotta: #A96948;
   --color-clay:   #A06A43;
   --color-brown:  #6B3E21;
   --color-deep:   #2B211B;
