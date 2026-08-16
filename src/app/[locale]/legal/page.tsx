@@ -35,7 +35,9 @@ export default async function LegalNoticePage({
     { label: t("fields.registry"), value: LEGAL_DATA.registry },
     { label: t("fields.domain"), value: LEGAL_DATA.domain },
     { label: t("fields.credentials.title"), value: t("fields.credentials.aicat") + LEGAL_DATA.credentials.aicat + "\n\n" + t("fields.credentials.anpiff") + LEGAL_DATA.credentials.npiff }
-  ];
+  ].filter(
+    (item): item is { label: string; value: string } => Boolean(item.value),
+  );
 
   const sections: LegalSection[] = [
     { heading: t("aviso.ownerTitle"), details: ownerDetails.filter(item => item.value) },
@@ -45,6 +47,9 @@ export default async function LegalNoticePage({
     { heading: t("aviso.liabilityTitle"), paragraphs: [t("aviso.liabilityBody")] },
     { heading: t("aviso.lawTitle"), paragraphs: [t("aviso.lawBody")] },
   ];
+
+  console.log(ownerDetails);
+  console.log(sections);
 
   return (
     <>
