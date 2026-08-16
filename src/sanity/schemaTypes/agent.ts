@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {UsersIcon} from '@sanity/icons'
+import {warnIfEmpty} from './validation'
 
 /**
  * Agent (Agente) — team members shown as personal contact cards on the
@@ -28,8 +29,10 @@ export const agent = defineType({
     defineField({
       name: 'email',
       title: 'Email',
+      description:
+        'Canal de contacto del agente. Aparece en la ficha PDF de las propiedades, por lo que no puede quedar vacío.',
       type: 'string',
-      validation: (rule) => rule.email(),
+      validation: (rule) => rule.required().email(),
     }),
     defineField({
       name: 'phone',
@@ -41,6 +44,21 @@ export const agent = defineType({
         rule
           .required()
           .regex(/^\+?\d{7,15}$/, {name: 'número internacional, solo dígitos'}),
+    }),
+    defineField({
+      name: 'aicat',
+      title: 'Número AICAT',
+      description:
+        "Número de registro en el Registre d'Agents Immobiliaris de Catalunya. Debe aparecer en la publicidad de las propiedades.",
+      type: 'string',
+      validation: (rule) =>
+        rule
+          .custom(
+            warnIfEmpty(
+              'El número AICAT es obligatorio en la publicidad de propiedades en Catalunya.',
+            ),
+          )
+          .warning(),
     }),
     defineField({
       name: 'photo',

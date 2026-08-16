@@ -42,7 +42,7 @@ Names and purpose only; get values from the project owner or the hosting dashboa
 - `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS`, `CONTACT_TO` — contact-form delivery. Port 587 = STARTTLS, 465 = implicit TLS. **If unset, `/api/contact` logs and returns success without sending** — verify real delivery before launch.
 - `NEXT_PUBLIC_SITE_URL` — canonical/OG/sitemap base, no trailing slash.
 - `NEXT_PUBLIC_WHATSAPP`, `NEXT_PUBLIC_CONTACT_EMAIL` — public contact channels.
-- `CLIENT_LEGAL_NAME`, `CLIENT_TAX_ID`, `CLIENT_CONTACT_EMAIL`, `CLIENT_CONTACT_PHONE`, `CLIENT_AICAT`, `CLIENT_NPIFF` — legally required disclosures rendered on `/legal` and `/privacy`. Personal data: keep out of source control.
+- `CLIENT_LEGAL_NAME`, `CLIENT_TAX_ID`, `CLIENT_CONTACT_EMAIL`, `CLIENT_CONTACT_PHONE`, `CLIENT_NPIFF` — legally required disclosures rendered on `/legal` and `/privacy`. Personal data: keep out of source control. AICAT numbers are **not** here: they are individual registrations, held on each `agent` document in the Studio.
 - `ANTHROPIC_API_KEY` — **server-only, billed.** See AI integration below.
 - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` — public; appears in every delivery URL.
 - `NEXT_PUBLIC_COMING_SOON` — `"true"` rewrites all public routes to a holding page. `NEXT_PUBLIC_*` vars are inlined at build time; redeploy after changing.

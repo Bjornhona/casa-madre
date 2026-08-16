@@ -453,7 +453,8 @@
     },
     "agents": {
       "title": "Habla con nosotras",
-      "whatsapp": "WhatsApp"
+      "whatsapp": "WhatsApp",
+      "aicat": "AICAT {number}"
     },
     "referencia": {
       "pill": "En referencia a",
@@ -543,8 +544,9 @@
       "domain": "Dominio",
       "credentials": {
         "title": "Datos identificativos",
-        "aicat": "Agente inmobiliario inscrito en el Registro de Agentes Inmobiliarios de Catalunya, núm. AICAT ",
-        "anpiff": "Inscrito en el Registro de Asociación Nacional de Profesionales Inmobiliarios, Financieros y Fiscales, núm. ANPIFF "
+        "anpiff": "Inscrito en el Registro de Asociación Nacional de Profesionales Inmobiliarios, Financieros y Fiscales, núm. ANPIFF ",
+        "aicatLabel": "Registro AICAT",
+        "aicatIntro": "Agentes inmobiliarias inscritas en el Registre d'Agents Immobiliaris de Catalunya:"
       }
     },
     "aviso": {

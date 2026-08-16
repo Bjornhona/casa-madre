@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { HomeIcon } from "@sanity/icons";
+import { warnIfEmpty } from "./validation";
 
 /**
  * Property (Propiedad) — manually entered listings for the Propiedades section.
@@ -95,7 +96,18 @@ export const property = defineType({
     }),
     defineField({
       name: "surface",
-      title: "Superficie (m²)",
+      title: "Superficie construida (m²)",
+      description:
+        "Superficie construida: incluye muros, tabiques y la parte proporcional de zonas comunes. Es la que se muestra en el listado y en los filtros. La superficie útil (solo el interior pisable) se indica aparte.",
+      type: "number",
+      group: "details",
+      validation: (rule) => rule.positive(),
+    }),
+    defineField({
+      name: "surfaceUtil",
+      title: "Superficie útil (m²)",
+      description:
+        "Superficie interior pisable, sin muros ni zonas comunes. Siempre menor que la construida.",
       type: "number",
       group: "details",
       validation: (rule) => rule.positive(),
@@ -113,6 +125,75 @@ export const property = defineType({
       type: "number",
       group: "details",
       validation: (rule) => rule.min(0).integer(),
+    }),
+    defineField({
+      name: "agent",
+      title: "Agente responsable",
+      description:
+        "Determina el bloque de contacto y el número AICAT que aparecen en la ficha PDF de esta propiedad.",
+      type: "reference",
+      group: "details",
+      to: [{ type: "agent" }],
+      // Warning, not required: the existing listings predate this field and
+      // must not become invalid documents overnight.
+      validation: (rule) =>
+        rule
+          .custom(
+            warnIfEmpty(
+              "Sin agente responsable, la ficha PDF se queda sin datos de contacto ni número AICAT.",
+            ),
+          )
+          .warning(),
+    }),
+    defineField({
+      name: "energyRating",
+      title: "Certificado energético",
+      description:
+        "Calificación de eficiencia energética. El RD 390/2021 obliga a mostrarla en toda publicidad de venta y alquiler.",
+      type: "string",
+      group: "details",
+      options: {
+        list: [
+          { title: "A", value: "A" },
+          { title: "B", value: "B" },
+          { title: "C", value: "C" },
+          { title: "D", value: "D" },
+          { title: "E", value: "E" },
+          { title: "F", value: "F" },
+          { title: "G", value: "G" },
+          { title: "En trámite", value: "En trámite" },
+          { title: "Exento", value: "Exento" },
+        ],
+      },
+      validation: (rule) =>
+        rule
+          .custom(
+            warnIfEmpty(
+              "El RD 390/2021 exige indicar la calificación energética en la publicidad de venta y alquiler.",
+            ),
+          )
+          .warning(),
+    }),
+    defineField({
+      name: "energyCertNumber",
+      title: "Nº registro certificado",
+      description:
+        "Número de registro del certificado de eficiencia energética (ICAEN). Opcional.",
+      type: "string",
+      group: "details",
+    }),
+    defineField({
+      name: "referenciaCatastral",
+      title: "Referencia catastral",
+      type: "string",
+      group: "details",
+    }),
+    defineField({
+      name: "cedulaHabitabilidad",
+      title: "Cédula de habitabilidad",
+      description: "Número de la cédula de habitabilidad, si está disponible.",
+      type: "string",
+      group: "details",
     }),
     defineField({
       name: "description",

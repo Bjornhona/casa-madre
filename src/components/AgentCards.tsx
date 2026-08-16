@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Mail, MessageCircle, Phone } from "lucide-react";
 import { fadeUp } from "@/lib/motion";
+import { agentPhoneDigits, formatAgentPhone } from "@/lib/format-phone";
 import { urlFor } from "@/sanity/lib/image";
 import type { AGENTS_QUERY_RESULT } from "@/sanity/types.gen";
 
@@ -39,7 +40,7 @@ export function AgentCards({ agents }: { agents: AGENTS_QUERY_RESULT }) {
           // Phone is stored as international digits with an optional "+"
           // (see the agent schema). Both the call and WhatsApp rows derive
           // from it: tel/display carry the "+", wa.me wants bare digits.
-          const phoneDigits = agent.phone?.replace(/^\+/, "");
+          const phoneDigits = agentPhoneDigits(agent.phone);
 
           return (
             <li
@@ -105,8 +106,11 @@ export function AgentCards({ agents }: { agents: AGENTS_QUERY_RESULT }) {
                       aria-hidden
                     />
                     <dd className="text-[15px] leading-[1.6]">
-                      <a href={`tel:+${phoneDigits}`} className={linkClass}>
-                        {`+${phoneDigits}`}
+                      <a
+                        href={`tel:${formatAgentPhone(agent.phone)}`}
+                        className={linkClass}
+                      >
+                        {formatAgentPhone(agent.phone)}
                       </a>
                     </dd>
                   </div>
@@ -132,6 +136,15 @@ export function AgentCards({ agents }: { agents: AGENTS_QUERY_RESULT }) {
                   </div>
                 )}
               </dl>
+
+              {/* Individual AICAT registration — required in property
+                  advertising in Catalunya. Omitted entirely when unset, so a
+                  bare label never appears. */}
+              {agent.aicat && (
+                <p className="mt-5 text-[11px] uppercase tracking-[0.14em] text-muted">
+                  {t("aicat", { number: agent.aicat })}
+                </p>
+              )}
             </li>
           );
         })}

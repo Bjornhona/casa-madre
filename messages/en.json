@@ -453,7 +453,8 @@
     },
     "agents": {
       "title": "Talk to us",
-      "whatsapp": "WhatsApp"
+      "whatsapp": "WhatsApp",
+      "aicat": "AICAT {number}"
     },
     "referencia": {
       "pill": "Regarding",
@@ -543,8 +544,9 @@
       "domain": "Domain",
       "credentials": {
         "title": "Identifying details",
-        "aicat": "Registered real estate agent in the Register of Real Estate Agents of Catalonia, number AICAT ",
-        "anpiff": "Registered in the Register of the National Association of Real Estate Professionals, Financial and Fiscal Professionals, number ANPIFF "
+        "anpiff": "Registered in the Register of the National Association of Real Estate Professionals, Financial and Fiscal Professionals, number ANPIFF ",
+        "aicatLabel": "AICAT register",
+        "aicatIntro": "Estate agents registered in the Register of Real Estate Agents of Catalonia (AICAT):"
       }
     },
     "aviso": {

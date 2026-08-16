@@ -63,7 +63,19 @@ export const AGENTS_QUERY = defineQuery(`
     ),
     email,
     phone,
-    photo
+    photo,
+    aicat
+  }
+`)
+
+// AICAT registrations for the aviso legal. These are individual registrations —
+// there is no company-level number — so the page lists whichever agents have
+// one. Filtered in GROQ so the page never has to render a bare label.
+export const AGENT_AICATS_QUERY = defineQuery(`
+  *[_type == "agent" && defined(aicat) && aicat != ""] | order(order asc) {
+    _id,
+    name,
+    aicat
   }
 `)
 

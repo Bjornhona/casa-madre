@@ -34,7 +34,9 @@ export default async function PrivacidadPage({
     { label: t("fields.phone"), value: LEGAL_DATA.phone },
     { label: t("fields.registry"), value: LEGAL_DATA.registry },
     { label: t("fields.domain"), value: LEGAL_DATA.domain },
-    { label: t("fields.credentials.title"), value: t("fields.credentials.aicat") + LEGAL_DATA.credentials.aicat + "\n\n" + t("fields.credentials.anpiff") + LEGAL_DATA.credentials.npiff }
+    // Only the ANPIFF membership: the AICAT numbers are individual to each
+    // agent and belong on the aviso legal, not in the data-controller block.
+    { label: t("fields.credentials.title"), value: LEGAL_DATA.credentials.npiff && t("fields.credentials.anpiff") + LEGAL_DATA.credentials.npiff }
   ].filter(
     (item): item is { label: string; value: string } => Boolean(item.value),
   );
