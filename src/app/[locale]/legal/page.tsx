@@ -48,9 +48,6 @@ export default async function LegalNoticePage({
     { heading: t("aviso.lawTitle"), paragraphs: [t("aviso.lawBody")] },
   ];
 
-  console.log(ownerDetails);
-  console.log(sections);
-
   return (
     <>
       <SiteNav />
