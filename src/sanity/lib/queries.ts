@@ -68,6 +68,15 @@ export const AGENTS_QUERY = defineQuery(`
   }
 `)
 
+// The establishment's AICAT registration, for the footer credentials mark.
+// It is held by whichever agent is the registered one (currently Evelyn), so it
+// is read from the agent records rather than hardcoded or transcribed off the
+// badge image — change it in the Studio and the footer follows. First agent
+// with a number wins, in the order the client sets.
+export const ESTABLISHMENT_AICAT_QUERY = defineQuery(`
+  *[_type == "agent" && defined(aicat) && aicat != ""] | order(order asc)[0].aicat
+`)
+
 // AICAT registrations for the aviso legal. These are individual registrations —
 // there is no company-level number — so the page lists whichever agents have
 // one. Filtered in GROQ so the page never has to render a bare label.

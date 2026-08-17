@@ -614,6 +614,11 @@ export type AGENTS_QUERY_RESULT = Array<{
 }>;
 
 // Source: src/sanity/lib/queries.ts
+// Variable: ESTABLISHMENT_AICAT_QUERY
+// Query: *[_type == "agent" && defined(aicat) && aicat != ""] | order(order asc)[0].aicat
+export type ESTABLISHMENT_AICAT_QUERY_RESULT = string | null;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: AGENT_AICATS_QUERY
 // Query: *[_type == "agent" && defined(aicat) && aicat != ""] | order(order asc) {    _id,    name,    aicat  }
 export type AGENT_AICATS_QUERY_RESULT = Array<{
@@ -890,6 +895,7 @@ declare module "@sanity/client" {
     '{\n  "property": *[_type == "property" && _id in [$id, "drafts." + $id]]\n    | order(_updatedAt desc)[0] {\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "slug": slug.current,\n    operation,\n    propertyType,\n    status,\n    price,\n    ocultarPrecio,\n    "neighbourhood": neighbourhood->{\n      _id,\n      name,\n      "slug": slug.current\n    },\n    surface,\n    surfaceUtil,\n    bedrooms,\n    bathrooms,\n    energyRating,\n    energyCertNumber,\n    referenciaCatastral,\n    cedulaHabitabilidad,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    gallery[]{ ... }\n  },\n  "registration": *[_type == "agent" && defined(aicat) && aicat != ""]\n    | order(order asc)[0] {\n    name,\n    aicat\n  }\n}': FICHA_QUERY_RESULT;
     '\n  *[_type == "property" && isPublic == true]\n    | order(select(\n        status == "vendido" => 2,\n        status == "reservado" => 1,\n        0\n      ) asc, price desc) {\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "slug": slug.current,\n    operation,\n    propertyType,\n    status,\n    ocultarPrecio,\n    "neighbourhood": neighbourhood->name,\n    "price": select(ocultarPrecio == true => null, price),\n    surface,\n    bedrooms,\n    bathrooms,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    "image": gallery[0]\n  }\n': PROPERTIES_QUERY_RESULT;
     '\n  *[_type == "agent"] | order(order asc) {\n    _id,\n    name,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    email,\n    phone,\n    photo,\n    aicat\n  }\n': AGENTS_QUERY_RESULT;
+    '\n  *[_type == "agent" && defined(aicat) && aicat != ""] | order(order asc)[0].aicat\n': ESTABLISHMENT_AICAT_QUERY_RESULT;
     '\n  *[_type == "agent" && defined(aicat) && aicat != ""] | order(order asc) {\n    _id,\n    name,\n    aicat\n  }\n': AGENT_AICATS_QUERY_RESULT;
     '\n  *[_type == "neighbourhood"] | order(order asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    "blurb": coalesce(\n      blurb[language == $locale][0].value,\n      blurb[language == "es"][0].value\n    ),\n    image\n  }\n': NEIGHBOURHOODS_QUERY_RESULT;
     '\n  *[_type == "neighbourhood" && defined(slug.current)] {\n    "slug": slug.current\n  }\n': NEIGHBOURHOOD_SLUGS_QUERY_RESULT;

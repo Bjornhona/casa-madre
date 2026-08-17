@@ -34,9 +34,10 @@ export default async function PrivacidadPage({
     { label: t("fields.phone"), value: LEGAL_DATA.phone },
     { label: t("fields.registry"), value: LEGAL_DATA.registry },
     { label: t("fields.domain"), value: LEGAL_DATA.domain },
-    // Only the ANPIFF membership: the AICAT numbers are individual to each
-    // agent and belong on the aviso legal, not in the data-controller block.
-    { label: t("fields.credentials.title"), value: LEGAL_DATA.credentials.npiff && t("fields.credentials.anpiff") + LEGAL_DATA.credentials.npiff }
+    // No credentials row here. ANPIFF is a voluntary trade association, not a
+    // public registry: listed among the data-controller's identifying details
+    // it reads as a regulatory credential it isn't. The membership badge lives
+    // in the footer instead.
   ].filter(
     (item): item is { label: string; value: string } => Boolean(item.value),
   );

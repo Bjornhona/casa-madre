@@ -529,7 +529,12 @@
       "cookies": "Política de cookies"
     },
     "rights": "Todos los derechos reservados.",
-    "credit": "Diseño y desarrollo por <link>Åsa Eriksson</link>"
+    "credit": "Diseño y desarrollo por <link>Åsa Eriksson</link>",
+    "credentials": {
+      "alt": "Registre d'Agents Immobiliaris de Catalunya, AICAT 14044 · Asociación Nacional de Profesionales Inmobiliarios Financieros y Fiscales, asociada nº 2213",
+      "aicat": "AICAT {number}",
+      "anpiff": "ANPIFF · Asociada nº {number}"
+    }
   },
   "legal": {
     "lastUpdated": "Última actualización",
