@@ -20,6 +20,20 @@ type IntlLocale = {
   en: "en-GB";
 };
 
+/** Energy ratings that are a bare letter: the same in every language. */
+type EnergyLetter = "A" | "B" | "C" | "D" | "E" | "F" | "G";
+
+/**
+ * The energy ratings that are prose rather than a letter, derived from the
+ * schema by subtracting the letters. Adding an option to `energyRating` in
+ * `property.ts` widens this union and breaks `energyStates` below until both
+ * languages have a label — the same guarantee `propertyTypes` gives.
+ */
+export type EnergyState = Exclude<
+  NonNullable<Property["energyRating"]>,
+  EnergyLetter
+>;
+
 /**
  * Every string the ficha needs, all required. The operation and property-type
  * dictionaries are keyed off the generated schema types, so adding a value in
@@ -54,6 +68,9 @@ type FichaCopy<L extends FichaLocale> = {
 
   operations: Record<Property["operation"], string>;
   propertyTypes: Record<Property["propertyType"], string>;
+
+  /** Only the non-letter ratings need translating; A–G print as stored. */
+  energyStates: Record<EnergyState, string>;
 
   /** Registration line in the footer. Required in property advertising in
    *  Catalunya, hence its own template rather than free text. */
@@ -109,6 +126,11 @@ export const FICHA_COPY: { [L in FichaLocale]: FichaCopy<L> } = {
       local: "Local comercial",
     },
 
+    energyStates: {
+      "En trámite": "En trámite",
+      Exento: "Exento",
+    },
+
     aicatLine: ({ agentName, aicat }) =>
       `${agentName} — Agente inmobiliaria inscrita en el Registre d'Agents Immobiliaris de Catalunya, núm. AICAT ${aicat}.`,
 
@@ -154,6 +176,11 @@ export const FICHA_COPY: { [L in FichaLocale]: FichaCopy<L> } = {
       duplex: "Duplex",
       estudio: "Studio",
       local: "Commercial unit",
+    },
+
+    energyStates: {
+      "En trámite": "In progress",
+      Exento: "Exempt",
     },
 
     aicatLine: ({ agentName, aicat }) =>

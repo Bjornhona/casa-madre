@@ -7,7 +7,7 @@ import { join } from "node:path";
  */
 export function loadSerifFont(): Promise<Buffer> {
   return readFile(
-    join(process.cwd(), "src/app/_assets/CormorantGaramond-SemiBold.ttf"),
+    join(process.cwd(), "/public/fonts/CormorantGaramond-SemiBold.ttf")
   );
 }
 
