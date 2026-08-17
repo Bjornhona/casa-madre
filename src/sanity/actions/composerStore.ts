@@ -18,7 +18,7 @@ import {useCallback, useSyncExternalStore} from 'react'
  * and reopening a composer — voluntarily or not — restores the agent's input.
  */
 
-export type ComposerKind = 'article' | 'property'
+export type ComposerKind = 'article' | 'property' | 'ficha'
 
 export type ActiveComposer = {
   kind: ComposerKind

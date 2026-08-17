@@ -14,6 +14,13 @@ import {
 } from './composerStore'
 import {PropertyComposerContent, type PropertyDoc} from './generatePropertyAction'
 import {JournalComposerContent, type ArticleDoc} from './generateDraftAction'
+import {FichaComposerContent, type FichaDoc} from './generateFichaAction'
+
+const DIALOG_HEADER: Record<ActiveComposer['kind'], string> = {
+  property: '✦ Generar ficha con IA',
+  article: '✦ Generar borrador con IA',
+  ficha: 'Generar ficha PDF',
+}
 
 /**
  * Studio-level host for the AI composer dialogs (registered as
@@ -58,14 +65,20 @@ function ComposerDialog({active}: {active: ActiveComposer}) {
   return (
     <Dialog
       id="ai-composer-dialog"
-      header={
-        kind === 'property' ? '✦ Generar ficha con IA' : '✦ Generar borrador con IA'
-      }
+      header={DIALOG_HEADER[kind]}
       width={1}
       onClose={closeComposer}
     >
       <Box padding={4}>
-        {kind === 'property' ? (
+        {kind === 'ficha' ? (
+          <FichaComposerContent
+            id={id}
+            doc={(doc as FichaDoc | null) ?? null}
+            client={client}
+            toast={toast}
+            onClose={closeComposer}
+          />
+        ) : kind === 'property' ? (
           <PropertyComposerContent
             stateKey={stateKey}
             doc={(doc as PropertyDoc | null) ?? null}
