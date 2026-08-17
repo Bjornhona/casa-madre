@@ -511,6 +511,60 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: src/sanity/ficha/query.ts
+// Variable: FICHA_QUERY
+// Query: {  "property": *[_type == "property" && _id in [$id, "drafts." + $id]]    | order(_updatedAt desc)[0] {    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    "slug": slug.current,    operation,    propertyType,    status,    price,    ocultarPrecio,    "neighbourhood": neighbourhood->{      _id,      name,      "slug": slug.current    },    surface,    surfaceUtil,    bedrooms,    bathrooms,    energyRating,    energyCertNumber,    referenciaCatastral,    cedulaHabitabilidad,    "description": coalesce(      description[language == $locale][0].value,      description[language == "es"][0].value    ),    highlights,    gallery[]{ ... }  },  "registration": *[_type == "agent" && defined(aicat) && aicat != ""]    | order(order asc)[0] {    name,    aicat  }}
+export type FICHA_QUERY_RESULT = {
+  property: {
+    _id: string;
+    title: string | null;
+    slug: string;
+    operation: "alquiler" | "venta";
+    propertyType: "atico" | "casa" | "duplex" | "estudio" | "local" | "piso";
+    status: "disponible" | "reservado" | "vendido";
+    price: number;
+    ocultarPrecio: boolean | null;
+    neighbourhood: {
+      _id: string;
+      name: string;
+      slug: string;
+    };
+    surface: number | null;
+    surfaceUtil: number | null;
+    bedrooms: number | null;
+    bathrooms: number | null;
+    energyRating:
+      | "A"
+      | "B"
+      | "C"
+      | "D"
+      | "E"
+      | "En tr\xE1mite"
+      | "Exento"
+      | "F"
+      | "G"
+      | null;
+    energyCertNumber: string | null;
+    referenciaCatastral: string | null;
+    cedulaHabitabilidad: string | null;
+    description: string | null;
+    highlights: Array<string> | null;
+    gallery: Array<{
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }> | null;
+  } | null;
+  registration: {
+    name: string;
+    aicat: string | null;
+  } | null;
+};
+
 // Source: src/sanity/lib/queries.ts
 // Variable: PROPERTIES_QUERY
 // Query: *[_type == "property" && isPublic == true]    | order(select(        status == "vendido" => 2,        status == "reservado" => 1,        0      ) asc, price desc) {    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "es"][0].value    ),    "slug": slug.current,    operation,    propertyType,    status,    ocultarPrecio,    "neighbourhood": neighbourhood->name,    "price": select(ocultarPrecio == true => null, price),    surface,    bedrooms,    bathrooms,    "description": coalesce(      description[language == $locale][0].value,      description[language == "es"][0].value    ),    highlights,    "image": gallery[0]  }
@@ -833,6 +887,7 @@ export type JOURNAL_POST_BY_SLUG_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '{\n  "property": *[_type == "property" && _id in [$id, "drafts." + $id]]\n    | order(_updatedAt desc)[0] {\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "slug": slug.current,\n    operation,\n    propertyType,\n    status,\n    price,\n    ocultarPrecio,\n    "neighbourhood": neighbourhood->{\n      _id,\n      name,\n      "slug": slug.current\n    },\n    surface,\n    surfaceUtil,\n    bedrooms,\n    bathrooms,\n    energyRating,\n    energyCertNumber,\n    referenciaCatastral,\n    cedulaHabitabilidad,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    gallery[]{ ... }\n  },\n  "registration": *[_type == "agent" && defined(aicat) && aicat != ""]\n    | order(order asc)[0] {\n    name,\n    aicat\n  }\n}': FICHA_QUERY_RESULT;
     '\n  *[_type == "property" && isPublic == true]\n    | order(select(\n        status == "vendido" => 2,\n        status == "reservado" => 1,\n        0\n      ) asc, price desc) {\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    "slug": slug.current,\n    operation,\n    propertyType,\n    status,\n    ocultarPrecio,\n    "neighbourhood": neighbourhood->name,\n    "price": select(ocultarPrecio == true => null, price),\n    surface,\n    bedrooms,\n    bathrooms,\n    "description": coalesce(\n      description[language == $locale][0].value,\n      description[language == "es"][0].value\n    ),\n    highlights,\n    "image": gallery[0]\n  }\n': PROPERTIES_QUERY_RESULT;
     '\n  *[_type == "agent"] | order(order asc) {\n    _id,\n    name,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "es"][0].value\n    ),\n    email,\n    phone,\n    photo,\n    aicat\n  }\n': AGENTS_QUERY_RESULT;
     '\n  *[_type == "agent" && defined(aicat) && aicat != ""] | order(order asc) {\n    _id,\n    name,\n    aicat\n  }\n': AGENT_AICATS_QUERY_RESULT;
