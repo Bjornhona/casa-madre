@@ -73,6 +73,10 @@ const styles = StyleSheet.create({
     paddingBottom: FOOTER_RESERVE,
   },
   padded: { paddingHorizontal: PAGE_X },
+  /** Top margin for the text pages. This belongs on the Page, not on an inner
+   *  View: when content wraps onto a further page, only Page padding is
+   *  reapplied, so an inner padding would leave continuation pages starting
+   *  ~22pt from the paper edge. */
   pageTop: { paddingTop: 44 },
 
   hero: { width: "100%", height: 292, objectFit: "cover" },
@@ -156,6 +160,8 @@ const styles = StyleSheet.create({
     borderTopColor: COLOR.line,
     paddingTop: 14,
   },
+  /** Same block with no separator, for when nothing precedes it on the page. */
+  contactAlone: {},
 
   footer: {
     position: "absolute",
@@ -170,19 +176,37 @@ const styles = StyleSheet.create({
 });
 
 /**
+ * Print widths, in pixels. Deliberately not full resolution: a ficha is emailed
+ * and sent over WhatsApp, so total file size matters more than pixel-peeping.
+ *
+ * The hero spans the full 595pt page (~8.3in) and the thumbnails ~244pt each,
+ * so these land around 145 DPI and 290 DPI respectively — past what matters on
+ * screen, and comfortable in print.
+ */
+const HERO_WIDTH = 1200;
+const THUMB_WIDTH = 700;
+
+/**
  * Sanity CDN URL for a gallery image, or null when the item has no asset.
  *
- * Format is pinned to jpg on purpose: @react-pdf/renderer decodes only JPEG and
- * PNG, so `auto=format` (which serves WebP to modern browsers) would produce
- * images the renderer cannot read.
+ * `format("jpg")` is the load-bearing part, not a preference. @react-pdf
+ * decodes only JPEG and PNG, and Sanity's `auto=format` serves WebP to any
+ * browser that advertises support — which every modern browser does. That would
+ * render fine nowhere and fail in every environment equally, but the failure is
+ * silent (a missing image, not an exception), so it is the kind of bug that
+ * reaches a client's inbox. Pinning the format removes the negotiation
+ * entirely: the CDN returns JPEG regardless of who asks.
  *
- * TODO(next session): these are cdn.sanity.io URLs fetched by the browser from
- * the Studio origin, which may fail CORS. Out of scope here — the fix belongs
- * with the document action.
+ * `quality` trades a few KB against artefacts on photographic content; 80/72 is
+ * conservative for the hero and unnoticeable at thumbnail scale.
  */
-const imageSrc = (image: GalleryImage | undefined): string | null => {
+const imageSrc = (
+  image: GalleryImage | undefined,
+  width: number,
+  quality: number,
+): string | null => {
   if (!image?.asset) return null;
-  return urlFor(image).width(1400).format("jpg").quality(82).url();
+  return urlFor(image).width(width).format("jpg").quality(quality).url();
 };
 
 /** A datos row renders only if it has a real value. `0` is a real value — a
@@ -262,7 +286,7 @@ export function FichaPropiedad({
       : (energyStates[energyRating] ?? energyRating);
 
   const gallery = property.gallery ?? [];
-  const heroSrc = imageSrc(gallery[0]);
+  const heroSrc = imageSrc(gallery[0], HERO_WIDTH, 80);
   // gallery[0] is the hero on page 1; the grid shows everything after it.
   const rest = gallery.slice(1);
 
@@ -302,7 +326,9 @@ export function FichaPropiedad({
       <Page size="A4" orientation="portrait" style={styles.page}>
         {heroSrc && <Image src={heroSrc} style={styles.hero} />}
 
-        <View style={[styles.padded, { paddingTop: 26 }]}>
+        {/* Without a hero the identity block would otherwise start 26pt from
+            the paper edge, tighter than any other page. */}
+        <View style={[styles.padded, { paddingTop: heroSrc ? 26 : 56 }]}>
           <Text style={styles.kicker}>
             {property.neighbourhood?.name}
             {SEP}
@@ -319,7 +345,9 @@ export function FichaPropiedad({
 
           <View style={[styles.priceRow, { marginTop: 16 }]}>
             <View>
-              <Text style={styles.kicker}>{copy.labels.precio}</Text>
+              <Text style={styles.kicker}>
+                {copy.labels.precio[property.operation]}
+              </Text>
               <Text style={[styles.price, { marginTop: 4 }]}>{price}</Text>
             </View>
 
@@ -338,8 +366,12 @@ export function FichaPropiedad({
       </Page>
 
       {/* Page 2 — description, datos, highlights */}
-      <Page size="A4" orientation="portrait" style={styles.page}>
-        <View style={[styles.padded, styles.pageTop]}>
+      <Page
+        size="A4"
+        orientation="portrait"
+        style={[styles.page, styles.pageTop]}
+      >
+        <View style={styles.padded}>
           {property.description && (
             <View>
               <Text style={styles.heading}>{copy.sections.descripcion}</Text>
@@ -380,14 +412,18 @@ export function FichaPropiedad({
       </Page>
 
       {/* Page 3 — gallery and the shared contact channel */}
-      <Page size="A4" orientation="portrait" style={styles.page}>
-        <View style={[styles.padded, styles.pageTop]}>
+      <Page
+        size="A4"
+        orientation="portrait"
+        style={[styles.page, styles.pageTop]}
+      >
+        <View style={styles.padded}>
           {rest.length > 0 && (
             <View>
               <Text style={styles.heading}>{copy.sections.galeria}</Text>
               <View style={[styles.grid, { marginTop: 12 }]}>
                 {rest.map((image) => {
-                  const src = imageSrc(image);
+                  const src = imageSrc(image, THUMB_WIDTH, 72);
                   if (!src) return null;
                   return (
                     <View key={image._key} style={styles.gridItem}>
@@ -399,9 +435,16 @@ export function FichaPropiedad({
             </View>
           )}
 
-          {/* One shared channel on purpose: no individual agent details. */}
+          {/* One shared channel on purpose: no individual agent details.
+              The rule above it separates it from the grid, so with a
+              single-image gallery (no grid) it would be an orphan hairline
+              across the top of an otherwise empty page. */}
           <View
-            style={[styles.contact, { marginTop: rest.length > 0 ? 30 : 0 }]}
+            style={
+              rest.length > 0
+                ? [styles.contact, { marginTop: 30 }]
+                : styles.contactAlone
+            }
           >
             <Text style={styles.heading}>{copy.sections.contacto}</Text>
             <Text style={[styles.rowValue, { marginTop: 10, fontSize: 11 }]}>

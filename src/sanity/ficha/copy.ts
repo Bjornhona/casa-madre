@@ -54,7 +54,13 @@ type FichaCopy<L extends FichaLocale> = {
   /** Row labels in the "datos" table. Area units live in the label, as they do
    *  in the Studio field titles, so values stay bare numbers. */
   labels: {
-    precio: string;
+    /**
+     * Keyed by operation, not a single string: a sale prints a total and a
+     * rental prints a monthly figure, and "Precio 2.400 €" on a rental ficha
+     * gives no clue which. Keying it off the schema means a new operation
+     * breaks both locales until it says what its number means.
+     */
+    precio: Record<Property["operation"], string>;
     barrio: string;
     tipo: string;
     superficieConstruida: string;
@@ -100,7 +106,10 @@ export const FICHA_COPY: { [L in FichaLocale]: FichaCopy<L> } = {
     },
 
     labels: {
-      precio: "Precio",
+      precio: {
+        venta: "Precio",
+        alquiler: "Alquiler mensual",
+      },
       barrio: "Barrio",
       tipo: "Tipo",
       superficieConstruida: "Superficie construida (m²)",
@@ -152,7 +161,10 @@ export const FICHA_COPY: { [L in FichaLocale]: FichaCopy<L> } = {
     },
 
     labels: {
-      precio: "Price",
+      precio: {
+        venta: "Price",
+        alquiler: "Monthly rent",
+      },
       barrio: "Neighbourhood",
       tipo: "Type",
       superficieConstruida: "Built area (m²)",
