@@ -15,14 +15,6 @@ import { formatAgentPhone } from "@/lib/format-phone";
  *  leaking into pages (that mismatch broke the /legal build once already). */
 const requireEnv = (value: string | undefined): string => value ?? "";
 
-// PENDIENTE — cliente: the registered address is not confirmed yet. Left empty
-// on purpose rather than filled with invented text: a fabricated street on a
-// legally required disclosure is worse than an omitted one. formatLegalAddress()
-// skips empty segments and assertLegalDataComplete() reports them, so the
-// address quietly shortens and the PDF gate stays shut until the client answers.
-const PENDING_STREET = ""; // PENDIENTE — cliente
-const PENDING_POSTAL_CODE = ""; // PENDIENTE — cliente
-
 export const LEGAL_DATA = {
   // Trading / brand name shown to users
   brandName: "Casa Madre",
@@ -35,11 +27,15 @@ export const LEGAL_DATA = {
   // taxId: process.env.NEXT_PUBLIC_CLIENT_TAX_ID,
   taxId: requireEnv(process.env.NEXT_PUBLIC_CLIENT_TAX_ID),
 
-  // Registered address — PENDIENTE: confirmar
+  // Registered address. Street and postcode come from env like the rest of the
+  // client's data; city/region/country are fixed for this firm. Unset means
+  // empty, which formatLegalAddress() drops from the line and
+  // assertLegalDataComplete() reports — and that gate is what blocks ficha
+  // generation, so a ficha can never carry a half-written legal address.
   address: {
-    street: PENDING_STREET,
+    street: requireEnv(process.env.NEXT_PUBLIC_CLIENT_ADDRESS_STREET),
     city: "Barcelona",
-    postalCode: PENDING_POSTAL_CODE,
+    postalCode: requireEnv(process.env.NEXT_PUBLIC_CLIENT_ADDRESS_POSTAL_CODE),
     region: "Barcelona",
     country: "España",
   },
@@ -68,7 +64,7 @@ export const LEGAL_DATA = {
 } as const;
 
 /** One-line postal address built from LEGAL_DATA. Empty segments drop out
- *  entirely, so a PENDIENTE street or postcode shortens the line instead of
+ *  entirely, so an unset street or postcode shortens the line instead of
  *  leaving ", ," or a stray leading space behind. */
 export const formatLegalAddress = (): string => {
   const a = LEGAL_DATA.address;
