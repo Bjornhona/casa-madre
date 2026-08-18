@@ -15,7 +15,10 @@ import {
 import {DocumentPdfIcon, WarningOutlineIcon} from '@sanity/icons'
 import type {SanityClient} from 'sanity'
 import {type DocumentActionComponent} from 'sanity'
-import {assertLegalDataComplete} from '../../lib/legal-data'
+import {
+  missingRecommendedLegalData,
+  missingRequiredLegalData,
+} from '../../lib/legal-data'
 import {FICHA_QUERY} from '../ficha/query'
 import type {FichaLocale} from '../ficha/copy'
 import {openComposer} from './composerStore'
@@ -75,6 +78,7 @@ export function FichaComposerContent({
   const [loading, setLoading] = useState(false)
 
   const hiddenPrice = doc?.ocultarPrecio === true
+  const missingAddress = missingRecommendedLegalData().length > 0
   const recipient = recipientName.trim()
   const canConfirm =
     recipient !== '' && !loading && (!hiddenPrice || priceAcknowledged)
@@ -159,6 +163,31 @@ export function FichaComposerContent({
 
   return (
     <Stack space={4}>
+      {/* Deliberately has no dismiss control: it must reappear on every
+          generation until the client's domicilio fiscal is in the env vars,
+          so nobody can turn it off once and forget the ficha ships without a
+          registered address. */}
+      {missingAddress && (
+        <Card padding={3} radius={2} shadow={1} tone="caution">
+          <Flex gap={2} align="flex-start">
+            <Text size={1}>
+              <WarningOutlineIcon />
+            </Text>
+            <Stack space={2}>
+              <Text size={1} weight="medium">
+                La ficha se generará sin la dirección registrada
+              </Text>
+              <Text size={1}>
+                El artículo 10 de la LSSI exige indicar el domicilio del
+                prestador en las comunicaciones comerciales, y la ficha lo es.
+                Falta el domicilio fiscal del cliente: en cuanto lo facilite,
+                añádelo a las variables de entorno.
+              </Text>
+            </Stack>
+          </Flex>
+        </Card>
+      )}
+
       <Stack space={3}>
         <Text size={1} weight="medium">
           Destinatario
@@ -268,7 +297,8 @@ const GenerateFichaAction: DocumentActionComponent = (props) => {
   const {id, type, draft, published, onComplete} = props
   const doc = (draft ?? published) as FichaDoc | null
 
-  const missingLegal = assertLegalDataComplete()
+  // Only the required tier blocks; a missing address warns inside the dialog.
+  const missingLegal = missingRequiredLegalData()
   const missingEnergy = !doc?.energyRating
 
   const blocked =

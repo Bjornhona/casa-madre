@@ -74,16 +74,43 @@ export const formatLegalAddress = (): string => {
   return [a.street, locality, a.region, a.country].filter(Boolean).join(", ");
 };
 
-/** Returns the names of any legal fields that are still missing. An empty array
- *  means the data is complete enough to publish — and to put on a ficha, which
- *  is gated on this. */
-export const assertLegalDataComplete = (): string[] => {
+/**
+ * Completeness of the legal identification block, in two tiers.
+ *
+ * ⚠️ The split is a temporary commercial decision, not a legal finding. The
+ * client does not have their domicilio fiscal confirmed yet and asked to keep
+ * issuing fichas in the meantime, so the address warns instead of blocking.
+ * It is NOT optional: LSSI Art. 10 requires the provider's registered domicile
+ * in commercial communications, and a ficha is one. As soon as the address
+ * arrives, move `address.street` and `address.postalCode` back into
+ * missingRequiredLegalData() and delete this note.
+ *
+ * Everything here reports the same dotted field names either tier, so callers
+ * can print them without knowing which tier they came from.
+ */
+
+/** Missing fields that must block ficha generation: without them the document
+ *  cannot identify who issued it at all. Empty array means clear to generate. */
+export const missingRequiredLegalData = (): string[] => {
   const missing: string[] = [];
   if (!LEGAL_DATA.legalName) missing.push("legalName");
   if (!LEGAL_DATA.taxId) missing.push("taxId");
-  if (!LEGAL_DATA.address.street) missing.push("address.street");
-  if (!LEGAL_DATA.address.postalCode) missing.push("address.postalCode");
   if (!LEGAL_DATA.email) missing.push("email");
   if (!LEGAL_DATA.phone) missing.push("phone");
   return missing;
 };
+
+/** Missing fields that warn but do not block — see the tier note above. */
+export const missingRecommendedLegalData = (): string[] => {
+  const missing: string[] = [];
+  if (!LEGAL_DATA.address.street) missing.push("address.street");
+  if (!LEGAL_DATA.address.postalCode) missing.push("address.postalCode");
+  return missing;
+};
+
+/** Every missing field, both tiers. For pages that just want to know whether
+ *  the legal data is complete, with no view on what blocks what. */
+export const assertLegalDataComplete = (): string[] => [
+  ...missingRequiredLegalData(),
+  ...missingRecommendedLegalData(),
+];
