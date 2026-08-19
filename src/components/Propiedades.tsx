@@ -12,6 +12,7 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { isClosed, statusLabelKey } from "@/lib/property-status";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 import { contactoHref } from "@/lib/contacto-href";
+import { firstParagraph } from "@/lib/first-paragraph";
 import { urlFor } from "@/sanity/lib/image";
 import type { PROPERTIES_QUERY_RESULT } from "@/sanity/types.gen";
 
@@ -222,6 +223,7 @@ export function Propiedades({
 
           const statusKey = statusLabelKey(p.status, p.operation);
           const closed = isClosed(p.status);
+          const excerpt = firstParagraph(p.description);
 
           return (
             <motion.li
@@ -295,9 +297,14 @@ export function Propiedades({
                   )}
                 </ul>
 
-                {p.description && (
-                  <p className="text-[14px] leading-[1.55] text-deep/80">
-                    {p.description}
+                {/* Opening paragraph only, clamped to four lines. The clamp is
+                    CSS, not a character count: the same string wraps at a
+                    different word in every column width, so a cut measured in
+                    characters lands mid-line on some viewports and leaves a
+                    short last line on others. */}
+                {excerpt && (
+                  <p className="line-clamp-4 text-[14px] leading-[1.55] text-deep/80">
+                    {excerpt}
                   </p>
                 )}
 
