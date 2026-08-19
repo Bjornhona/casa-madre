@@ -17,6 +17,7 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
+import { priceFormatter } from "@/lib/format-price";
 import { dropRestatedHighlights } from "@/lib/highlights";
 import { LEGAL_DATA, formatLegalAddress } from "@/lib/legal-data";
 import { urlFor } from "@/sanity/lib/image";
@@ -257,15 +258,9 @@ export function FichaPropiedad({
   }).format(new Date());
 
   // ocultarPrecio is the caller's business — the ficha prints the real figure.
-  // Grouping is forced: es-ES drops the separator on four-digit numbers, which
-  // reads as an inconsistency next to a six-figure sale price, and property
-  // listings group them regardless of the RAE prose rule.
-  const price = new Intl.NumberFormat(copy.dateLocale, {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-    useGrouping: "always",
-  }).format(property.price);
+  // Shared with the website so a buyer reading the PDF and the listing sees one
+  // number in one form; the grouping rationale lives in the formatter.
+  const price = priceFormatter(copy.dateLocale).format(property.price);
 
   // A–G print as stored; only the prose states are translated. It reads as a
   // datos row like any other certificate — the badge it used to have on page 1

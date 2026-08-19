@@ -15,6 +15,7 @@ import {
 } from '@sanity/ui'
 import {EditIcon, SparklesIcon} from '@sanity/icons'
 import {type DocumentActionComponent, type SanityClient} from 'sanity'
+import {priceFormatter} from '@/lib/format-price'
 import {
   clearComposer,
   getComposerField,
@@ -213,7 +214,7 @@ export function PropertyComposerContent(props: {
         doc.propertyType &&
           (PROPERTY_TYPE_LABELS[doc.propertyType] ?? doc.propertyType),
         doc.price != null &&
-          `${new Intl.NumberFormat('es-ES').format(doc.price)} €${
+          `${priceFormatter('es-ES').format(doc.price)}${
             doc.operation === 'alquiler' ? '/mes' : ''
           }`,
         doc.surface != null && `${doc.surface} m²`,

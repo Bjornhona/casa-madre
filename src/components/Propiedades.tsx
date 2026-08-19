@@ -13,6 +13,7 @@ import { isClosed, statusLabelKey } from "@/lib/property-status";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 import { contactoHref } from "@/lib/contacto-href";
 import { firstParagraph } from "@/lib/first-paragraph";
+import { priceFormatter } from "@/lib/format-price";
 import { urlFor } from "@/sanity/lib/image";
 import type { PROPERTIES_QUERY_RESULT } from "@/sanity/types.gen";
 
@@ -77,15 +78,7 @@ export function Propiedades({
   const [maxPrice, setMaxPrice] = useState<number>(priceCeiling);
   const [bedrooms, setBedrooms] = useState<BedroomsFilter>("all");
 
-  const currency = useMemo(
-    () =>
-      new Intl.NumberFormat(locale, {
-        style: "currency",
-        currency: "EUR",
-        maximumFractionDigits: 0,
-      }),
-    [locale],
-  );
+  const currency = useMemo(() => priceFormatter(locale), [locale]);
 
   const visible = properties.filter((p) => {
     if (operation !== "all" && p.operation !== operation) return false;

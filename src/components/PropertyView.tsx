@@ -11,6 +11,7 @@ import { statusLabelKey } from "@/lib/property-status";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 import { contactoHref } from "@/lib/contacto-href";
 import { dropRestatedHighlights } from "@/lib/highlights";
+import { priceFormatter } from "@/lib/format-price";
 import { urlFor } from "@/sanity/lib/image";
 import { fallbackImagesFor } from "@/lib/property-fallback-images";
 import type { PROPERTY_BY_SLUG_QUERY_RESULT } from "@/sanity/types.gen";
@@ -25,11 +26,7 @@ export function PropertyView({ property }: { property: Property }) {
   const locale = useLocale();
   const reduce = useReducedMotion();
 
-  const currency = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  });
+  const currency = priceFormatter(locale);
 
   const operationLabel = t(`operationLabels.${property.operation}`);
   const typeLabel = t(`typeLabels.${property.propertyType}`);
