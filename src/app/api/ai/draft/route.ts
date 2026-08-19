@@ -85,7 +85,14 @@ REGLAS DE CONTENIDO (obligatorias):
 FORMATO:
 - Título: corto y evocador, uno por idioma (p. ej. "Ático reformado con terraza en Gràcia").
 - Descripción: 2–3 párrafos breves por idioma, como array de cadenas, sin Markdown.
-- Destacados (highlights): de 3 a 6 etiquetas concisas en español, extraídas solo de los datos y notas (p. ej. "Terraza", "Reformado", "Luz natural").`;
+- Destacados (highlights): etiquetas concisas en español. Ver la regla estricta más abajo.
+
+DESTACADOS (highlights) — REGLA ESTRICTA:
+- Un destacado SOLO puede describir algo que NO esté ya en los datos estructurados.
+- Los datos estructurados (operación, tipo, barrio, precio, superficie, dormitorios, baños) ya se publican en su propia tabla: en la página de la propiedad y en la ficha PDF. Una etiqueta que los repita aparece dos veces en la misma pantalla y no aporta nada.
+- PROHIBIDO devolver etiquetas como "5 dormitorios", "320 m²", "4 baños", "Sarrià", "Casa", "Venta" o cualquier reformulación suya ("5 hab.", "320 metros", "Casa en Sarrià"). Eso son datos estructurados, no destacados.
+- SÍ son destacados las características que solo constan en las notas del agente: "Reformada 2022", "Piscina", "Terraza orientada al sur", "Zona de juegos", "Vistas al parque".
+- Devuelve entre 0 y 6. Sin notas del agente rara vez hay destacados legítimos: en ese caso devuelve un array vacío. Un array vacío es una respuesta correcta y siempre preferible a rellenar con datos repetidos o inventados.`;
 
 const articleDraftSchema = z.object({
   titleEs: z.string().min(1),
@@ -101,7 +108,11 @@ const propertyDraftSchema = z.object({
   titleEn: z.string().min(1),
   descriptionEs: z.array(z.string().min(1)).min(1),
   descriptionEn: z.array(z.string().min(1)).min(1),
-  highlights: z.array(z.string().min(1)).min(1),
+  // No `.min(1)`: a property whose only inputs are the structured fields has no
+  // legitimate highlights, and the prompt tells the model to say so with an
+  // empty array. Requiring one here would reject the correct answer and leave
+  // "restate a datos row" as the only way to pass validation.
+  highlights: z.array(z.string().min(1)),
 });
 
 const requestSchema = z.discriminatedUnion("contentType", [
@@ -156,9 +167,13 @@ function buildPropertyPrompt(
   const price = `${new Intl.NumberFormat("es-ES").format(facts.price)} €${
     facts.operation === "alquiler" ? "/mes" : ""
   }`;
+  const operationLabel = OPERATION_LABELS[facts.operation] ?? facts.operation;
+  const typeLabel =
+    PROPERTY_TYPE_LABELS[facts.propertyType] ?? facts.propertyType;
+
   const lines = [
-    `- Operación: ${OPERATION_LABELS[facts.operation] ?? facts.operation}`,
-    `- Tipo: ${PROPERTY_TYPE_LABELS[facts.propertyType] ?? facts.propertyType}`,
+    `- Operación: ${operationLabel}`,
+    `- Tipo: ${typeLabel}`,
     `- Barrio: ${facts.neighbourhood}`,
     `- Precio: ${price}`,
     facts.surface != null ? `- Superficie: ${facts.surface} m²` : null,
@@ -166,12 +181,32 @@ function buildPropertyPrompt(
     facts.bathrooms != null ? `- Baños: ${facts.bathrooms}` : null,
   ].filter(Boolean);
 
+  /**
+   * The banned tags spelled out with this property's own values. The system
+   * prompt states the rule in the abstract; naming the literal strings the
+   * model would otherwise produce is what actually stops it, because the tag it
+   * is tempted to write appears in front of it as a prohibition.
+   */
+  const banned = [
+    operationLabel,
+    typeLabel,
+    facts.neighbourhood,
+    facts.surface != null ? `${facts.surface} m²` : null,
+    facts.bedrooms != null ? `${facts.bedrooms} dormitorios` : null,
+    facts.bathrooms != null ? `${facts.bathrooms} baños` : null,
+  ]
+    .filter(Boolean)
+    .map((value) => `"${value}"`)
+    .join(", ");
+
   return `Redacta la ficha de esta propiedad para Casa Madre.
 
 DATOS ESTRUCTURADOS (única fuente de información, junto con las notas):
 ${lines.join("\n")}
 
-${notes ? `Notas del agente: ${notes}` : "No hay notas del agente: redacta solo con los datos estructurados y sé breve."}
+PROHIBIDO EN "highlights": ninguna etiqueta puede repetir un dato estructurado ni reformularlo. En esta propiedad quedan excluidas, entre otras: ${banned}, y cualquier variante suya. Los destacados salen de las notas del agente, no de la lista de arriba.
+
+${notes ? `Notas del agente: ${notes}` : 'No hay notas del agente: redacta solo con los datos estructurados, sé breve y devuelve "highlights" como array vacío.'}
 
 Devuelve ÚNICAMENTE un objeto JSON válido (sin texto antes o después, sin bloques de código Markdown) con esta forma exacta:
 {
@@ -180,7 +215,9 @@ Devuelve ÚNICAMENTE un objeto JSON válido (sin texto antes o después, sin blo
   "descriptionEs": ["párrafo 1", "párrafo 2", "..."],
   "descriptionEn": ["paragraph 1", "paragraph 2", "..."],
   "highlights": ["Etiqueta", "..."]
-}`;
+}
+
+"highlights" admite de 0 a 6 etiquetas; devuélvelo vacío antes que repetir un dato estructurado.`;
 }
 
 // Strip accidental ```json fences / preamble the model may add despite being

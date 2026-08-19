@@ -82,6 +82,15 @@ type FichaCopy<L extends FichaLocale> = {
    *  Catalunya, hence its own template rather than free text. */
   aicatLine: (params: { agentName: string; aicat: string }) => string;
 
+  /**
+   * Footer identification line. The title is the same string the website sends
+   * to the contact form as the enquiry reference, so a buyer quoting "the ficha
+   * for X" and an agent reading the enquiry email are naming one thing. It sits
+   * in the fixed footer rather than only in the page 1 heading so that every
+   * page — printed, or forwarded as a single screenshot — identifies itself.
+   */
+  propertyReference: (params: { title: string }) => string;
+
   /** Non-contractual notice. */
   disclaimer: string;
 
@@ -143,6 +152,8 @@ export const FICHA_COPY: { [L in FichaLocale]: FichaCopy<L> } = {
     aicatLine: ({ agentName, aicat }) =>
       `${agentName} — Agente inmobiliaria inscrita en el Registre d'Agents Immobiliaris de Catalunya, núm. AICAT ${aicat}.`,
 
+    propertyReference: ({ title }) => `Propiedad de referencia: ${title}.`,
+
     disclaimer:
       "Este documento tiene carácter meramente informativo y no forma parte de ningún contrato. Las superficies indicadas son aproximadas. El certificado de eficiencia energética está disponible previa solicitud.",
 
@@ -197,6 +208,8 @@ export const FICHA_COPY: { [L in FichaLocale]: FichaCopy<L> } = {
 
     aicatLine: ({ agentName, aicat }) =>
       `${agentName} — Estate agent registered in the Register of Real Estate Agents of Catalonia (AICAT), no. ${aicat}.`,
+
+    propertyReference: ({ title }) => `Property reference: ${title}.`,
 
     disclaimer:
       "This document is for information purposes only and does not form part of any contract. The surface areas shown are approximate. The energy performance certificate is available on request.",

@@ -117,14 +117,18 @@ function PreviewField(props: {
   outcome?: InsertOutcome
   /** The target field already holds content, so this click overwrites it. */
   replaces: boolean
+  /** Nothing to write: the preview explains itself and offers no button, so an
+   *  empty result can never be pasted over content the agent wrote. */
+  empty?: boolean
 }) {
-  const {label, es, en, onInsert, outcome, replaces} = props
+  const {label, es, en, onInsert, outcome, replaces, empty} = props
   const done = Boolean(outcome)
   return (
     <Card padding={3} radius={2} border>
       <Stack space={3}>
         <Flex align="center" justify="space-between">
           <Label size={1}>{label}</Label>
+          {empty ? null : (
           <Button
             text={
               outcome === 'replaced'
@@ -141,6 +145,7 @@ function PreviewField(props: {
             padding={2}
             onClick={onInsert}
           />
+          )}
         </Flex>
         <Stack space={2}>
           <Text size={1}>{es}</Text>
@@ -347,7 +352,7 @@ export function PropertyComposerContent(props: {
   }
 
   const insertHighlights = () => {
-    if (!result) return
+    if (!result || result.highlights.length === 0) return
     patch.execute([{set: {highlights: result.highlights}}])
     setInserted((s) => ({...s, highlights: outcomeOf(filled.highlights)}))
     toast.push({
@@ -369,7 +374,11 @@ export function PropertyComposerContent(props: {
             paragraphs(result.descriptionEs),
             paragraphs(result.descriptionEn),
           ),
-          highlights: result.highlights,
+          // An empty result is the generator declining to invent destacados, not
+          // an instruction to clear the ones the agent wrote by hand.
+          ...(result.highlights.length > 0
+            ? {highlights: result.highlights}
+            : {}),
         },
       },
     ])
@@ -378,7 +387,9 @@ export function PropertyComposerContent(props: {
     setInserted(() => ({
       title: outcomeOf(filled.title),
       description: outcomeOf(filled.description),
-      highlights: outcomeOf(filled.highlights),
+      ...(result.highlights.length > 0
+        ? {highlights: outcomeOf(filled.highlights)}
+        : {}),
     }))
     toast.push({
       status: 'success',
@@ -502,17 +513,29 @@ export function PropertyComposerContent(props: {
           <PreviewField
             label="Destacados"
             es={
-              <Inline space={2}>
-                {result.highlights.map((h) => (
-                  <Badge key={h} tone="primary" mode="outline">
-                    {h}
-                  </Badge>
-                ))}
-              </Inline>
+              result.highlights.length > 0 ? (
+                <Inline space={2}>
+                  {result.highlights.map((h) => (
+                    <Badge key={h} tone="primary" mode="outline">
+                      {h}
+                    </Badge>
+                  ))}
+                </Inline>
+              ) : (
+                // Not a failure: the destacados are for what the datos table
+                // cannot say, so with no notas del agente there is nothing to
+                // add. Says so plainly instead of showing an empty row.
+                <Text size={1} muted>
+                  Sin destacados: los datos estructurados ya lo dicen todo.
+                  Añade notas del agente (reformas, terraza, vistas…) y vuelve a
+                  generar.
+                </Text>
+              )
             }
             onInsert={insertHighlights}
             outcome={inserted.highlights}
             replaces={filled.highlights}
+            empty={result.highlights.length === 0}
           />
           <Flex justify="flex-end">
             <Button

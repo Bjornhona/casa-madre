@@ -10,6 +10,7 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { statusLabelKey } from "@/lib/property-status";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 import { contactoHref } from "@/lib/contacto-href";
+import { dropRestatedHighlights } from "@/lib/highlights";
 import { urlFor } from "@/sanity/lib/image";
 import { fallbackImagesFor } from "@/lib/property-fallback-images";
 import type { PROPERTY_BY_SLUG_QUERY_RESULT } from "@/sanity/types.gen";
@@ -68,6 +69,17 @@ export function PropertyView({ property }: { property: Property }) {
       : null,
     typeLabel,
   ].filter(Boolean) as string[];
+
+  // The specs line above already states surface, bedrooms, bathrooms and type,
+  // and the hero states the neighbourhood, so a tag repeating any of them is
+  // read twice within one screen. Same filter as the PDF ficha.
+  const highlights = dropRestatedHighlights(property.highlights, {
+    bedrooms: property.bedrooms,
+    bathrooms: property.bathrooms,
+    surface: property.surface,
+    propertyType: property.propertyType,
+    neighbourhood: property.neighbourhood,
+  });
 
   const container = staggerContainer(reduce, 0.12);
   const item = fadeUp(reduce, { y: 20, duration: 0.7 });
@@ -220,11 +232,11 @@ export function PropertyView({ property }: { property: Property }) {
             </motion.div>
           )}
 
-          {property.highlights && property.highlights.length > 0 && (
+          {highlights.length > 0 && (
             <div className="mt-16 border-t border-line pt-10">
               <Kicker>{t("featuresLabel")}</Kicker>
               <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
-                {property.highlights.map((highlight) => (
+                {highlights.map((highlight) => (
                   <li
                     key={highlight}
                     className="font-serif text-[20px] italic text-deep/80"

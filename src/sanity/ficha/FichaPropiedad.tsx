@@ -17,6 +17,7 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
+import { dropRestatedHighlights } from "@/lib/highlights";
 import { LEGAL_DATA, formatLegalAddress } from "@/lib/legal-data";
 import { urlFor } from "@/sanity/lib/image";
 import type { FICHA_QUERY_RESULT } from "@/sanity/types.gen";
@@ -109,26 +110,6 @@ const styles = StyleSheet.create({
 
   rule: { borderBottomWidth: 0.6, borderBottomColor: COLOR.line },
 
-  priceRow: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
-  },
-  energyBadge: {
-    borderWidth: 0.6,
-    borderColor: COLOR.sand,
-    backgroundColor: COLOR.bone,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-  },
-  energyLabel: {
-    fontSize: 6.5,
-    letterSpacing: 1.2,
-    textTransform: "uppercase",
-    color: COLOR.muted,
-  },
-  energyValue: { fontSize: 11, fontWeight: 600, color: COLOR.brown },
-
   body: { fontSize: 9.5, lineHeight: 1.75, color: COLOR.muted },
 
   row: {
@@ -218,11 +199,13 @@ const hasValue = (value: unknown): boolean =>
 function FichaFooter({
   copy,
   registration,
+  propertyTitle,
   recipientName,
   preparedOn,
 }: {
   copy: (typeof FICHA_COPY)[FichaLocale];
   registration: FichaRegistration;
+  propertyTitle: string | null;
   recipientName: string;
   preparedOn: string;
 }) {
@@ -245,6 +228,13 @@ function FichaFooter({
       </Text>
       {aicat && <Text style={styles.footerText}>{aicat}</Text>}
       <Text style={styles.footerText}>{copy.disclaimer}</Text>
+      {/* Which property, then for whom — the two identification facts together,
+          and never a bare label when the title is missing. */}
+      {propertyTitle && (
+        <Text style={styles.footerText}>
+          {copy.propertyReference({ title: propertyTitle })}
+        </Text>
+      )}
       <Text style={styles.footerText}>
         {copy.confidentiality({ recipient: recipientName, date: preparedOn })}
       </Text>
@@ -277,7 +267,9 @@ export function FichaPropiedad({
     useGrouping: "always",
   }).format(property.price);
 
-  // A–G print as stored; only the prose states are translated.
+  // A–G print as stored; only the prose states are translated. It reads as a
+  // datos row like any other certificate — the badge it used to have on page 1
+  // gave a legally required disclosure the weight of a selling point.
   const energyStates: Record<string, string> = copy.energyStates;
   const energyRating = property.energyRating;
   const energyLabel =
@@ -305,12 +297,26 @@ export function FichaPropiedad({
       label: copy.labels.cedulaHabitabilidad,
       value: property.cedulaHabitabilidad,
     },
+    { label: copy.labels.calificacionEnergetica, value: energyLabel },
   ].filter((row) => hasValue(row.value));
+
+  // Tags that only repeat a row of the table above them are noise on a page
+  // whose whole job is to be scanned; the shared filter keeps that judgement
+  // identical here and on the website.
+  const highlights = dropRestatedHighlights(property.highlights, {
+    bedrooms: property.bedrooms,
+    bathrooms: property.bathrooms,
+    surface: property.surface,
+    surfaceUtil: property.surfaceUtil,
+    propertyType: property.propertyType,
+    neighbourhood: property.neighbourhood?.name,
+  });
 
   const footer = (
     <FichaFooter
       copy={copy}
       registration={registration}
+      propertyTitle={property.title}
       recipientName={recipientName}
       preparedOn={preparedOn}
     />
@@ -343,22 +349,11 @@ export function FichaPropiedad({
 
           <View style={[styles.rule, { marginTop: 20 }]} />
 
-          <View style={[styles.priceRow, { marginTop: 16 }]}>
-            <View>
-              <Text style={styles.kicker}>
-                {copy.labels.precio[property.operation]}
-              </Text>
-              <Text style={[styles.price, { marginTop: 4 }]}>{price}</Text>
-            </View>
-
-            {energyLabel && (
-              <View style={styles.energyBadge}>
-                <Text style={styles.energyLabel}>
-                  {copy.labels.calificacionEnergetica}
-                </Text>
-                <Text style={styles.energyValue}>{energyLabel}</Text>
-              </View>
-            )}
+          <View style={{ marginTop: 16 }}>
+            <Text style={styles.kicker}>
+              {copy.labels.precio[property.operation]}
+            </Text>
+            <Text style={[styles.price, { marginTop: 4 }]}>{price}</Text>
           </View>
         </View>
 
@@ -395,10 +390,10 @@ export function FichaPropiedad({
             </View>
           )}
 
-          {property.highlights && property.highlights.length > 0 && (
+          {highlights.length > 0 && (
             <View style={{ marginTop: 28 }}>
               <View style={styles.tags}>
-                {property.highlights.map((highlight) => (
+                {highlights.map((highlight) => (
                   <Text key={highlight} style={styles.tag}>
                     {highlight}
                   </Text>
