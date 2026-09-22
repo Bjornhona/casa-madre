@@ -115,7 +115,7 @@ export function ComingSoon() {
         {/* Main line — serif display, matching SerifHeading's locked tracking. */}
         <motion.p
           variants={item}
-          className="mt-12 max-w-[18ch] font-serif font-medium tracking-[-0.035em] text-[30px] leading-[1.12] text-brown sm:text-[44px]"
+          className="mt-12 max-w-[22ch] font-serif font-medium tracking-[-0.035em] text-[30px] leading-[1.12] text-brown sm:text-[44px]"
         >
           {t("title")}
         </motion.p>
