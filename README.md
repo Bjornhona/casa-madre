@@ -46,7 +46,9 @@ Names and purpose only; get values from the project owner or the hosting dashboa
 - **These gate the ficha, in two tiers.** `missingRequiredLegalData()` (`legalName`, `taxId`, `email`, `phone`) disables the "Generar ficha PDF" action outright, with the missing names in its tooltip. `missingRecommendedLegalData()` (`address.street`, `address.postalCode`) lets generation proceed but puts a non-dismissible warning in the dialog, since LSSI Art. 10 requires the provider's registered domicile. The address is in the softer tier only while the client's domicilio fiscal is outstanding — a temporary commercial decision, not a view that it is optional. See the tier note in `src/lib/legal-data.ts`.
 - `ANTHROPIC_API_KEY` — **server-only, billed.** See AI integration below.
 - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` — public; appears in every delivery URL.
-- `NEXT_PUBLIC_COMING_SOON` — `"true"` rewrites all public routes to a holding page. `NEXT_PUBLIC_*` vars are inlined at build time; redeploy after changing.
+- `NEXT_PUBLIC_COMING_SOON` — `"true"` rewrites all public routes to a holding page unless the visitor carries a valid team-access cookie. `NEXT_PUBLIC_*` vars are inlined at build time; redeploy after changing.
+- `PREVIEW_PASSWORD` — **server-only.** The single shared password the team types at `/acceso` to get past the holding page.
+- `PREVIEW_SECRET` — **server-only.** HMAC key signing the access cookie. Not typed by a human: generate with `openssl rand -base64 32`. Rotating it invalidates every cookie already issued, which is the intended revocation mechanism.
 
 ## Content model
 
@@ -69,6 +71,16 @@ All queries live in `src/sanity/lib/queries.ts`. After editing a schema, run `pn
 **AI drafting — costs money.** Studio actions "Generar borrador con IA" (Journal) and "Generar ficha con IA" (Propiedades) POST to `/api/ai/draft`, which calls the Anthropic API server-side using `ANTHROPIC_API_KEY`. **Whoever owns that key pays per generation.** It is triggered manually by editors, so cost scales with editorial activity — there is no quota, throttle, or usage log. If handing the site to the client, either move the key to their Anthropic account or remove the actions from `sanity.config.ts`. The key must never reach the browser or Studio bundle. Model is pinned to `claude-sonnet-4-6` in the route; it is valid and active but no longer the current Sonnet.
 
 **Contact form rate limit.** `/api/contact` allows 5 submissions/hour/IP via an in-memory map. On serverless this is per-instance and resets on redeploy, so the real limit is looser than it looks. Replace with a shared store if abuse appears.
+
+**Team access to the holding page.** While `NEXT_PUBLIC_COMING_SOON` is `"true"`, `src/proxy.ts` rewrites every public route to `/[locale]/coming-soon` unless the request carries a valid `cm_access` cookie. The cookie holds `v1.<expiry>.<HMAC-SHA256>` signed with `PREVIEW_SECRET` — not a boolean — so it can't be forged or extended client-side; `src/lib/preview-auth.ts` signs and verifies it with Web Crypto only, so the same module runs in the proxy and in the login action. Log in at `/es/acceso` or `/en/acceso` (password compared in constant time via double-HMAC), log out at `/api/preview/logout`. The login route, `/coming-soon`, `/studio`, `/api`, Next internals and the root metadata routes all sit outside the gate. The login page is `noindex, nofollow` and absent from `sitemap.ts`, which builds from explicit path lists.
+
+Failed logins get a randomised 400–900 ms delay plus a sliding window of 8 attempts / 10 min per IP (`src/lib/rate-limit.ts`). **That window is in-process**, so on Vercel it is per-instance and resets on cold start — a speed bump, not a limiter. The real one is a Vercel Firewall rule, configured in the dashboard, no code:
+
+1. Project → **Firewall** → **Rules** → **Add Rule**, name it e.g. `acceso-login`.
+2. Condition: **Request Path** — `equals` — `/es/acceso`. Add a second condition with the **Or** operator for `/en/acceso` (or use `contains` / `/acceso`).
+3. Action: **Rate Limit**. Set **20 requests** per **60 seconds**, keyed by **IP address**.
+4. Choose **Deny** (returns 429) as the action when the limit is exceeded; **Challenge** is the gentler alternative if the team shares an office IP.
+5. Save and **deploy the rule** — Firewall changes are staged until published.
 
 ## Deployment
 

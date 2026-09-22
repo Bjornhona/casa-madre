@@ -512,7 +512,20 @@
     "subtitle": "Casa Madre is taking shape. In the meantime, we'd be glad to accompany you.",
     "contact": "Shall we talk?",
     "ctaEmail": "Write to us",
-    "ctaWhatsapp": "WhatsApp"
+    "ctaWhatsapp": "WhatsApp",
+    "access": "Access",
+    "accessAria": "Team access"
+  },
+  "access": {
+    "kicker": "Casa Madre",
+    "title": "Team access",
+    "subtitle": "Enter the password to view the site before it launches.",
+    "passwordLabel": "Password",
+    "submit": "Enter",
+    "submitting": "Entering…",
+    "invalid": "Incorrect password",
+    "throttled": "Too many attempts. Please try again in a few minutes.",
+    "unconfigured": "Access is not configured. Please tell the technical team."
   },
   "floatingContact": {
     "contact": "Contact",

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { ctaClass } from "./cta-styles";
 
 type CTAButtonProps = React.PropsWithChildren<{
   onClick: () => void;
@@ -13,14 +13,7 @@ type CTAButtonProps = React.PropsWithChildren<{
  */
 export function CTAButton({ onClick, className, children }: CTAButtonProps) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "inline-block border border-brown px-7 py-3.5 text-[11px] uppercase tracking-[0.16em] text-brown transition-colors duration-500 ease-out hover:bg-brown hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory",
-        className,
-      )}
-    >
+    <button type="button" onClick={onClick} className={ctaClass("onLight", className)}>
       {children}
     </button>
   );

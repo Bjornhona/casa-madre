@@ -1,23 +1,21 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
-import { Mail, MessageCircle } from "lucide-react";
+import { Lock, Mail, MessageCircle } from "lucide-react";
+import { ctaClass } from "@/components/ui/cta-styles";
+import { heroPoster } from "@/lib/hero-media";
 import { itemAnimation, staggerContainer } from "@/lib/motion";
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP;
 const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
 
-// Shared CTA styling — mirrors CTALink (onLight) so the holding page reads as
-// part of the same design system, but as anchors that can open a new tab /
-// carry mailto without going through the component's href-only API.
-const CTA_CLASS =
-  "inline-flex items-center gap-2.5 border border-brown px-7 py-3.5 text-[11px] uppercase tracking-[0.16em] text-brown transition-colors duration-500 ease-out hover:bg-brown hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory";
-
 /**
  * Premium "coming soon" holding page — quiet, editorial, on-brand. Reuses the
- * locked Hero monogram + wordmark treatment over a clean ivory field (no
- * generic construction imagery), with a single slow fade-in on load.
+ * locked Hero monogram + wordmark treatment over the homepage hero still, with
+ * a single slow fade-in on load.
  */
 export function ComingSoon() {
   const tHero = useTranslations("hero");
@@ -32,14 +30,40 @@ export function ComingSoon() {
 
   return (
     <main className="relative flex min-h-svh flex-col overflow-hidden bg-ivory px-6 py-10 text-center text-deep sm:px-10">
-      {/* Faint warm vignette — adds Mediterranean warmth without an image or any
-          legibility cost. Purely decorative. */}
+      {/* Same still the homepage hero paints, via @/lib/hero-media. Statically
+          imported, so `placeholder="blur"` gets its blurDataURL for free.
+          The source is ~2.56:1, so a portrait phone shows only ~18% of its
+          width. Dead centre there is bare sky and the page reads as blank
+          cream, so below `sm` the focal point moves right onto the sun's
+          reflection on the water — still bright enough for the dark type, but
+          with something actually in frame. Desktop keeps the full composition. */}
+      <Image
+        src={heroPoster}
+        alt=""
+        aria-hidden
+        fill
+        priority
+        sizes="100vw"
+        placeholder="blur"
+        className="object-cover object-[64%_50%] sm:object-center"
+      />
+
+      {/* Scrim, mirroring HeroBackground's `warm` + `light` treatments so the
+          holding page reads as the same room as the homepage hero: a gentle
+          vertical cream wash, plus a stronger glow concentrated behind the
+          centred content. Weighted this way rather than as one flat wash so
+          the photograph still reads at the edges of the frame while
+          text-deep / text-brown / text-muted stay above AA where they sit. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-cream/40 via-cream/20 to-cream/45"
+      />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 90% at 50% 12%, color-mix(in srgb, var(--color-sand) 28%, transparent), transparent 60%)",
+            "radial-gradient(ellipse 70% 56% at 50% 46%, color-mix(in srgb, var(--color-cream) 78%, transparent), transparent 76%)",
         }}
       />
 
@@ -111,8 +135,13 @@ export function ComingSoon() {
               {t("contact")}
             </p>
             <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+              {/* ctaClass rather than CTALink: these carry mailto / target,
+                  which that primitive's href-only API doesn't expose. */}
               {CONTACT_EMAIL && (
-                <a href={`mailto:${CONTACT_EMAIL}`} className={CTA_CLASS}>
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className={ctaClass("onLight", "inline-flex items-center gap-2.5")}
+                >
                   <Mail className="h-4 w-4" strokeWidth={1.5} aria-hidden />
                   {t("ctaEmail")}
                 </a>
@@ -122,7 +151,7 @@ export function ComingSoon() {
                   href={`https://wa.me/${WHATSAPP}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={CTA_CLASS}
+                  className={ctaClass("onLight", "inline-flex items-center gap-2.5")}
                 >
                   <MessageCircle className="h-4 w-4" strokeWidth={1.5} aria-hidden />
                   {t("ctaWhatsapp")}
@@ -134,7 +163,7 @@ export function ComingSoon() {
       </motion.div>
 
       <motion.footer
-        initial={reduce ? { opacity: 0 } : { opacity: 0 }}
+        initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: reduce ? 0 : 0.9 }}
         className="relative z-10 mt-10 text-[11px] uppercase tracking-[0.22em] text-muted/80"
@@ -142,6 +171,21 @@ export function ComingSoon() {
         © {year} Casa Madre · Barcelona
         <span className="sr-only"> · {locale.toUpperCase()}</span>
       </motion.footer>
+
+      {/* Team entry point. Deliberately quiet — a client's eye should slide off
+          it, while anyone who knows it's there can find it. Opacity is the only
+          thing dialled down: it sits in the tab order, takes a visible focus
+          ring, and carries a full label for screen readers.
+          Pinned to the corner from `sm` up; below that the footer line is
+          nearly full-width, so it stacks underneath instead of overlapping. */}
+      <Link
+        href={`/${locale}/acceso`}
+        aria-label={t("accessAria")}
+        className="relative z-10 mt-3 inline-flex items-center gap-1.5 self-center p-2 text-[10px] uppercase tracking-[0.18em] text-deep/35 transition-colors duration-500 ease-out hover:text-deep/70 focus-visible:text-deep/70 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brown/60 sm:absolute sm:bottom-7 sm:right-7 sm:mt-0"
+      >
+        <Lock className="h-3 w-3" strokeWidth={1.5} aria-hidden />
+        <span aria-hidden>{t("access")}</span>
+      </Link>
     </main>
   );
 }

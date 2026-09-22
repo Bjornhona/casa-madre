@@ -512,7 +512,20 @@
     "subtitle": "Casa Madre está tomando forma. Mientras tanto, estaremos encantadas de acompañarte.",
     "contact": "¿Hablamos?",
     "ctaEmail": "Escríbenos",
-    "ctaWhatsapp": "WhatsApp"
+    "ctaWhatsapp": "WhatsApp",
+    "access": "Acceso",
+    "accessAria": "Acceso para el equipo"
+  },
+  "access": {
+    "kicker": "Casa Madre",
+    "title": "Acceso al equipo",
+    "subtitle": "Introduce la contraseña para ver el sitio antes de su lanzamiento.",
+    "passwordLabel": "Contraseña",
+    "submit": "Entrar",
+    "submitting": "Entrando…",
+    "invalid": "Contraseña incorrecta",
+    "throttled": "Demasiados intentos. Inténtalo de nuevo en unos minutos.",
+    "unconfigured": "El acceso no está configurado. Avisa al equipo técnico."
   },
   "floatingContact": {
     "contact": "Contacto",

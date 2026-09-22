@@ -5,14 +5,13 @@ import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 import { CTALink } from "@/components/ui/CTALink";
 import { EASE, itemAnimation, staggerContainer } from "@/lib/motion";
+import { HERO_VIDEO_MP4, heroPoster } from "@/lib/hero-media";
 import { HeroBackground } from "./HeroBackground";
 import { OceanSound } from "./OceanSound";
 
-// Hero background assets — swap to the final encoded files when delivered.
-// Poster (LCP): high-quality first frame. Until the real /hero/hero-poster.jpg
-// is supplied, we reuse the existing Mediterranean still as a tasteful placeholder.
-const HERO_POSTER = "/mediterranean-seaview.webp"; // TODO: /hero/hero-poster.jpg
-const HERO_VIDEO_MP4 = "/hero/hero.mp4";
+// Hero background assets live in @/lib/hero-media so the coming-soon holding
+// page can reuse the same poster. Swap to the final encoded files there when
+// they're delivered (the poster is still the Mediterranean placeholder still).
 
 // "video" = cinemagraph clip; "kenburns" = lightweight slow-zoom still fallback.
 const HERO_MODE: "video" | "kenburns" = "video";
@@ -37,7 +36,7 @@ export function Hero() {
       <HeroBackground
         mode={HERO_MODE}
         scrim={HERO_SCRIM}
-        poster={HERO_POSTER}
+        poster={heroPoster.src}
         videoMp4={HERO_VIDEO_MP4}
       />
       <OceanSound />
