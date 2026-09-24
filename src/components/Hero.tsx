@@ -57,7 +57,7 @@ export function Hero() {
         />
         <motion.h1
           variants={item}
-          className="mt-[-0.25em] pl-[0.22em] font-serif text-[28px] text-deep uppercase tracking-[0.22em] sm:text-[50px]"
+          className="mt-[-0.25em] pl-[0.22em] font-serif text-[28px] text-cream uppercase tracking-[0.22em] sm:text-[50px]"
         >
           {t("brand")}
         </motion.h1>
@@ -70,14 +70,14 @@ export function Hero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div
-            className="flex-1 h-px bg-deep/90"
+            className="flex-1 h-px bg-ivory/90"
             style={{
               maskImage: "linear-gradient(to right, transparent, black)",
             }}
           />
-          <span className="w-2 h-2 bg-deep/90 rounded-full" />
+          <span className="w-2 h-2 bg-ivory/90 rounded-full" />
           <div
-            className="flex-1 h-px bg-deep/90"
+            className="flex-1 h-px bg-ivory/90"
             style={{
               maskImage: "linear-gradient(to left, transparent, black)",
             }}
@@ -86,7 +86,7 @@ export function Hero() {
 
         <motion.p
           variants={item}
-          className="mt-3.5 text-[12px] uppercase tracking-[0.42em] text-deep/90"
+          className="mt-3.5 text-[12px] uppercase tracking-[0.42em] text-ivory/90"
         >
           {t("descriptor")}
         </motion.p>
@@ -102,13 +102,13 @@ export function Hero() {
           initial={reduce ? { opacity: 0 } : { opacity: 0, y: 18 }}
           animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: EASE, delay: reduce ? 0 : 1 }}
-          className="mx-auto mt-8 max-w-[34ch] font-serif text-[20px] italic leading-[1.4] text-clay sm:text-[26px]"
+          className="mx-auto mt-8 max-w-[34ch] font-serif text-[20px] italic leading-[1.4] text-sand sm:text-[26px]"
         >
           {t("tagline")}
         </motion.p>
 
         <motion.div variants={item} className="mt-10">
-          <CTALink href={`/${locale}/contact`} variant="onLight">
+          <CTALink href={`/${locale}/contact`} variant="onDark">
             {t("cta")}
           </CTALink>
         </motion.div>
