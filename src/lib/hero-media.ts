@@ -1,4 +1,4 @@
-import heroPoster from "../../public/mediterranean-seaview.webp";
+import heroPoster from "../../public/casa-madre-cover.webp";
 
 /**
  * The single source of truth for the hero background, shared by the homepage
