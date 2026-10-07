@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
+import { HeroScrim, type ScrimVariant } from "./HeroScrim";
 
 /*
  * Target encode settings for the hero assets (encode the real files to match):
@@ -27,7 +28,13 @@ type HeroBackgroundProps = {
    * `light` = soft cream glow behind the centred content so the dark wordmark /
    * tagline stay legible over darker, more cinematic footage.
    */
-  scrim?: "warm" | "light";
+  scrim?: ScrimVariant;
+  /**
+   * Extra `deep` wash passed straight to HeroScrim, 0–100. Defaults to 0, i.e.
+   * the hero's own look. Raise it on pages where the overlaid copy is the point
+   * rather than atmosphere — see the contrast note in ComingSoon.
+   */
+  boost?: number;
 };
 
 export function HeroBackground({
@@ -35,6 +42,7 @@ export function HeroBackground({
   videoMp4,
   mode = "video",
   scrim = "warm",
+  boost = 0,
 }: HeroBackgroundProps) {
   const reduce = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -113,52 +121,9 @@ export function HeroBackground({
         </video>
       )}
 
-      {/* Warm dark overlay: faint top tint + a deeper foot so overlaid text stays legible. */}
-      {/* <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-deep/10 via-transparent to-deep/35" /> */}
-
-      {/* Optional light scrim: a soft cream glow behind the centred content so the
-          dark wordmark / tagline stay legible over darker, more cinematic footage. */}
-      {/* {scrim === "light" && (
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 62% 54% at 50% 46%, color-mix(in srgb, var(--color-cream) 60%, transparent), transparent 72%)",
-          }}
-        />
-      )} */}
-
-      {/* Linear framing — subtle at the head, deeper at the foot. Always on. */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-deep/15 via-transparent to-deep/40" />
-
-      {/* Content scrim. Mutually exclusive: `warm` darkens behind the centred
-    content for light text over bright footage; `light` lifts it for dark
-    text over darker footage. */}
-      {scrim === "warm" ? (
-        <>
-          {/* Uniform wash — lifts contrast everywhere without a vignette edge. */}
-          <div className="pointer-events-none absolute inset-0 bg-deep/25" />
-          {/* Soft centre weight, aligned with the content block. */}
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 72% 62% at 50% 46%, color-mix(in srgb, var(--color-deep) 30%, transparent), transparent 78%)",
-            }}
-          />
-        </>
-      ) : (
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 62% 54% at 50% 46%, color-mix(in srgb, var(--color-cream) 60%, transparent), transparent 72%)",
-          }}
-        />
-      )}
-
-      {/* Foot gradient over the scrim so the scroll chevron stays readable. */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-deep/30 via-transparent to-transparent" />
+      {/* Scrim layers live in HeroScrim so the coming-soon holding page can render
+          the identical stack. Don't inline gradients here again. */}
+      <HeroScrim scrim={scrim} boost={boost} />
     </div>
   );
 }
