@@ -26,7 +26,7 @@ export function TestimoniosView({
   const single = testimonials.length === 1;
 
   return (
-    <Section id="testimonios" aria-labelledby="testimonios-kicker" className="border-line border-b-1">
+    <Section id="testimonios" aria-labelledby="testimonios-kicker" className="border-line border-b">
       <motion.div
         variants={container}
         initial="hidden"
@@ -38,7 +38,7 @@ export function TestimoniosView({
         </motion.div>
         <motion.p
           variants={item}
-          className="mt-6 max-w-[46rem] font-serif text-[24px] leading-[1.2] text-deep sm:text-[29px]"
+          className="mt-6 max-w-184 font-serif text-[24px] leading-[1.2] text-deep sm:text-[29px]"
         >
           {t("intro")}
         </motion.p>

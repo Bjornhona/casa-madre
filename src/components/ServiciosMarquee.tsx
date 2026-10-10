@@ -48,7 +48,7 @@ export function ServiciosMarquee() {
         // out of the a11y tree and tab order.
         aria-hidden={duplicate || undefined}
         tabIndex={duplicate ? -1 : undefined}
-        className="flex w-[300px] max-w-full shrink-0 flex-col gap-4 rounded-card border border-line bg-cream p-7 transition-colors duration-500 hover:bg-ivory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
+        className="flex w-75 max-w-full shrink-0 flex-col gap-4 rounded-card border border-line bg-cream p-7 transition-colors duration-500 hover:bg-ivory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brown focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
       >
         <Icon className="h-7 w-7 text-clay" strokeWidth={1.25} aria-hidden />
         <h3 className="text-[13px] font-semibold uppercase tracking-[0.15em] text-brown">
@@ -62,7 +62,7 @@ export function ServiciosMarquee() {
   };
 
   return (
-    <Section id="servicios" aria-labelledby="servicios-kicker" className="bg-bone">
+    <Section id="servicios" aria-labelledby="servicios-kicker" className="bg-bone border-line border-b">
       <Kicker id="servicios-kicker">{t("kicker")}</Kicker>
 
       {reduce ? (

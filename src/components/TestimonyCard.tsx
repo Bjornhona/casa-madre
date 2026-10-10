@@ -10,7 +10,7 @@ interface TestimonyCardProps {
 const TestimonyCard = ({ testimonial, single, item }: TestimonyCardProps) => {
   if (single) {
     return (
-      <motion.li variants={item} className="max-w-[48rem] text-center">
+      <motion.li variants={item} className="max-w-3xl text-center">
         <figure>
           <span
             aria-hidden

@@ -25,7 +25,7 @@ export function AboutManifesto() {
   const item = fadeUp(reduce, { y: 20, duration: 0.7 });
 
   return (
-    <Section className="border-line border-b-1">
+    <Section className="border-line border-b">
       <motion.div
         variants={container}
         initial="hidden"
@@ -48,7 +48,7 @@ export function AboutManifesto() {
             <motion.p
               key={i}
               variants={item}
-              className="mt-2 max-w-[34rem] text-[18px] leading-[1.7] text-deep/85"
+              className="mt-2 max-w-136 text-[18px] leading-[1.7] text-deep/85"
             >
               {paragraph}
             </motion.p>
@@ -72,15 +72,15 @@ export function AboutFounders() {
     <Section
       id="founders"
       aria-labelledby="founders-kicker"
-      className="bg-cream border-line border-b-1"
+      className="bg-cream border-line border-b"
     >
-      <div className="grid items-center gap-12 md:grid-cols-2 md:gap-[70px]">
+      <div className="grid items-center gap-12 md:grid-cols-2 md:gap-17.5">
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 24 }}
           whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.9, ease: EASE }}
-          className="relative order-last aspect-[4/5] w-full overflow-hidden rounded-card bg-sand/30 shadow-soft md:order-first"
+          className="relative order-last aspect-4/5 w-full overflow-hidden rounded-card bg-sand/30 shadow-soft md:order-first"
         >
           {!imgFailed && (
             <Image
@@ -116,7 +116,7 @@ export function AboutFounders() {
               <motion.p
                 key={i}
                 variants={item}
-                className="mt-2 max-w-[34rem] text-[18px] leading-[1.7] text-deep/85"
+                className="mt-2 max-w-136 text-[18px] leading-[1.7] text-deep/85"
               >
                 {paragraph}
               </motion.p>
@@ -211,7 +211,8 @@ export function AboutNetwork() {
     <Section
       id="network"
       aria-labelledby="network-kicker"
-      className="border-line border-b-1 bg-bone"
+      // className="border-line border-b-1 bg-bone"
+      className="bg-brown text-cream"
     >
       <motion.div
         variants={container}
@@ -221,12 +222,12 @@ export function AboutNetwork() {
         className="max-w-[60ch]"
       >
         <motion.div variants={item}>
-          <Kicker id="network-kicker">{t("kicker")}</Kicker>
+          <Kicker id="network-kicker" tone="sand">{t("kicker")}</Kicker>
         </motion.div>
         <motion.div variants={item}>
           <SerifHeading
             as="h2"
-            className="mt-5 text-[30px] leading-[1.08] text-brown sm:text-[40px]"
+            className="mt-5 text-[30px] leading-[1.08] sm:text-[40px]"
           >
             {t("title")}
           </SerifHeading>
@@ -236,7 +237,7 @@ export function AboutNetwork() {
             <motion.p
               key={i}
               variants={item}
-              className="mt-2 text-[17px] font-light leading-[1.8] text-deep/85"
+              className="mt-2 text-[17px] font-light leading-[1.8]"
             >
               {paragraph}
             </motion.p>
@@ -254,13 +255,13 @@ export function AboutCta() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="px-6 pb-20 pt-2 sm:px-10 lg:px-12">
+    <section className="bg-bone px-6 p-20 sm:px-10 lg:px-12">
       <motion.div
         initial={reduce ? { opacity: 1 } : { opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7, ease: EASE }}
-        className="mx-auto w-full max-w-[1240px] rounded-card bg-deep px-6 py-16 text-cream sm:px-12 lg:px-16"
+        className="mx-auto w-full max-w-310 rounded-card bg-deep px-6 py-16 text-cream sm:px-12 lg:px-16"
       >
         <SerifHeading
           as="h2"

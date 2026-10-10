@@ -42,9 +42,9 @@ export function Barrios({
   const isHome = variant === "home";
 
   return (
-    <Section id="barrios" aria-labelledby="barrios-kicker" className="border-line border-b-1">
+    <Section id="barrios" aria-labelledby="barrios-kicker" className="border-line border-b">
       <Kicker id="barrios-kicker">{t("kicker")}</Kicker>
-      <p className="mt-6 max-w-[46rem] font-serif text-[24px] leading-[1.2] text-deep sm:text-[29px]">
+      <p className="mt-6 max-w-184 font-serif text-[24px] leading-[1.2] text-deep sm:text-[29px]">
         {t("intro")}
       </p>
 
@@ -70,7 +70,7 @@ export function Barrios({
                 href={`/${locale}/neighbourhoods/${barrio.slug}`}
                 className="group block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brown"
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                <div className="relative aspect-4/3 w-full overflow-hidden">
                   <Image
                     src={src}
                     alt={barrio.image?.alt ?? ""}

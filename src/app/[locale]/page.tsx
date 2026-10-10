@@ -4,7 +4,6 @@ import { Hero } from "@/components/Hero";
 import { AboutIntro } from "@/components/AboutIntro";
 import { ServiciosMarquee } from "@/components/ServiciosMarquee";
 import { AboutMethod } from "@/components/About";
-import { Testimonios } from "@/components/Testimonios";
 import { Barrios } from "@/components/Barrios";
 import { Propiedades } from "@/components/Propiedades";
 import { JournalTeaser } from "@/components/JournalTeaser";
@@ -28,12 +27,15 @@ export default async function Home({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [{ data: properties }, { data: neighbourhoods }, { data: journalPosts }] =
-    await Promise.all([
-      sanityFetch({ query: PROPERTIES_QUERY, params: { locale } }),
-      sanityFetch({ query: NEIGHBOURHOODS_QUERY, params: { locale } }),
-      sanityFetch({ query: RECENT_JOURNAL_POSTS_QUERY, params: { locale } }),
-    ]);
+  const [
+    { data: properties },
+    { data: neighbourhoods },
+    { data: journalPosts },
+  ] = await Promise.all([
+    sanityFetch({ query: PROPERTIES_QUERY, params: { locale } }),
+    sanityFetch({ query: NEIGHBOURHOODS_QUERY, params: { locale } }),
+    sanityFetch({ query: RECENT_JOURNAL_POSTS_QUERY, params: { locale } }),
+  ]);
 
   return (
     <>
@@ -41,10 +43,9 @@ export default async function Home({
       <main>
         <Hero />
         <AboutIntro />
-        <ServiciosMarquee />
-        <AboutMethod />
-        <Testimonios max={3} />
         <Propiedades properties={properties} variant="home" />
+        <AboutMethod />
+        <ServiciosMarquee />
         <Barrios neighbourhoods={neighbourhoods} variant="home" />
         <JournalTeaser posts={journalPosts} />
         <ContactoTeaser />
