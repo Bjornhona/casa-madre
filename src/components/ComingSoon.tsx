@@ -93,17 +93,19 @@ export function ComingSoon() {
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 mx-auto flex w-full max-w-[640px] flex-1 flex-col items-center justify-center"
+        className="relative z-10 mx-auto flex w-full max-w-230 flex-1 flex-col items-center justify-center"
       >
         {/* Monogram + wordmark — the locked Hero treatment. */}
-        <motion.img
-          variants={item}
-          src="/casa-madre-logo.webp"
-          alt="Casa Madre"
-          width={120}
-          height={120}
-          className="mx-auto h-[110px] w-auto object-contain sm:h-[140px] mb-4"
-        />
+        <div className="mx-auto">
+          <motion.img
+            variants={item}
+            src="/casa-madre-logo.webp"
+            alt="Casa Madre"
+            width={120}
+            height={120}
+            className="ml-8 sm:ml-20 h-27.5 sm:h-40 w-auto object-contain mb-4"
+          />
+        </div>
         <motion.h1
           variants={item}
           className="mt-[-0.25em] pl-[0.22em] font-serif text-[34px] uppercase tracking-[0.22em] text-cream sm:text-[52px]"
@@ -111,50 +113,28 @@ export function ComingSoon() {
           {tHero("brand")}
         </motion.h1>
 
-        {/* Hairline + dot divider — matches the Hero, ivory/90 and all. */}
-        <motion.div
-          variants={item}
-          className="flex w-full items-center gap-4"
-        >
-          <div
-            className="h-px flex-1 bg-ivory/90"
-            style={{ maskImage: "linear-gradient(to right, transparent, black)" }}
-          />
-          <span className="h-2 w-2 rounded-full bg-ivory/90" />
-          <div
-            className="h-px flex-1 bg-ivory/90"
-            style={{ maskImage: "linear-gradient(to left, transparent, black)" }}
-          />
-        </motion.div>
-
         <motion.p
           variants={item}
-          className="mt-3.5 text-[12px] uppercase tracking-[0.42em] text-ivory/90"
+          className="text-[18px] uppercase tracking-[0.42em] text-cream/90"
         >
           {tHero("descriptor")}
-        </motion.p>
-
-        {/* Main line — this page's equivalent of the Hero tagline, so it takes
-            the Hero's serif accent colour. SerifHeading's locked tracking. */}
-        <motion.p
-          variants={item}
-          className="mt-12 max-w-[22ch] font-serif font-medium tracking-[-0.035em] text-[30px] leading-[1.12] text-sand sm:text-[44px]"
-        >
-          {t("title")}
         </motion.p>
 
         {/* Sub line. ivory/90 rather than a dimmer step: small text over the
             poster's bright band needs the full weight to clear AA. */}
         <motion.p
           variants={item}
-          className="mt-6 max-w-[46ch] text-[15px] font-light leading-[1.7] text-ivory/90"
+          className="mt-12 max-w-[46ch] text-[15px] font-light leading-[1.7] text-ivory/90"
         >
           {t("subtitle")}
         </motion.p>
 
         {/* Contact prompt + channels */}
         {(CONTACT_EMAIL || WHATSAPP) && (
-          <motion.div variants={item} className="mt-12 flex flex-col items-center">
+          <motion.div
+            variants={item}
+            className="mt-12 flex flex-col items-center"
+          >
             <p className="text-[12px] uppercase tracking-[0.22em] text-ivory/90">
               {t("contact")}
             </p>
@@ -167,7 +147,10 @@ export function ComingSoon() {
               {CONTACT_EMAIL && (
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
-                  className={ctaClass("onDark", "inline-flex items-center gap-2.5")}
+                  className={ctaClass(
+                    "onDark",
+                    "inline-flex items-center gap-2.5",
+                  )}
                 >
                   <Mail className="h-4 w-4" strokeWidth={1.5} aria-hidden />
                   {t("ctaEmail")}
@@ -178,9 +161,16 @@ export function ComingSoon() {
                   href={`https://wa.me/${WHATSAPP}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={ctaClass("onDark", "inline-flex items-center gap-2.5")}
+                  className={ctaClass(
+                    "onDark",
+                    "inline-flex items-center gap-2.5",
+                  )}
                 >
-                  <MessageCircle className="h-4 w-4" strokeWidth={1.5} aria-hidden />
+                  <MessageCircle
+                    className="h-4 w-4"
+                    strokeWidth={1.5}
+                    aria-hidden
+                  />
                   {t("ctaWhatsapp")}
                 </a>
               )}
