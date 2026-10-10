@@ -6,7 +6,6 @@ import { PageHero } from "@/components/ui/PageHero";
 import {
   AboutManifesto,
   AboutFounders,
-  AboutMethod,
   AboutNetwork,
   AboutCta,
 } from "@/components/About";
@@ -39,13 +38,11 @@ export default async function AboutPage({
         <AboutManifesto />
         {/* 2 · Founders */}
         <AboutFounders />
-        {/* 3 · The Método */}
-        <AboutMethod />
-        {/* 4 · Our network */}
+        {/* 3 · Our network */}
         <AboutNetwork />
-        {/* 5 · Testimonios (from Sanity; renders nothing if none published) */}
+        {/* 4 · Testimonios (from Sanity; renders nothing if none published) */}
         <Testimonios />
-        {/* 6 · CTA */}
+        {/* 5 · CTA */}
         <AboutCta />
       </main>
       <Footer />

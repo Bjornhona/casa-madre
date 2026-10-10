@@ -92,18 +92,16 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       className={`${cormorant.variable} ${inter.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
     >
-      <NextIntlClientProvider>
-        <head>
-          <link rel="icon" href="/icon" />
-          <JsonLd description={t("subtext")} />
-        </head>
-        <SanityLive />
-        <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col">
+        <NextIntlClientProvider>
           {children}
           <FloatingContact />
-        </body>
-      </NextIntlClientProvider>
+        </NextIntlClientProvider>
+        <JsonLd description={t("subtext")} />
+        <SanityLive />
+      </body>
     </html>
   );
 }

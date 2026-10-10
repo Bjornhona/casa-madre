@@ -3,7 +3,7 @@ import { SiteNav } from "@/components/SiteNav";
 import { Hero } from "@/components/Hero";
 import { AboutIntro } from "@/components/AboutIntro";
 import { ServiciosMarquee } from "@/components/ServiciosMarquee";
-import { MetodoTeaser } from "@/components/MetodoTeaser";
+import { AboutMethod } from "@/components/About";
 import { Testimonios } from "@/components/Testimonios";
 import { Barrios } from "@/components/Barrios";
 import { Propiedades } from "@/components/Propiedades";
@@ -42,7 +42,7 @@ export default async function Home({
         <Hero />
         <AboutIntro />
         <ServiciosMarquee />
-        <MetodoTeaser />
+        <AboutMethod />
         <Testimonios max={3} />
         <Propiedades properties={properties} variant="home" />
         <Barrios neighbourhoods={neighbourhoods} variant="home" />

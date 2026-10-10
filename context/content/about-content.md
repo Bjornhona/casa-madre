@@ -1,4 +1,4 @@
-# Casa Madre — Contenido página "Nosotras" / About (ES + EN)
+# Casa Madre — Contenido página "Quienes somos" / Who we are (ES + EN)
 
 *Adaptado del documento de marca de la clienta. El español es su voz (manifiesto, método y red provienen casi literalmente de su documento); el inglés es una adaptación natural. Estructura de la página de arriba abajo.*
 
@@ -114,6 +114,6 @@ We don't hand you off; we accompany you. We coordinate each specialist so you ha
 
 ## Notas
 
-- **URLs:** cambiar `/nosotras` → `/about` (slug en inglés, coherente con el resto). La etiqueta visible en el menú puede seguir siendo "Nosotras" (ES) / "About" (EN).
+- **URLs:** cambiar `/nosotras` → `/about` (slug en inglés, coherente con el resto). La etiqueta visible en el menú puede seguir siendo "Quiénes somos" (ES) / "Who we are" (EN).
 - **Imagen:** una sola imagen, idealmente la foto real de las fundadoras, en la Sección 2. Si más adelante se quiere, una segunda imagen ambiental podría acompañar la sección Nuestra Red.
 - **Pendiente real:** solo el texto de las fundadoras (Sección 2). Todo lo demás proviene del documento de la clienta y está listo.

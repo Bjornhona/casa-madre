@@ -29,7 +29,7 @@ test.describe("overlay navigation menu", () => {
 
     // All six section links are present.
     for (const label of [
-      "Nosotras",
+      "Who we are",
       "Servicios",
       "Método",
       "Barrios",

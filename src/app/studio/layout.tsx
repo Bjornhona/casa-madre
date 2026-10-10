@@ -5,7 +5,6 @@ export default function StudioLayout({
 }) {
   return (
     <html lang="en">
-      <link rel="icon" href="/icon" />
       <body>{children}</body>
     </html>
   )

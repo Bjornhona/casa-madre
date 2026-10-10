@@ -62,7 +62,7 @@ export function Hero() {
           {t("brand")}
         </motion.h1>
 
-        <motion.div
+        {/* <motion.div
           className={`flex items-center gap-4 w-full`}
           initial={{ opacity: 0, scaleX: 0.2 }}
           whileInView={{ opacity: 1, scaleX: 1 }}
@@ -82,7 +82,7 @@ export function Hero() {
               maskImage: "linear-gradient(to left, transparent, black)",
             }}
           />
-        </motion.div>
+        </motion.div> */}
 
         <motion.p
           variants={item}
@@ -98,14 +98,15 @@ export function Hero() {
         </motion.p> */}
 
         {/* Emotional tagline — unhurried fade-up ~1s after load, calm and slow. */}
-        <motion.p
+        {/* <motion.p
           initial={reduce ? { opacity: 0 } : { opacity: 0, y: 18 }}
           animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: EASE, delay: reduce ? 0 : 1 }}
           className="mx-auto mt-8 max-w-[34ch] font-serif text-[20px] italic leading-[1.4] text-sand sm:text-[26px]"
         >
           {t("tagline")}
-        </motion.p>
+          {t("claim")}
+        </motion.p> */}
 
         <motion.div variants={item} className="mt-10">
           <CTALink href={`/${locale}/contact`} variant="onDark">

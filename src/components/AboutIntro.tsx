@@ -19,12 +19,16 @@ export function AboutIntro() {
   const t = useTranslations("about");
   const locale = useLocale();
   const reduce = useReducedMotion();
-
+  const body = t.raw("body") as string[];
   const container = staggerContainer(reduce);
   const item = itemAnimation(reduce);
 
   return (
-    <Section id="about" aria-labelledby="about-kicker" className="border-line border-b-1">
+    <Section
+      id="about"
+      aria-labelledby="about-kicker"
+      className="border-line border-b-1"
+    >
       <div className="grid items-center gap-12 md:grid-cols-2 md:gap-[70px]">
         <motion.div
           variants={container}
@@ -45,12 +49,17 @@ export function AboutIntro() {
               {t("headlinePart2")}
             </SerifHeading>
           </motion.div>
-          <motion.p
-            variants={item}
-            className="mt-8 max-w-[34rem] text-[18px] leading-[1.6] text-deep/85"
-          >
-            {t("body")}
-          </motion.p>
+          <motion.div className="mt-6" variants={item}>
+            {body.map((paragraph: string, i: number) => (
+              <motion.p
+                key={i}
+                variants={item}
+                className="mt-2 max-w-[34rem] text-[18px] leading-[1.6] text-deep/85"
+              >
+                {paragraph}
+              </motion.p>
+            ))}
+          </motion.div>
           <motion.div variants={item} className="mt-7">
             <CTALink href={`/${locale}/about`}>{t("cta")}</CTALink>
           </motion.div>

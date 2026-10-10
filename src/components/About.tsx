@@ -31,19 +31,29 @@ export function AboutManifesto() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.3 }}
-        className="max-w-[60ch]"
       >
-        {body.map((paragraph, i) => (
-          <motion.p
-            key={i}
-            variants={item}
-            className={`text-[19px] font-light leading-[1.8] text-deep/85 sm:text-[21px] ${
-              i > 0 ? "mt-7" : ""
-            }`}
+        <motion.div variants={item}>
+          <Kicker id="manifesto-kicker">{t("kicker")}</Kicker>
+        </motion.div>
+        <motion.div variants={item}>
+          <SerifHeading
+            as="h2"
+            className="mt-5 text-[30px] leading-[1.08] text-brown sm:text-[40px]"
           >
-            {paragraph}
-          </motion.p>
-        ))}
+            {t("title")}
+          </SerifHeading>
+        </motion.div>
+        <motion.div className="mt-6" variants={item}>
+          {body.map((paragraph, i) => (
+            <motion.p
+              key={i}
+              variants={item}
+              className="mt-2 max-w-[34rem] text-[18px] leading-[1.7] text-deep/85"
+            >
+              {paragraph}
+            </motion.p>
+          ))}
+        </motion.div>
       </motion.div>
     </Section>
   );
@@ -53,6 +63,7 @@ export function AboutManifesto() {
 export function AboutFounders() {
   const t = useTranslations("about.founders");
   const reduce = useReducedMotion();
+  const body = t.raw("body") as string[];
   const [imgFailed, setImgFailed] = useState(false);
   const container = staggerContainer(reduce);
   const item = fadeUp(reduce);
@@ -92,12 +103,25 @@ export function AboutFounders() {
           <motion.div variants={item}>
             <Kicker id="founders-kicker">{t("kicker")}</Kicker>
           </motion.div>
-          <motion.p
-            variants={item}
-            className="mt-6 max-w-[34rem] text-[18px] leading-[1.7] text-deep/85"
-          >
-            {t("body")}
-          </motion.p>
+          <motion.div variants={item}>
+            <SerifHeading
+              as="h2"
+              className="mt-5 text-[30px] leading-[1.08] text-brown sm:text-[40px]"
+            >
+              {t("title")}
+            </SerifHeading>
+          </motion.div>
+          <motion.div className="mt-6" variants={item}>
+            {body.map((paragraph, i) => (
+              <motion.p
+                key={i}
+                variants={item}
+                className="mt-2 max-w-[34rem] text-[18px] leading-[1.7] text-deep/85"
+              >
+                {paragraph}
+              </motion.p>
+            ))}
+          </motion.div>
         </motion.div>
       </div>
     </Section>
@@ -207,15 +231,17 @@ export function AboutNetwork() {
             {t("title")}
           </SerifHeading>
         </motion.div>
-        {body.map((paragraph, i) => (
-          <motion.p
-            key={i}
-            variants={item}
-            className="mt-6 text-[17px] font-light leading-[1.8] text-deep/85"
-          >
-            {paragraph}
-          </motion.p>
-        ))}
+        <motion.div className="mt-6" variants={item}>
+          {body.map((paragraph, i) => (
+            <motion.p
+              key={i}
+              variants={item}
+              className="mt-2 text-[17px] font-light leading-[1.8] text-deep/85"
+            >
+              {paragraph}
+            </motion.p>
+          ))}
+        </motion.div>
       </motion.div>
     </Section>
   );

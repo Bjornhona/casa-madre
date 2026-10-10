@@ -4,7 +4,7 @@
     "close": "Cerrar",
     "contact": "Contacto",
     "items": {
-      "nosotras": { "label": "Nosotras", "subtitle": "La marca" },
+      "nosotras": { "label": "Quiénes somos", "subtitle": "La marca" },
       "servicios": { "label": "Servicios", "subtitle": "Cómo ayudamos" },
       "metodo": { "label": "Método", "subtitle": "Cómo trabajamos" },
       "barrios": { "label": "Barrios", "subtitle": "Dónde vivir" },
@@ -26,41 +26,56 @@
     }
   },
   "about": {
-    "kicker": "Qué es Casa Madre",
-    "headlinePart1": "Antes de encontrar tu casa, queremos que te sientas ",
-    "headlineEmphasis": "en casa",
+    "kicker": "Por qué Casa Madre",
+    "headlinePart1": "Where living begins",
+    "headlineEmphasis": "",
     "headlinePart2": ".",
-    "body": "Casa Madre nace del origen y de la intención. Del lugar donde empieza todo. Y también de esa sensación que queremos que te acompañe desde el primer momento: que estés en buenas manos.",
+    "body": [
+      "Casa Madre habla del origen. De ese primer lugar que todos recordamos. Donde aprendimos lo que significa pertenecer. Sentirse seguros y reconocer un espacio como propio.",
+      "Pero Casa Madre no mira solo hacia atrás. Mira hacia lo que empieza.",
+      "Una casa no es solo un lugar al que llegas, sino un espacio donde algo nuevo comienza. Y Casa Madre nace de esa idea: Del lugar de dónde empezó todo, la inversión que todo lo cambia. El espacio donde alguien inicia o cierra una etapa."
+    ],
     "cta": "Conócenos",
     "manifesto": {
+      "kicker": "Nuestra filosofía",
+      "title": "Creemos en la personalización del servicio",
       "body": [
-        "No vendemos casas. Acompañamos el momento en que alguien decide dónde empezar a vivir de verdad. Por eso trabajamos con pocas propiedades y mucha atención, con criterio y con calma, entendiendo primero quién eres y cómo quieres vivir.",
-        "Creemos que una casa es mucho más que metros cuadrados. Es donde ocurren las historias. Y nuestro trabajo es ayudarte a encontrar el lugar donde empiezan las tuyas."
+        "No todos somos iguales, ni sentimos, ni buscamos lo mismo, ni vendemos, ni invertimos por los mismos motivos.",
+        "Por eso no entendemos nuestro trabajo como una compraventa si no como un acompañamiento en una nueva etapa de vida, ofreciendo un servicio global.",
+        "Creemos que un inmueble, no es solo una dirección o unos metros cuadrados, Es un lugar donde nacen recuerdos, donde cambian familias, donde suceden decisiones que cambian vidas.",
+        "Y en Casa Madre queremos que te sientas en casa, para plantear y resolver cualquier duda."
       ]
     },
     "founders": {
-      "kicker": "Quiénes somos",
-      "body": "Casa Madre nace de una idea simple: un hogar no es un lugar, sino una forma de estar en el mundo. Seleccionamos espacios que invitan a vivir con calma, con belleza y con intención.\n\nDetrás de Casa Madre estamos Eve y Eugenia. Nos une la misma manera de mirar una casa: no por sus metros cuadrados, sino por la luz que entra a primera hora, por el silencio de una habitación bien orientada, por cómo un espacio puede cambiar el ritmo de una vida.\n\nTrabajamos con pocas propiedades a la vez, con tiempo y con criterio. Acompañamos a quienes buscan algo más que una inversión: un sitio donde empezar algo, volver a empezar, o simplemente quedarse."
+      "kicker": "Nosotras",
+      "title": "Somos Evelyn y Eugenia",
+      "body": [
+        "Nos conocimos sin presentaciones, escuchamos primero nuestras voces, y con el tiempo nos conocimos en persona.",
+        "Lo que empezó como una relación profesional, se transformó en conexión: una forma compartida de entender los espacios, las personas y la vida. ",
+        "Con el tiempo la colaboración y una misma sensibilidad se convirtió en amistad.",
+        "Y la amistad en proyecto",
+        "Así nace Casa Madre."
+      ]
     },
     "method": {
       "kicker": "El Método",
-      "title": "Una forma de hacer que se repite, hasta convertirse en método.",
-      "intro": "No improvisamos. Cada acompañamiento sigue una manera de hacer pensada para entenderte y cuidar cada detalle.",
+      "title": "Del acierto al método, del método al éxito",
+      "intro": "No creemos en procesos estándar. Creemos en entender primero.",
       "steps": [
         {
           "number": "01",
           "title": "Entender quién eres",
-          "body": "Antes de enseñarte nada, escuchamos. Entendemos tu momento, tu manera de vivir y lo que buscas de verdad."
+          "body": "Antes de hablar de propiedades, hablamos de ti. De en qué momento estás, qué buscas, qué necesitas ahora."
         },
         {
           "number": "02",
-          "title": "Definir el camino",
-          "body": "Trazamos una estrategia clara y personalizada, con criterio y sin prisa, adaptada a tu objetivo."
+          "title": "La valoración (Clave)",
+          "body": "Una valoración acertada, marca la diferencia entre una propoedad que encuentra su comprador y otra que permanece en el mercado."
         },
         {
           "number": "03",
           "title": "Seleccionar con criterio",
-          "body": "Filtramos por ti. Solo te proponemos lo que realmente encaja, para que cada visita tenga sentido."
+          "body": "No buscamos volumen. Preferimos trabajar con pocos proyectos,bien elegidos,y acompañarlos de verdad."
         },
         {
           "number": "04",
@@ -76,10 +91,10 @@
     },
     "network": {
       "kicker": "Nuestra Red",
-      "title": "Trabajamos como una misma casa.",
+      "title": "Como en cada casa, cada uno tiene su lugar y algo valioso que aportar",
       "body": [
-        "Detrás de Casa Madre hay una red de profesionales de confianza — abogados, asesores financieros, arquitectos, interioristas y especialistas — que colaboran con nosotras cuando un proceso lo necesita.",
-        "No derivamos: acompañamos. Coordinamos a cada especialista para que tú tengas una sola interlocutora y todo ocurra con la misma cercanía y el mismo criterio de principio a fin."
+        "Somos una estructura de personas, compartiendo conocimiento, sumando talento, que trabajan desde una misma manera de hacer las cosas, la confianza y el compromiso. Abogados, asesores financieros, interioristas, arquitectos, colaboradores, profesionales que aportan su especialidad.",
+        "En Casa Madre sabemos que esa forma de trabajar conecta personas, multiplica oportunidades y crece la coherencia en cada proceso."
       ]
     },
     "ctaSection": {
@@ -239,13 +254,17 @@
   "serviciosHub": {
     "hero": {
       "kicker": "Servicios",
-      "title": "Acompañamos cada decisión, no solo cada operación.",
-      "tagline": "Una misma manera de hacer, aplicada a cada momento."
+      "title": "Experiencia Integral Casa Madre",
+      "tagline": [
+        "Mucho más que comprar o vender.",
+        "Saber que se hace con todo lo demás."
+      ]
     },
     "intro": {
+      "title": "La cercanía de lo personal y el rigor de lo profesional",
       "body": [
-        "En Casa Madre no entendemos los servicios como una lista, sino como una forma de acompañar. Detrás de cada operación hay una persona, un momento y una decisión importante — y eso es lo que cuidamos.",
-        "Trabajamos con criterio y con calma: pocas operaciones, mucha atención. Ya sea comprar, vender, alquilar, invertir o transformar un espacio, lo abordamos desde la misma cercanía y el mismo cuidado por el detalle."
+        "En Casa madre podemos acompañarte en todos los procesos para que todo resulte más fácil, sencillo y eficaz. Ya sea para comprar vender, alquilar, invertir o transformar un espacio.",
+        "Buscando la mejor solución en cada caso para evitar contratiempos y optimizar resultados."
       ]
     },
     "gridLabel": "Áreas de trabajo",
@@ -293,8 +312,8 @@
     ]
   },
   "testimonios": {
-    "kicker": "Lo que dicen",
-    "intro": "Pocas palabras, pero verdaderas. Quienes ya viven su casa con nosotras."
+    "kicker": "Casa Madre testimoniales",
+    "intro": "Voces de quienes ya han vivido la Experiencia Casa Madre."
   },
   "barrios": {
     "kicker": "Barrios",
@@ -340,7 +359,7 @@
   },
   "propiedades": {
     "kicker": "Propiedades",
-    "intro": "Pocas propiedades, cuidadosamente seleccionadas.",
+    "intro": "Donde nacen nuevas historias",
     "viewAll": "Ver todas las propiedades",
     "filters": {
       "operation": "Operación",
@@ -382,7 +401,7 @@
     "featuresLabel": "Características",
     "ctaKicker": "Contacto",
     "ctaHeadline": "¿Te interesa esta propiedad?",
-    "ctaBody": "Cuéntanos qué buscas y te acompañamos en cada paso del camino.",
+    "ctaBody": "Cuéntanos qué buscas y te ayudamos.",
     "ctaPrimary": "Solicitar información",
     "ctaWhatsapp": "Contactar por WhatsApp",
     "cardViewLabel": "Ver propiedad",
@@ -466,9 +485,9 @@
   },
   "pages": {
     "about": {
-      "kicker": "Nosotras",
-      "title": "Antes incluso de encontrar tu casa, queremos que te sientas en casa.",
-      "intro": "Casa Madre habla del origen. De la casa de la madre — ese primer lugar donde aprendimos lo que significa sentirse en casa: el cuidado, la cercanía, la sensación de pertenecer."
+      "kicker": "Quiénes somos",
+      "title": "Sentirte en casa es sentirte comprendido",
+      "intro": "Entenderte es parte de nuestro trabajo."
     },
     "nosotras": {
       "kicker": "Nosotras",
@@ -487,8 +506,8 @@
     },
     "propiedades": {
       "kicker": "Propiedades",
-      "title": "Selección actual",
-      "intro": "Pocas propiedades, cuidadosamente seleccionadas y trabajadas en exclusiva."
+      "title": "Espacios y direcciones imborrables",
+      "intro": "Propiedades que cambian y nunca desaparecen porque forman parte de nuestra historia."
     },
     "journal": {
       "kicker": "Journal",
