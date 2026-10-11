@@ -646,6 +646,24 @@ export type NEIGHBOURHOODS_QUERY_RESULT = Array<{
 }>;
 
 // Source: src/sanity/lib/queries.ts
+// Variable: HOME_NEIGHBOURHOODS_QUERY
+// Query: *[_type == "neighbourhood"] | order(order asc)[0...4] {    _id,    name,    "slug": slug.current,    "blurb": coalesce(      blurb[language == $locale][0].value,      blurb[language == "es"][0].value    ),    image  }
+export type HOME_NEIGHBOURHOODS_QUERY_RESULT = Array<{
+  _id: string;
+  name: string;
+  slug: string;
+  blurb: string | null;
+  image: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+}>;
+
+// Source: src/sanity/lib/queries.ts
 // Variable: NEIGHBOURHOOD_SLUGS_QUERY
 // Query: *[_type == "neighbourhood" && defined(slug.current)] {    "slug": slug.current  }
 export type NEIGHBOURHOOD_SLUGS_QUERY_RESULT = Array<{
@@ -898,6 +916,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "agent" && defined(aicat) && aicat != ""] | order(order asc)[0].aicat\n': ESTABLISHMENT_AICAT_QUERY_RESULT;
     '\n  *[_type == "agent" && defined(aicat) && aicat != ""] | order(order asc) {\n    _id,\n    name,\n    aicat\n  }\n': AGENT_AICATS_QUERY_RESULT;
     '\n  *[_type == "neighbourhood"] | order(order asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    "blurb": coalesce(\n      blurb[language == $locale][0].value,\n      blurb[language == "es"][0].value\n    ),\n    image\n  }\n': NEIGHBOURHOODS_QUERY_RESULT;
+    '\n  *[_type == "neighbourhood"] | order(order asc)[0...4] {\n    _id,\n    name,\n    "slug": slug.current,\n    "blurb": coalesce(\n      blurb[language == $locale][0].value,\n      blurb[language == "es"][0].value\n    ),\n    image\n  }\n': HOME_NEIGHBOURHOODS_QUERY_RESULT;
     '\n  *[_type == "neighbourhood" && defined(slug.current)] {\n    "slug": slug.current\n  }\n': NEIGHBOURHOOD_SLUGS_QUERY_RESULT;
     '\n  *[_type == "neighbourhood" && slug.current == $slug][0] {\n    _id,\n    name,\n    "slug": slug.current,\n    "blurb": coalesce(\n      blurb[language == $locale][0].value,\n      blurb[language == "es"][0].value\n    ),\n    "intro": coalesce(\n      intro[language == $locale][0].value,\n      intro[language == "es"][0].value\n    ),\n    heroImage,\n    image,\n    gallery[]{ ... },\n    "highlights": highlights[]{\n      "label": coalesce(\n        label[language == $locale][0].value,\n        label[language == "es"][0].value\n      ),\n      "value": coalesce(\n        value[language == $locale][0].value,\n        value[language == "es"][0].value\n      )\n    },\n    "body": select(\n      $locale == "en" && defined(bodyEn) => bodyEn,\n      bodyEs\n    )\n  }\n': NEIGHBOURHOOD_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "testimonial" && isPublished == true] | order(_createdAt desc) {\n    _id,\n    "quote": coalesce(\n      quote[language == $locale][0].value,\n      quote[language == "es"][0].value\n    ),\n    attribution\n  }\n': PUBLISHED_TESTIMONIALS_QUERY_RESULT;

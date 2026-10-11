@@ -53,7 +53,7 @@ export function Barrios({
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.15 }}
-        className="mt-14 grid grid-cols-2 gap-5 lg:grid-cols-4"
+        className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-5 lg:grid-cols-4"
       >
         {neighbourhoods.map((barrio) => {
           const src = barrio.image?.asset

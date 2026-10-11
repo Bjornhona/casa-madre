@@ -158,7 +158,8 @@ export const neighbourhood = defineType({
     defineField({
       name: 'order',
       title: 'Orden de aparición',
-      description: 'Los números más bajos aparecen primero en la sección Barrios.',
+      description:
+        'Los números más bajos aparecen primero. Además decide qué barrios se muestran en la página de inicio: solo salen los cuatro primeros. La página de Barrios los muestra todos.',
       type: 'number',
       group: 'content',
     }),

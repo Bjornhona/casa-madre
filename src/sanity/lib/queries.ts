@@ -101,6 +101,25 @@ export const NEIGHBOURHOODS_QUERY = defineQuery(`
   }
 `)
 
+// The first few barrios for the home-page teaser. Four, because the cards lay
+// out 4-across at desktop (2-across below), so the row fills exactly. The
+// `order` field decides which ones make the cut, and it is applied before the
+// slice so the client's choice — not document creation order — wins. Limited in
+// GROQ rather than at render time: the home page should not ship records it
+// never shows.
+export const HOME_NEIGHBOURHOODS_QUERY = defineQuery(`
+  *[_type == "neighbourhood"] | order(order asc)[0...4] {
+    _id,
+    name,
+    "slug": slug.current,
+    "blurb": coalesce(
+      blurb[language == $locale][0].value,
+      blurb[language == "es"][0].value
+    ),
+    image
+  }
+`)
+
 // Slugs of every neighbourhood — used by generateStaticParams and the sitemap.
 export const NEIGHBOURHOOD_SLUGS_QUERY = defineQuery(`
   *[_type == "neighbourhood" && defined(slug.current)] {

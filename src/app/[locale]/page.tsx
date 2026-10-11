@@ -11,7 +11,7 @@ import { ContactoTeaser } from "@/components/ContactoTeaser";
 import { Footer } from "@/components/Footer";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
-  NEIGHBOURHOODS_QUERY,
+  HOME_NEIGHBOURHOODS_QUERY,
   PROPERTIES_QUERY,
   RECENT_JOURNAL_POSTS_QUERY,
 } from "@/sanity/lib/queries";
@@ -33,7 +33,7 @@ export default async function Home({
     { data: journalPosts },
   ] = await Promise.all([
     sanityFetch({ query: PROPERTIES_QUERY, params: { locale } }),
-    sanityFetch({ query: NEIGHBOURHOODS_QUERY, params: { locale } }),
+    sanityFetch({ query: HOME_NEIGHBOURHOODS_QUERY, params: { locale } }),
     sanityFetch({ query: RECENT_JOURNAL_POSTS_QUERY, params: { locale } }),
   ]);
 
