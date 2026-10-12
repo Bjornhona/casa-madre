@@ -40,10 +40,10 @@ export function Servicios() {
             <li key={svc.key} id={svc.key} className="scroll-mt-28">
               <a
                 href={`/${locale}/services/${svc.slug}`}
-                className="flex h-full min-h-[210px] w-full flex-col items-center justify-center px-[22px] py-[34px] text-center transition-colors duration-500 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brown"
+                className="flex h-full min-h-52.5 w-full flex-col items-center justify-center px-5.5 py-8.5 text-center transition-colors duration-500 hover:bg-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brown"
               >
                 <Icon
-                  className="mb-[18px] h-8 w-8 text-brown"
+                  className="mb-4.5 h-8 w-8 text-brown"
                   strokeWidth={1.25}
                   aria-hidden
                 />

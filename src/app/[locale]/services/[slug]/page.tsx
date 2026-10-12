@@ -13,7 +13,11 @@ type Params = { locale: string; slug: string };
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "";
 const OG_LOCALE: Record<string, string> = { es: "es_ES", en: "en_GB" };
 
-type ServiceItem = { title: string; tagline: string };
+type ServiceItem = { title: string; tagline: string[] };
+
+// The tagline renders as separate paragraphs in the hero, but metadata
+// descriptions are a single string — flatten to one sentence run.
+const toDescription = (tagline: string[]) => tagline.join(" ");
 
 // The six services are a fixed set — pre-render each in both locales.
 export function generateStaticParams() {
@@ -34,7 +38,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "servicios" });
   const item = (t.raw("items") as ServiceItem[])[service.index];
   const title = item.title;
-  const description = item.tagline;
+  const description = toDescription(item.tagline);
   const url = `/${locale}/services/${slug}`;
 
   return {
@@ -84,7 +88,7 @@ export default async function ServicePage({
     "@context": "https://schema.org",
     "@type": "Service",
     name: item.title,
-    ...(item.tagline ? { description: item.tagline } : {}),
+    ...(item.tagline.length ? { description: toDescription(item.tagline) } : {}),
     serviceType: item.title,
     areaServed: "Barcelona",
     provider: {

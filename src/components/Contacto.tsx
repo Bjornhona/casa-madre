@@ -65,7 +65,7 @@ export function Contacto({ agents = [] }: { agents?: AGENTS_QUERY_RESULT }) {
 
   return (
     <Section id="contacto" aria-labelledby="contacto-kicker">
-      <Kicker id="contacto-kicker">{t("kicker")}</Kicker>
+      <Kicker id="contacto-kicker">{t("label")}</Kicker>
       <SerifHeading
         as="h2"
         className="mt-5 max-w-[18ch] text-[34px] leading-[1.04] text-brown sm:text-[48px]"

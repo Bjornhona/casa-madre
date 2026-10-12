@@ -16,7 +16,7 @@ type ServiceDetailItem = {
   title: string;
   description: string;
   cta: string;
-  tagline: string;
+  tagline: string[];
   intro: string;
   forWho: string;
   includes: string[];

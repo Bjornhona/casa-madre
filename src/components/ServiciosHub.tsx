@@ -7,6 +7,7 @@ import { Section } from "@/components/ui/Section";
 import { SerifHeading } from "@/components/ui/SerifHeading";
 import { CTALink } from "@/components/ui/CTALink";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
+import { Kicker } from "@/components/ui/Kicker";
 
 /** Editorial framing paragraph above the "Áreas de trabajo" grid. */
 export function ServiciosIntro() {
@@ -25,17 +26,21 @@ export function ServiciosIntro() {
         viewport={{ once: true, amount: 0.3 }}
         className="max-w-[65ch]"
       >
-        {body.map((paragraph, i) => (
-          <motion.p
-            key={i}
-            variants={item}
-            className={`text-[19px] font-light leading-[1.8] text-deep/85 sm:text-[21px] ${
-              i > 0 ? "mt-7" : ""
-            }`}
-          >
-            {paragraph}
-          </motion.p>
-        ))}
+        <motion.div variants={item}>
+          <Kicker id="about-kicker">{t("title")}</Kicker>
+        </motion.div>
+
+        <motion.div variants={item} className="mt-5">
+          {body.map((paragraph, i) => (
+            <motion.p
+              key={i}
+              variants={item}
+              className={`text-deep/85 ${i > 0 ? "mt-2" : ""}`}
+            >
+              {paragraph}
+            </motion.p>
+          ))}
+        </motion.div>
       </motion.div>
     </Section>
   );

@@ -10,9 +10,7 @@ import { CTALink } from "@/components/ui/CTALink";
 import { EASE, staggerContainer } from "@/lib/motion";
 import { itemAnimation } from "@/lib/motion";
 
-// Editorial placeholder image, warm-graded to sit with the hero.
 const ABOUT_IMAGE =
-  // "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=85";
   "/casa-madre-table.webp";
 
 export function AboutIntro() {

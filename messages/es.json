@@ -127,7 +127,9 @@
         "title": "Compraventa",
         "description": "Acompañamos cada operación con estrategia, valoración y sensibilidad.",
         "cta": "Quiero comprar o vender",
-        "tagline": "Comprar o vender no es solo una operación. Es entender el momento, el valor y lo que viene después.",
+        "tagline": [
+          "Comprar o vender no es solo una operación. Es entender el momento, el valor y lo que viene después."
+        ],
         "intro": "Acompañamos procesos de compraventa desde una mirada completa. No se trata solo de encontrar o colocar un inmueble, sino de hacerlo en el momento adecuado y con el criterio correcto.",
         "forWho": "Para quienes compran o venden una vivienda y quieren hacerlo con estrategia, criterio y un acompañamiento real en cada paso.",
         "includes": [
@@ -148,7 +150,9 @@
         "title": "Alquileres",
         "description": "Viviendas para cada momento: temporada y larga estancia.",
         "cta": "Buscar o alquilar vivienda",
-        "tagline": "Llegar a una casa debería sentirse fácil. Como si ya supieras cómo vivir en ella.",
+        "tagline": [
+          "Llegar a una casa debería sentirse fácil. Como si ya supieras cómo vivir en ella."
+        ],
         "intro": "Seleccionamos viviendas pensadas para distintos momentos de la vida, con todo preparado para empezar a vivir.",
         "forWho": "Para quienes llegan a Barcelona por una etapa o para quedarse, y buscan un proceso ágil, seguro y bien cuidado.",
         "includes": [
@@ -169,7 +173,9 @@
         "title": "Personal Shopper",
         "description": "Buscamos por ti. Entendemos, filtramos y encontramos.",
         "cta": "Buscar por mí",
-        "tagline": "Cuando no sabes por dónde empezar, empezamos contigo.",
+        "tagline": [
+          "Cuando no sabes por dónde empezar, empezamos contigo."
+        ],
         "intro": "Buscamos por ti. Pero antes, entendemos: qué necesitas, qué encaja contigo, qué tiene sentido en este momento.",
         "forWho": "Para compradores con poco tiempo, clientes internacionales o quienes quieren delegar la búsqueda en alguien de confianza.",
         "includes": [
@@ -190,7 +196,9 @@
         "title": "Reformas & Home Staging",
         "description": "Transformamos espacios para que cuenten su mejor versión.",
         "cta": "Transformar mi vivienda",
-        "tagline": "Un espacio puede cambiar por completo cuando se entiende cómo debe vivirse.",
+        "tagline": [
+          "Un espacio puede cambiar por completo cuando se entiende cómo debe vivirse."
+        ],
         "intro": "Trabajamos los espacios desde dentro, para que cuenten su mejor versión sin perder autenticidad.",
         "forWho": "Para propietarios, compradores y vendedores que quieren sacar lo mejor de un espacio antes de venderlo, alquilarlo o habitarlo.",
         "includes": [
@@ -211,7 +219,9 @@
         "title": "Inversión",
         "description": "Analizamos, valoramos y te ayudamos a tomar decisiones acertadas.",
         "cta": "Analizar una inversión",
-        "tagline": "Toda propiedad es una decisión. Algunas, además, son una oportunidad.",
+        "tagline": [
+          "Toda propiedad es una decisión. Algunas, además, son una oportunidad."
+        ],
         "intro": "Analizamos activos desde una mirada estratégica, para ayudarte a entender no solo qué comprar, sino por qué.",
         "forWho": "Para inversores particulares y compradores patrimoniales que buscan rentabilidad, revalorización y valor a largo plazo.",
         "includes": [
@@ -232,7 +242,9 @@
         "title": "Jurídico & Financiero",
         "description": "Procesos legales y financieros con transparencia y rigor.",
         "cta": "Resolver mi operación",
-        "tagline": "Hay procesos que necesitan algo más que gestión. Necesitan claridad.",
+        "tagline": [
+          "Hay procesos que necesitan algo más que gestión. Necesitan claridad."
+        ],
         "intro": "Contamos con un equipo legal y financiero que acompaña situaciones complejas con discreción y rigor.",
         "forWho": "Para clientes locales e internacionales que afrontan operaciones sensibles y quieren claridad, seguridad y discreción.",
         "includes": [
@@ -317,6 +329,7 @@
   },
   "barrios": {
     "kicker": "Barrios",
+    "label": "Barrios de Barcelona",
     "intro": "Una ciudad no se entiende cuando se visita. Se entiende cuando empieza a formar parte de tu vida.",
     "viewAll": "Explorar barrios",
     "discover": "Descubrir el barrio",
@@ -443,6 +456,7 @@
   },
   "contacto": {
     "kicker": "Contacto",
+    "label": "Formulario de contacto",
     "headline": "Cuéntanos cómo quieres vivir Barcelona.",
     "teaserCta": "Cuéntanos qué buscas",
     "form": {

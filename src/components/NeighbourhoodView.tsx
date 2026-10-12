@@ -20,7 +20,7 @@ import type { NEIGHBOURHOOD_BY_SLUG_QUERY_RESULT } from "@/sanity/types.gen";
 import { PageHero } from "./ui/PageHero";
 
 type Neighbourhood = NonNullable<NEIGHBOURHOOD_BY_SLUG_QUERY_RESULT>;
-export type HeroImage = { heroSrc: string; heroAlt: string; heroName: string; heroTagline: string | null };
+export type HeroImage = { heroSrc: string; heroAlt: string; heroName: string; heroTagline?: string[] };
 
 // Public env — safe in the client bundle. Stripped to digits for the wa.me link.
 const WHATSAPP = (process.env.NEXT_PUBLIC_WHATSAPP ?? "").replace(/\D/g, "");
@@ -45,13 +45,17 @@ export function NeighbourhoodView({ barrio }: { barrio: Neighbourhood }) {
   const container = staggerContainer(reduce, 0.1);
   const galleryItem = fadeUp(reduce, { y: 24, duration: 0.7 });
 
-  const heroImage: HeroImage | undefined = heroSrc ? { heroSrc, heroAlt, heroName: barrio.name, heroTagline: barrio.blurb ?? null } : undefined;
+  // The CMS blurb is a single line; PageHero takes one entry per paragraph.
+  // Left undefined when absent so the hero falls back to the catalog intro.
+  const tagline = barrio.blurb ? [barrio.blurb] : undefined;
+
+  const heroImage: HeroImage | undefined = heroSrc ? { heroSrc, heroAlt, heroName: barrio.name, heroTagline: tagline } : undefined;
 
   return (
     <article>
       {/* PAGE HERO — heroImage full-bleed with the name + lifestyle line, or a dark
           band fallback when no image is set yet. */}
-      <PageHero pageKey="barrios" item={{ image: heroImage ?? undefined, kicker: t("kicker"), title: barrio.name, tagline: barrio.blurb }} />
+      <PageHero pageKey="barrios" item={{ image: heroImage, kicker: t("kicker"), title: barrio.name, tagline }} />
 
       {/* BODY */}
       <section className="px-6 pt-12 pb-4 sm:px-10 sm:pt-16 lg:px-12">

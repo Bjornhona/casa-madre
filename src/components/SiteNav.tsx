@@ -18,9 +18,9 @@ import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 // locale-agnostic path handed to next-intl's <Link>, which adds the locale.
 const ROUTES = [
   { key: "nosotras", href: "/about" },
+  { key: "propiedades", href: "/properties" },
   { key: "servicios", href: "/services" },
   { key: "barrios", href: "/neighbourhoods" },
-  { key: "propiedades", href: "/properties" },
   { key: "journal", href: "/journal" },
   { key: "contacto", href: "/contact" },
 ] as const;
@@ -75,7 +75,7 @@ export function SiteNav() {
         initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-        className="fixed inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-6 text-cream sm:px-10 lg:px-[42px]"
+        className="fixed inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-6 text-cream sm:px-10 lg:px-10.5"
       >
         <div
           aria-hidden
@@ -133,7 +133,7 @@ export function SiteNav() {
             transition={{ duration: reduce ? 0.2 : 0.5, ease: EASE }}
             className="fixed inset-0 z-20 bg-deep text-cream outline-none"
           >
-            <div className="flex h-full flex-col overflow-y-auto px-6 pt-24 pb-10 sm:px-10 lg:px-[42px]">
+            <div className="flex h-full flex-col overflow-y-auto px-6 pt-24 pb-10 sm:px-10 lg:px-10.5">
               <nav
                 aria-label={t("menu")}
                 className="flex flex-1 flex-col justify-center"
@@ -155,7 +155,7 @@ export function SiteNav() {
                           className="group flex w-fit items-baseline gap-4 py-2 outline-none sm:gap-6"
                         >
                           <span
-                            className={`font-serif text-[24px] leading-[1.04] tracking-[-0.025em] decoration-1 underline-offset-[10px] transition-all duration-500 sm:text-[36px] lg:text-[48px] ${
+                            className={`font-serif text-[24px] leading-[1.04] tracking-tight decoration-1 underline-offset-10 transition-all duration-500 sm:text-[36px] lg:text-[48px] ${
                               active
                                 ? "text-cream underline decoration-clay"
                                 : "text-cream/85 decoration-cream/30 group-hover:text-cream group-hover:underline group-focus-visible:text-cream group-focus-visible:underline"

@@ -7,35 +7,41 @@ import { SerifHeading } from "@/components/ui/SerifHeading";
 import { EASE, heroScaleAnimation } from "@/lib/motion";
 import Image from "next/image";
 
+interface PageHeroItem {
+  image?: {
+    heroSrc: string;
+    heroAlt: string;
+    heroName?: string;
+    /** One entry per paragraph. Always an array — callers normalise. */
+    heroTagline?: string[];
+  };
+  kicker?: string;
+  title?: string;
+  /** One entry per paragraph. Always an array — callers normalise. */
+  tagline?: string[];
+}
+
 /**
  * Dark editorial header band for the sub-pages. Sits under the fixed cream nav
  * (which expects a dark surface beneath it), and gives each route a confident
  * title treatment built from the shared Kicker + SerifHeading primitives.
  *
- * Copy comes from the `pages.<pageKey>` catalog (kicker / title / intro).
+ * Copy comes from the `pages.<pageKey>` catalog (kicker / title / intro), or
+ * from `item` when a route supplies its own. Taglines are always `string[]`,
+ * one entry per paragraph — the single-line catalog `intro` is wrapped here.
  */
 export function PageHero({
   pageKey,
   item,
 }: {
   pageKey: string;
-  item?: {
-    image?: {
-      heroSrc: string;
-      heroAlt: string;
-      heroName?: string;
-      heroTagline?: string | null;
-    };
-    kicker?: string;
-    title?: string;
-    tagline?: string | null;
-  };
+  item?: PageHeroItem;
 }) {
   const t = useTranslations(`pages.${pageKey}`);
   const reduce = useReducedMotion();
   const heroScale = heroScaleAnimation(reduce);
 
-  const heroText = (kicker: string, title: string, tagline: string) => (
+  const heroText = (kicker: string, title: string, tagline: string[]) => (
     <motion.div
       initial={reduce ? false : { opacity: 0, y: 18 }}
       animate={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -49,14 +55,21 @@ export function PageHero({
       >
         {title}
       </SerifHeading>
-      <p className="mt-6 max-w-[52ch] text-[17px] font-light leading-[1.7] text-cream/75">
-        {tagline}
-      </p>
+      {tagline.map((line, i) => (
+        <p
+          key={line}
+          className={`max-w-[52ch] text-cream/75 ${
+            i === 0 ? "mt-5" : "mt-2"
+          }`}
+        >
+          {line}
+        </p>
+      ))}
     </motion.div>
   );
 
   return item?.image ? (
-    <section className="relative flex h-[64vh] min-h-[460px] w-full items-end overflow-hidden text-cream">
+    <section className="relative flex h-[54vh] min-h-[460px] w-full items-end overflow-hidden text-cream">
       <motion.div
         variants={heroScale}
         initial="hidden"
@@ -76,11 +89,11 @@ export function PageHero({
         aria-hidden
         className="absolute inset-0 bg-[linear-gradient(rgba(43,33,27,0.1),rgba(43,33,27,0.62))]"
       />
-      <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 pb-12 sm:px-10 lg:px-12">
+      <div className="relative z-10 mx-auto w-full px-6 pt-36 pb-20 text-cream sm:px-10 lg:px-12 lg:pt-40 lg:pb-24">
         {heroText(
           item?.kicker ?? t("kicker"),
           item?.image?.heroName ?? item?.title ?? t("title"),
-          item?.image?.heroTagline ?? item?.tagline ?? t("intro"),
+          item?.image?.heroTagline ?? item?.tagline ?? [t("intro")],
         )}
       </div>
     </section>
@@ -89,7 +102,7 @@ export function PageHero({
       {heroText(
         item?.kicker ?? t("kicker"),
         item?.title ?? t("title"),
-        item?.tagline ?? t("intro"),
+        item?.tagline ?? [t("intro")],
       )}
     </section>
   );

@@ -35,26 +35,20 @@ export default async function ServicesPage({
     <>
       <SiteNav />
       <main>
-        {/* 1 · Page hero — kicker / title / tagline from serviciosHub.hero, over
-            the optional overview image. */}
         <PageHero
-          pageKey="services"
+          pageKey="servicios"
           item={{
             kicker: t("hero.kicker"),
             title: t("hero.title"),
-            tagline: t("hero.tagline"),
+            tagline: t.raw("hero.tagline") as string[],
             ...(SERVICES_OVERVIEW_IMAGE
               ? { image: { heroSrc: SERVICES_OVERVIEW_IMAGE, heroAlt: "" } }
               : {}),
           }}
         />
-        {/* 2 · Editorial intro, before the grid */}
         <ServiciosIntro />
-        {/* 3 · "Áreas de trabajo" bordered grid (unchanged) */}
         <Servicios />
-        {/* 4 · Editorial closing + one-line network link → /about */}
         <ServiciosClosing />
-        {/* 5 · CTA band → /contact */}
         <ServiciosCta />
       </main>
       <Footer />

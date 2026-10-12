@@ -43,7 +43,7 @@ export function Barrios({
 
   return (
     <Section id="barrios" aria-labelledby="barrios-kicker" className="border-line border-b">
-      <Kicker id="barrios-kicker">{t("kicker")}</Kicker>
+      <Kicker id="barrios-kicker">{t("label")}</Kicker>
       <p className="mt-6 max-w-184 font-serif text-[24px] leading-[1.2] text-deep sm:text-[29px]">
         {t("intro")}
       </p>
