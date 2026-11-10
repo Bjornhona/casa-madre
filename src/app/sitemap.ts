@@ -7,14 +7,17 @@ import {
   PROPERTY_SLUGS_QUERY,
 } from "@/sanity/lib/queries";
 import { SERVICE_SLUGS } from "@/lib/services";
+import { JOURNAL_ENABLED } from "@/lib/features";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+// "journal" is omitted while the flag is off — the route 404s, so listing it
+// would advertise a dead URL.
 const CONTENT_PATHS = [
   "about",
   "services",
   "neighbourhoods",
   "properties",
-  "journal",
+  ...(JOURNAL_ENABLED ? ["journal"] : []),
   "contact",
 ];
 const LEGAL_PATHS = ["legal", "privacy", "cookies"];
@@ -35,7 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     useCdn: false,
   });
   const [journalSlugs, propertySlugs, neighbourhoodSlugs] = await Promise.all([
-    publishedClient.fetch(JOURNAL_SLUGS_QUERY),
+    JOURNAL_ENABLED ? publishedClient.fetch(JOURNAL_SLUGS_QUERY) : [],
     publishedClient.fetch(PROPERTY_SLUGS_QUERY),
     publishedClient.fetch(NEIGHBOURHOOD_SLUGS_QUERY),
   ]);

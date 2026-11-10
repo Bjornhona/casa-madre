@@ -15,6 +15,7 @@ import { urlFor } from "@/sanity/lib/image";
 import { ogPosterUrl } from "@/lib/cloudinary";
 import type { JOURNAL_POST_BY_SLUG_QUERY_RESULT } from "@/sanity/types.gen";
 import { routing } from "@/i18n/routing";
+import { JOURNAL_ENABLED } from "@/lib/features";
 
 type Params = { locale: string; slug: string };
 
@@ -49,6 +50,9 @@ function articleImage(
 // runs without a request, so we use the plain client (not `sanityFetch`, which
 // reads `draftMode()` and is only valid during request rendering).
 export async function generateStaticParams() {
+  // Nothing to pre-render while the Journal is hidden; every slug 404s.
+  if (!JOURNAL_ENABLED) return [];
+
   const data = await client
     .withConfig({ perspective: "published", useCdn: false })
     .fetch(JOURNAL_SLUGS_QUERY);
@@ -63,6 +67,8 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
+  if (!JOURNAL_ENABLED) return {};
+
   const { data: post } = await sanityFetch({
     query: JOURNAL_POST_BY_SLUG_QUERY,
     params: { slug, locale },
@@ -116,6 +122,8 @@ export default async function JournalPostPage({
 }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
+
+  if (!JOURNAL_ENABLED) notFound();
 
   const { data: post } = await sanityFetch({
     query: JOURNAL_POST_BY_SLUG_QUERY,

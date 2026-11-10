@@ -7,23 +7,13 @@ import { Menu, X } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleSwitch } from "@/components/LocaleSwitch";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
+import { MENU_ROUTES } from "@/lib/nav-routes";
 
 /**
  * Fixed top navigation, plus a full-screen overlay menu. The wordmark (home),
  * ES/EN switch and Contacto link stay visible in the bar at all times; the Menú
  * button toggles a dark-brown overlay listing the site's real routes.
  */
-
-// Menu items, in order. Labels/subtitles come from `nav.items.*`; `href` is the
-// locale-agnostic path handed to next-intl's <Link>, which adds the locale.
-const ROUTES = [
-  { key: "nosotras", href: "/about" },
-  { key: "propiedades", href: "/properties" },
-  { key: "servicios", href: "/services" },
-  { key: "barrios", href: "/neighbourhoods" },
-  { key: "journal", href: "/journal" },
-  { key: "contacto", href: "/contact" },
-] as const;
 
 export function SiteNav() {
   const t = useTranslations("nav");
@@ -144,7 +134,7 @@ export function SiteNav() {
                   animate="show"
                   className="flex flex-col gap-1 sm:gap-2"
                 >
-                  {ROUTES.map(({ key, href }) => {
+                  {MENU_ROUTES.map(({ key, href }) => {
                     const active = isActive(href);
                     return (
                       <motion.li key={key} variants={item}>

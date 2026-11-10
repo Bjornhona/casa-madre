@@ -15,6 +15,8 @@ import {
   PROPERTIES_QUERY,
   RECENT_JOURNAL_POSTS_QUERY,
 } from "@/sanity/lib/queries";
+import type { RECENT_JOURNAL_POSTS_QUERY_RESULT } from "@/sanity/types.gen";
+import { JOURNAL_ENABLED } from "@/lib/features";
 
 // Condensed narrative overview: each band teases a section and links to its
 // dedicated page. Full versions live on /about, /services, /neighbourhoods,
@@ -34,7 +36,11 @@ export default async function Home({
   ] = await Promise.all([
     sanityFetch({ query: PROPERTIES_QUERY, params: { locale } }),
     sanityFetch({ query: HOME_NEIGHBOURHOODS_QUERY, params: { locale } }),
-    sanityFetch({ query: RECENT_JOURNAL_POSTS_QUERY, params: { locale } }),
+    // Skip the query entirely while the Journal is hidden — no point paying for
+    // posts the page won't render.
+    JOURNAL_ENABLED
+      ? sanityFetch({ query: RECENT_JOURNAL_POSTS_QUERY, params: { locale } })
+      : { data: [] as RECENT_JOURNAL_POSTS_QUERY_RESULT },
   ]);
 
   return (
@@ -47,7 +53,7 @@ export default async function Home({
         <AboutMethod />
         <ServiciosMarquee />
         <Barrios neighbourhoods={neighbourhoods} variant="home" />
-        <JournalTeaser posts={journalPosts} />
+        {JOURNAL_ENABLED && <JournalTeaser posts={journalPosts} />}
         <ContactoTeaser />
       </main>
       <Footer />
