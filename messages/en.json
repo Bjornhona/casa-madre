@@ -6,7 +6,6 @@
     "items": {
       "nosotras": { "label": "Who we are", "subtitle": "The brand" },
       "servicios": { "label": "Services", "subtitle": "How we help" },
-      "metodo": { "label": "Method", "subtitle": "How we work" },
       "barrios": { "label": "Neighbourhoods", "subtitle": "Where to live" },
       "propiedades": { "label": "Properties", "subtitle": "Current selection" },
       "journal": { "label": "Journal", "subtitle": "Stories and guides" },

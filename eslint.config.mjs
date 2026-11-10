@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Build dirs for the e2e servers (see next.config.ts). Generated output,
+    // same as .next — linting it buries every real finding.
+    ".next-e2e/**",
+    ".next-e2e-gate/**",
   ]),
 ]);
 

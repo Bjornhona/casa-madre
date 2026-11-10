@@ -46,3 +46,8 @@ next-env.d.ts
 /playwright-report
 /blob-report
 /playwright/.cache
+
+# Build dirs for the e2e servers, kept apart from /.next so they can run
+# alongside your everyday dev server (see next.config.ts)
+/.next-e2e/
+/.next-e2e-gate/

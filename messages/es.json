@@ -6,7 +6,6 @@
     "items": {
       "nosotras": { "label": "Quiénes somos", "subtitle": "La marca" },
       "servicios": { "label": "Servicios", "subtitle": "Cómo ayudamos" },
-      "metodo": { "label": "Método", "subtitle": "Cómo trabajamos" },
       "barrios": { "label": "Barrios", "subtitle": "Dónde vivir" },
       "propiedades": { "label": "Propiedades", "subtitle": "Selección actual" },
       "journal": { "label": "Journal", "subtitle": "Historias y guías" },

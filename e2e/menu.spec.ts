@@ -122,7 +122,11 @@ for (const locale of LOCALES) {
       await dialog.getByRole("link", { name: new RegExp(target.label) }).click();
 
       await expect(dialog).toBeHidden();
-      await expect(page).toHaveURL(new RegExp(`${target.href}$`));
+      // Generous timeout: this is the first hit on that route, so a cold dev
+      // server compiles it on demand, which can take well over the 5s default.
+      await expect(page).toHaveURL(new RegExp(`${target.href}$`), {
+        timeout: 30_000,
+      });
     });
 
     test("the bar's own labels are translated", async ({ page }) => {

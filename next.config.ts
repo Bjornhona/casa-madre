@@ -2,6 +2,12 @@ import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
+  // Next refuses to run a second `next dev` against the same build directory,
+  // whatever port you give it. The e2e suite needs two servers at once (the
+  // real site, plus one with the holding-page gate on), so it hands the second
+  // one its own dist dir through this. Nothing else sets it.
+  ...(process.env.NEXT_DIST_DIR ? { distDir: process.env.NEXT_DIST_DIR } : {}),
+
   // Route renamed /nosotras → /about. Permanently redirect the old localized
   // paths so existing links / search results don't 404.
   async redirects() {
