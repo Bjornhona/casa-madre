@@ -124,7 +124,7 @@
     "items": [
       {
         "title": "Buying & Selling",
-        "description": "We guide every transaction with strategy, valuation and judgement.",
+        "description": "Strategy, valuation and judgement in every transaction.",
         "cta": "I want to buy or sell",
         "tagline": ["Every property is different. So is our strategy."],
         "intro": [
@@ -139,7 +139,7 @@
       },
       {
         "title": "Rentals",
-        "description": "Long-term and seasonal rentals, for owners and tenants.",
+        "description": "Long-term and seasonal, for owners and tenants alike.",
         "cta": "I want to rent",
         "tagline": ["The reassurance of leaving it all in good hands."],
         "intro": [
@@ -154,7 +154,7 @@
       },
       {
         "title": "Buying Agent",
-        "description": "We search on your behalf, exclusively, representing your interests.",
+        "description": "An exclusive search, representing only your interests.",
         "cta": "Search for me",
         "tagline": ["You picture it. We find it."],
         "intro": [
@@ -169,7 +169,7 @@
       },
       {
         "title": "Renovation & Home Staging",
-        "description": "We transform spaces to increase the value of each property.",
+        "description": "From home staging to full renovation, coordinated.",
         "cta": "Transform my home",
         "tagline": ["We transform spaces. We multiply possibilities."],
         "intro": [
@@ -185,7 +185,7 @@
       },
       {
         "title": "Property Investment",
-        "description": "We identify opportunities with strategic judgement and an eye on returns.",
+        "description": "Selected opportunities, chosen with an eye on returns.",
         "cta": "Analyse an investment",
         "tagline": ["The best opportunities aren't always in plain sight."],
         "intro": [
@@ -201,7 +201,7 @@
       },
       {
         "title": "Legal & Financial Advice",
-        "description": "Legal, tax and financial guidance for every transaction.",
+        "description": "Legal, tax and financial matters, properly resolved.",
         "cta": "Resolve my transaction",
         "tagline": ["The confidence of making good decisions."],
         "intro": [
@@ -217,7 +217,7 @@
       },
       {
         "title": "Relocation",
-        "description": "We support your arrival and settling in Barcelona.",
+        "description": "Arriving in Barcelona and settling in, made simple.",
         "cta": "I'm moving to Barcelona",
         "tagline": ["You move cities. We make you feel at home."],
         "intro": [
@@ -233,7 +233,7 @@
       },
       {
         "title": "Casa Madre Concierge",
-        "description": "Our network of professionals for the everyday life of your home.",
+        "description": "Our network of professionals for everyday life.",
         "cta": "Request a service",
         "tagline": ["Your home, your time, your life. We take care of it."],
         "intro": [

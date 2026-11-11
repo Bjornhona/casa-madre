@@ -3,36 +3,25 @@
  * (keyed by English slug) plus one for the /services overview. Static — service
  * copy lives in the message catalogs, not Sanity.
  *
- * These are tasteful Unsplash placeholders for now. To use the real local files,
- * drop them in /public/services/ and swap each value to its local path — a
- * ONE-LINE change per entry, e.g.
- *   "buying-selling": "/services/buying-selling.jpg",
- *   SERVICES_OVERVIEW_IMAGE = "/services/overview.jpg"
- *
  * A missing entry (undefined) degrades gracefully: the detail hero falls back to
  * the plain dark band, and the overview banner renders nothing — never a broken
  * image.
  */
 
-const UNSPLASH = (id: string) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=2000&q=80`;
-
 // slug → image. Swap the right-hand side to "/services/<slug>.jpg" when ready.
 export const SERVICE_IMAGES: Record<string, string> = {
-  "buying-selling": UNSPLASH("1554995207-c18c203602cb"),
-  rentals: UNSPLASH("1613977257363-707ba9348227"),
-  "personal-shopper": UNSPLASH("1517248135467-4c7edcad34c4"),
-  "renovation-home-staging": UNSPLASH("1583422409516-2895a77efded"),
-  investment: UNSPLASH("1607706189992-eae578626c86"),
-  "legal-financial": UNSPLASH("1539037116277-4db20889f2d4"),
-  relocation: UNSPLASH("1436491865332-7a61a109cc05"),
-  concierge: UNSPLASH("1566073771259-6a8506099945"),
+  "buying-selling": '/services/buying-selling.webp',
+  rentals: '/services/rentals.webp',
+  "personal-shopper": '/services/personal-shopper.webp',
+  "renovation-home-staging": '/services/renovation-home-staging.webp',
+  investment: '/services/investment.webp',
+  "legal-financial": '/services/legal-financial.webp',
+  relocation: '/services/relocation.webp',
+  concierge: '/services/concierge.webp',
 };
 
 // Overview page banner. Swap to "/services/overview.jpg" when ready.
-export const SERVICES_OVERVIEW_IMAGE: string | undefined = UNSPLASH(
-  "1486406146926-c627a92ad1ab",
-);
+export const SERVICES_OVERVIEW_IMAGE: string | undefined = '/services/overview.webp';
 
 /** Resolve a service's editorial image by slug; undefined when none is set. */
 export const serviceImage = (slug: string): string | undefined =>

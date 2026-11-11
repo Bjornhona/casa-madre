@@ -124,7 +124,7 @@
     "items": [
       {
         "title": "Compraventa",
-        "description": "Acompañamos cada operación con estrategia, valoración y sensibilidad.",
+        "description": "Estrategia, valoración y criterio en cada operación.",
         "cta": "Quiero comprar o vender",
         "tagline": ["Cada propiedad es única. Nuestra estrategia también."],
         "intro": [
@@ -154,7 +154,7 @@
       },
       {
         "title": "Personal Shopper Inmobiliario",
-        "description": "Buscamos por ti, en exclusiva y defendiendo tus intereses.",
+        "description": "Búsqueda en exclusiva, defendiendo solo tus intereses.",
         "cta": "Buscar por mí",
         "tagline": ["Tú imaginas. Nosotros lo encontramos."],
         "intro": [
@@ -169,7 +169,7 @@
       },
       {
         "title": "Reformas & Home Staging",
-        "description": "Transformamos espacios para revalorizar cada propiedad.",
+        "description": "Del home staging a la reforma integral, coordinado.",
         "cta": "Transformar mi vivienda",
         "tagline": ["Transformamos espacios. Multiplicamos posibilidades."],
         "intro": [
@@ -185,7 +185,7 @@
       },
       {
         "title": "Inversión Inmobiliaria",
-        "description": "Identificamos oportunidades con criterio estratégico y visión de rentabilidad.",
+        "description": "Oportunidades seleccionadas, con criterio y rentabilidad.",
         "cta": "Analizar una inversión",
         "tagline": ["Las buenas oportunidades no siempre están a la vista."],
         "intro": [
@@ -201,7 +201,7 @@
       },
       {
         "title": "Asesoramiento Jurídico y Financiero",
-        "description": "Asesoramiento legal, fiscal y financiero para cada operación.",
+        "description": "Lo legal, lo fiscal y lo financiero, bien resuelto.",
         "cta": "Resolver mi operación",
         "tagline": ["La seguridad de tomar buenas decisiones."],
         "intro": [
