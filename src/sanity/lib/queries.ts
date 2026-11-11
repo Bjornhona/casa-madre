@@ -143,6 +143,10 @@ export const NEIGHBOURHOOD_BY_SLUG_QUERY = defineQuery(`
       intro[language == $locale][0].value,
       intro[language == "es"][0].value
     ),
+    "mobility": coalesce(
+      mobility[language == $locale][0].value,
+      mobility[language == "es"][0].value
+    ),
     heroImage,
     image,
     gallery[]{ ... },

@@ -15,6 +15,8 @@ import {
   staggerContainer,
 } from "@/lib/motion";
 import { contactoHref } from "@/lib/contacto-href";
+import { paragraphs } from "@/lib/first-paragraph";
+import { filled } from "@/lib/content";
 import { urlFor } from "@/sanity/lib/image";
 import type { NEIGHBOURHOOD_BY_SLUG_QUERY_RESULT } from "@/sanity/types.gen";
 import { PageHero } from "./ui/PageHero";
@@ -40,6 +42,12 @@ export function NeighbourhoodView({ barrio }: { barrio: Neighbourhood }) {
   const gallery = (barrio.gallery ?? []).filter((g) => g?.asset);
   const highlights = (barrio.highlights ?? []).filter((h) => h?.label || h?.value);
   const body = barrio.body ?? [];
+
+  // Transit copy is one field with blank lines between paragraphs, like every
+  // other long text in the Studio. `filled` then drops anything whitespace-only
+  // so a field an editor opened and left blank renders nothing at all — no
+  // heading, no rule, no spacing.
+  const mobility = filled(paragraphs(barrio.mobility));
 
   const restrained = restrainedAnimation(reduce);
   const container = staggerContainer(reduce, 0.1);
@@ -91,6 +99,32 @@ export function NeighbourhoodView({ barrio }: { barrio: Neighbourhood }) {
               className="mt-10 max-w-[65ch]"
             >
               <JournalPortableText value={body as unknown as PortableTextBlock[]} />
+            </motion.div>
+          )}
+
+          {/* Conexiones y movilidad — prose, so it sits with the editorial
+              text it continues rather than after the gallery, which reads as a
+              visual break. Same secondary-section treatment as Highlights
+              below: top rule, Kicker, then the copy. */}
+          {mobility.length > 0 && (
+            <motion.div
+              variants={restrained}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              className="mt-16 border-t border-line pt-10"
+            >
+              <Kicker>{t("mobilityLabel")}</Kicker>
+              {mobility.map((paragraph, i) => (
+                <p
+                  key={i}
+                  className={`max-w-[65ch] text-[17px] font-light leading-[1.7] text-deep/85 ${
+                    i === 0 ? "mt-8" : "mt-4"
+                  }`}
+                >
+                  {paragraph}
+                </p>
+              ))}
             </motion.div>
           )}
 

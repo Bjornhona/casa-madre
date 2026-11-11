@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test, { describe } from "node:test";
 
-import { firstParagraph } from "./first-paragraph.ts";
+import { firstParagraph, paragraphs } from "./first-paragraph.ts";
 
 describe("firstParagraph", () => {
   test("takes the opening paragraph of a composer-written description", () => {
@@ -44,5 +44,50 @@ describe("firstParagraph", () => {
     assert.equal(firstParagraph(null), "");
     assert.equal(firstParagraph(undefined), "");
     assert.equal(firstParagraph("   \n\n  "), "");
+  });
+});
+
+describe("paragraphs", () => {
+  test("splits a multi-paragraph field into every paragraph, in order", () => {
+    const mobility = [
+      "Gràcia está conectada por las líneas L3 y L4 del metro.",
+      "Los FGC enlazan con Sant Gervasi en pocos minutos.",
+      "Varias líneas de autobús cruzan el barrio de norte a sur.",
+    ].join("\n\n");
+
+    assert.deepEqual(paragraphs(mobility), [
+      "Gràcia está conectada por las líneas L3 y L4 del metro.",
+      "Los FGC enlazan con Sant Gervasi en pocos minutos.",
+      "Varias líneas de autobús cruzan el barrio de norte a sur.",
+    ]);
+  });
+
+  test("treats a field with no blank line as one paragraph", () => {
+    assert.deepEqual(paragraphs("Metro L3 y L4."), ["Metro L3 y L4."]);
+  });
+
+  test("keeps soft line breaks inside a paragraph", () => {
+    // A lone newline is a break within one paragraph, not between two.
+    assert.deepEqual(paragraphs("Metro L3\ny L4.\n\nFGC a Sant Gervasi."), [
+      "Metro L3\ny L4.",
+      "FGC a Sant Gervasi.",
+    ]);
+  });
+
+  test("drops blank blocks and padded separators", () => {
+    assert.deepEqual(paragraphs("Uno.\r\n\r\nDos."), ["Uno.", "Dos."]);
+    assert.deepEqual(paragraphs("Uno.\n   \nDos."), ["Uno.", "Dos."]);
+    assert.deepEqual(paragraphs("\n\n  \n\nUno.\n\n\n\nDos.\n\n"), [
+      "Uno.",
+      "Dos.",
+    ]);
+  });
+
+  test("returns nothing for empty, blank or missing input", () => {
+    assert.deepEqual(paragraphs(""), []);
+    assert.deepEqual(paragraphs("   "), []);
+    assert.deepEqual(paragraphs("   \n\n  "), []);
+    assert.deepEqual(paragraphs(null), []);
+    assert.deepEqual(paragraphs(undefined), []);
   });
 });

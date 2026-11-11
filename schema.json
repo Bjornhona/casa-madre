@@ -2116,6 +2116,14 @@
         },
         "optional": true
       },
+      "mobility": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayText"
+        },
+        "optional": true
+      },
       "image": {
         "type": "objectAttribute",
         "value": {

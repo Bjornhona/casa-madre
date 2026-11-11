@@ -124,6 +124,14 @@ export const neighbourhood = defineType({
       ],
     }),
     defineField({
+      name: 'mobility',
+      title: 'Conexiones y movilidad',
+      description:
+        'Metro, autobús, FGC y otras conexiones del barrio. Separa los párrafos con una línea en blanco. Si se deja vacío, la sección no aparece en la web.',
+      type: 'internationalizedArrayText',
+      group: 'content',
+    }),
+    defineField({
       name: 'image',
       title: 'Imagen (tarjeta)',
       description: 'Imagen pequeña para la tarjeta en la sección Barrios.',
