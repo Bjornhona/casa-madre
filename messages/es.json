@@ -57,34 +57,34 @@
       ]
     },
     "method": {
-      "kicker": "El Método",
+      "kicker": "Nuestro Método",
       "title": "Del acierto al método, del método al éxito",
-      "intro": "No creemos en procesos estándar. Creemos en entender primero.",
+      "intro": "Una forma de hacer. Una fórmula para conseguir resultados.",
       "steps": [
         {
           "number": "01",
-          "title": "Entender quién eres",
-          "body": "Antes de hablar de propiedades, hablamos de ti. De en qué momento estás, qué buscas, qué necesitas ahora."
+          "title": "Entender antes de actuar",
+          "body": "Escuchamos, analizamos y comprendemos las necesidades de cada propietario para diseñar una estrategia personalizada."
         },
         {
           "number": "02",
-          "title": "La valoración (Clave)",
-          "body": "Una valoración acertada, marca la diferencia entre una propiedad que encuentra su comprador y otra que permanece en el mercado."
+          "title": "La valoración marca la diferencia",
+          "body": "El precio justo y la estrategia adecuada marcan la diferencia entre una propiedad que se estanca en el mercado y otra que encuentra rápidamente comprador."
         },
         {
           "number": "03",
-          "title": "Seleccionar con criterio",
-          "body": "No buscamos volumen. Preferimos trabajar con pocos proyectos,bien elegidos,y acompañarlos de verdad."
+          "title": "Compromiso total",
+          "body": "Diseñamos una estrategia global de comercialización a medida, ofreciéndote una dedicación exclusiva y un servicio integral que incluye fotografía profesional, visitas virtuales 3D, inversión publicitaria y nuestra sólida red off-market. Un único objetivo: conseguir el mejor resultado para ti."
         },
         {
           "number": "04",
-          "title": "Acompañar cada detalle",
-          "body": "Cuidamos todo el proceso — la documentación, la negociación, los tiempos — hasta el cierre, sin fricción."
+          "title": "Nuestro ingrediente secreto",
+          "body": "Experiencia, estrategia, psicología de venta y un know-how propio. Una fórmula perfeccionada con los años y ese ingrediente que preferimos reservarnos."
         },
         {
           "number": "05",
-          "title": "Cuando se repite, se convierte en método",
-          "body": "Lo que funciona, lo repetimos. Esa constancia es lo que convierte nuestra forma de trabajar en algo de confianza."
+          "title": "Superar expectativas",
+          "body": "Nuestro método, know-how y ese ingrediente secreto hacen que muchas de nuestras propiedades encuentren comprador en las primeras semanas de comercialización."
         }
       ]
     },
@@ -323,7 +323,7 @@
   "barrios": {
     "kicker": "Barrios",
     "label": "Barrios de Barcelona",
-    "intro": "Una ciudad no se entiende cuando se visita. Se entiende cuando empieza a formar parte de tu vida.",
+    "intro": "Una ciudad se descubre de verdad cuando empieza a formar parte de tu vida.",
     "viewAll": "Explorar barrios",
     "discover": "Descubrir el barrio",
     "detail": {
@@ -509,7 +509,7 @@
     "barrios": {
       "kicker": "Barrios",
       "title": "Dónde vivir en Barcelona",
-      "intro": "Los barrios donde mejor conocemos la vida, la luz y el ritmo de cada calle."
+      "intro": "Barcelona ofrece muchas formas de vivirla. Descubre el barrio que mejor se adapta a ti."
     },
     "propiedades": {
       "kicker": "Propiedades",

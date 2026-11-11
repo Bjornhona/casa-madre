@@ -57,34 +57,34 @@
       ]
     },
     "method": {
-      "kicker": "The Method",
-      "title": "From the right choice to a method, from the method to success",
-      "intro": "We don't believe in standard processes. We believe in understanding first.",
+      "kicker": "Our Method",
+      "title": "From insight to method, from method to success",
+      "intro": "A distinctive approach. A proven formula for results.",
       "steps": [
         {
           "number": "01",
-          "title": "Understand who you are",
-          "body": "Before we talk about properties, we talk about you. About where you are in life, what you're looking for, and what you need right now."
+          "title": "Understand before taking action",
+          "body": "We listen, analyse, and understand each property owner's needs to develop a tailored strategy."
         },
         {
           "number": "02",
-          "title": "Valuation (The Key)",
-          "body": "An accurate valuation makes the difference between a property that finds its buyer and one that remains on the market."
+          "title": "The right valuation makes all the difference",
+          "body": "The right price and the right strategy make the difference between a property that lingers on the market and one that quickly finds its buyer."
         },
         {
           "number": "03",
-          "title": "Select with judgement",
-          "body": "We don't aim for volume. We prefer to work with a select number of carefully chosen projects and give each one our full attention."
+          "title": "Complete commitment",
+          "body": "We create a comprehensive, tailored marketing strategy, offering you our undivided attention and an end-to-end service that includes professional photography, 3D virtual tours, targeted advertising investment, and access to our established off-market network. One clear objective: achieving the best possible outcome for you."
         },
         {
           "number": "04",
-          "title": "Tend to every detail",
-          "body": "We care for the entire process — the paperwork, the negotiation, the timing — through to closing, without friction."
+          "title": "Our secret ingredient",
+          "body": "Experience, strategy, sales psychology, and our own distinctive know-how. A formula refined over the years, with one special ingredient we prefer to keep to ourselves."
         },
         {
           "number": "05",
-          "title": "When it repeats, it becomes a method",
-          "body": "What works, we repeat. That consistency is what turns our way of working into something you can trust."
+          "title": "Exceeding expectations",
+          "body": "Our method, expertise, and that secret ingredient mean that many of our properties find their buyers within the first few weeks of being on the market."
         }
       ]
     },
@@ -323,7 +323,7 @@
   "barrios": {
     "kicker": "Neighbourhoods",
     "label": "Neighbourhoods of Barcelona",
-    "intro": "A city isn't understood when you visit it. It's understood when it becomes part of your life.",
+    "intro": "You truly discover a city when it becomes part of your life.",
     "viewAll": "Explore neighbourhoods",
     "discover": "Discover the neighbourhood",
     "detail": {
@@ -509,7 +509,7 @@
     "barrios": {
       "kicker": "Neighbourhoods",
       "title": "Where to live in Barcelona",
-      "intro": "The neighbourhoods whose life, light and rhythm we know best."
+      "intro": "There are many ways to experience life in Barcelona. Discover the neighbourhood that suits you best."
     },
     "propiedades": {
       "kicker": "Properties",

@@ -21,7 +21,7 @@ export const SERVICE_IMAGES: Record<string, string> = {
 };
 
 // Overview page banner. Swap to "/services/overview.jpg" when ready.
-export const SERVICES_OVERVIEW_IMAGE: string | undefined = '/services/overview.webp';
+export const SERVICES_OVERVIEW_IMAGE: string | undefined = '/services/overview1.webp';
 
 /** Resolve a service's editorial image by slug; undefined when none is set. */
 export const serviceImage = (slug: string): string | undefined =>
