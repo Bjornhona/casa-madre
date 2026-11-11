@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
+import { PageIntro } from "@/components/ui/PageIntro";
 import { CTALink } from "@/components/ui/CTALink";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 
@@ -16,45 +17,22 @@ import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 const FOUNDERS_IMAGE =
   "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=85";
 
-/** Section 1 (continued) — the manifesto body beneath the hero. Calm, editorial. */
+/**
+ * Section 1 (continued) — the manifesto body beneath the hero. Calm, editorial.
+ *
+ * The treatment itself lives in PageIntro, which the services index and the
+ * service detail pages share.
+ */
 export function AboutManifesto() {
   const t = useTranslations("about.manifesto");
-  const reduce = useReducedMotion();
-  const body = t.raw("body") as string[];
-  const container = staggerContainer(reduce);
-  const item = fadeUp(reduce, { y: 20, duration: 0.7 });
 
   return (
     <Section className="border-line border-b">
-      <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        <motion.div variants={item}>
-          <Kicker id="manifesto-kicker">{t("kicker")}</Kicker>
-        </motion.div>
-        <motion.div variants={item}>
-          <SerifHeading
-            as="h2"
-            className="mt-5 text-[30px] leading-[1.08] text-brown sm:text-[40px]"
-          >
-            {t("title")}
-          </SerifHeading>
-        </motion.div>
-        <motion.div className="mt-6" variants={item}>
-          {body.map((paragraph, i) => (
-            <motion.p
-              key={i}
-              variants={item}
-              className="mt-2 max-w-136 text-[18px] leading-[1.7] text-deep/85"
-            >
-              {paragraph}
-            </motion.p>
-          ))}
-        </motion.div>
-      </motion.div>
+      <PageIntro
+        kicker={<Kicker id="manifesto-kicker">{t("kicker")}</Kicker>}
+        heading={t("title")}
+        body={t.raw("body") as string[]}
+      />
     </Section>
   );
 }

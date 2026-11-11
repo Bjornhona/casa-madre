@@ -126,9 +126,7 @@
         "title": "Compraventa",
         "description": "Acompañamos cada operación con estrategia, valoración y sensibilidad.",
         "cta": "Quiero comprar o vender",
-        "tagline": [
-          "Cada propiedad es única. Nuestra estrategia también."
-        ],
+        "tagline": ["Cada propiedad es única. Nuestra estrategia también."],
         "intro": [
           "Comprar o vender una propiedad es mucho más que una operación inmobiliaria. Es una decisión importante que merece conocimiento, dedicación y una estrategia adecuada.",
           "En Casa Madre acompañamos cada operación de principio a fin, desde la valoración y el posicionamiento en el mercado hasta la negociación y la firma. Combinamos experiencia, marketing personalizado y una sólida red de contactos nacionales e internacionales para conseguir las mejores oportunidades y resultados.",
@@ -268,9 +266,9 @@
       ]
     },
     "intro": {
-      "title": "La cercanía de lo personal y el rigor de lo profesional",
+      "title": "La cercanía de lo personal, el rigor de lo profesional",
       "body": [
-        "En Casa madre podemos acompañarte en todos los procesos para que todo resulte más fácil, sencillo y eficaz. Ya sea para comprar vender, alquilar, invertir o transformar un espacio.",
+        "En Casa Madre podemos acompañarte en todos los procesos para que todo resulte más fácil, sencillo y eficaz. Ya sea para comprar, vender, alquilar, invertir o transformar un espacio.",
         "Buscando la mejor solución en cada caso para evitar contratiempos y optimizar resultados."
       ]
     },

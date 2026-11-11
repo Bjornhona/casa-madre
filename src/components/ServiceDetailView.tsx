@@ -7,6 +7,7 @@ import { filled, splitLabel } from "@/lib/content";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
+import { PageIntro } from "@/components/ui/PageIntro";
 import { CTALink } from "@/components/ui/CTALink";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
 import { contactoHref } from "@/lib/contacto-href";
@@ -61,22 +62,15 @@ export function ServiceDetailView({ slug }: { slug: string }) {
    */
   const sections: { key: string; content: ReactNode }[] = [];
 
-  const intro = filled(item.intro);
-  if (intro.length) {
-    sections.push({
-      key: "intro",
-      content: intro.map((paragraph, i) => (
-        <p
-          key={i}
-          className={`max-w-[65ch] text-[19px] font-light leading-[1.75] text-deep/85 sm:text-[21px] ${
-            i > 0 ? "mt-6" : ""
-          }`}
-        >
-          {paragraph}
-        </p>
-      )),
-    });
-  }
+  /**
+   * The intro is no longer one of these blocks — it renders through PageIntro,
+   * in the same treatment as the Quiénes somos manifesto and the services
+   * index. The tagline becomes its heading; `filled` drops a blank first entry
+   * so a service with no tagline yet renders the body alone rather than an
+   * empty heading slot.
+   */
+  const introHeading = filled(item.tagline)[0] ?? "";
+  const hasIntro = introHeading.length > 0 || filled(item.intro).length > 0;
 
   const forWho = filled(item.forWho);
   if (forWho.length) {
@@ -214,23 +208,36 @@ export function ServiceDetailView({ slug }: { slug: string }) {
           {t("detail.backLink")}
         </a>
 
+        {/* The back link sits where the About page has its kicker, so the gap
+            below it is set here rather than inherited: 32px gives the serif
+            heading room to breathe without the orphaned feel of the old 40px
+            above a plain paragraph. */}
+        <PageIntro
+          heading={introHeading}
+          body={item.intro}
+          className="mt-8"
+        />
+
         {sections.length > 0 && (
           <motion.div
             variants={container}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.15 }}
-            className="mt-10 flex flex-col gap-16"
+            className={`flex flex-col gap-16 ${hasIntro ? "mt-16" : "mt-10"}`}
           >
             {sections.map(({ key, content }, i) => (
-              <motion.p
+              <motion.div
                 key={key}
                 variants={reveal}
-                // Rule between blocks, never above the first one.
-                className={i > 0 ? "border-t border-line pt-10" : undefined}
+                // A rule between blocks, never above the first thing on the
+                // page — the intro counts as that first block when present.
+                className={
+                  hasIntro || i > 0 ? "border-t border-line pt-10" : undefined
+                }
               >
                 {content}
-              </motion.p>
+              </motion.div>
             ))}
           </motion.div>
         )}

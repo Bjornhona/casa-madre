@@ -5,43 +5,28 @@ import { useLocale, useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { SerifHeading } from "@/components/ui/SerifHeading";
+import { PageIntro } from "@/components/ui/PageIntro";
 import { CTALink } from "@/components/ui/CTALink";
 import { EASE, fadeUp, staggerContainer } from "@/lib/motion";
-import { Kicker } from "@/components/ui/Kicker";
 
-/** Editorial framing paragraph above the "Áreas de trabajo" grid. */
+/**
+ * Editorial framing above the "Áreas de trabajo" grid, in the shared PageIntro
+ * treatment. `intro.title` used to be set as a Kicker — a 54-character
+ * sentence rendered as a 12px tracked label — so it now gets the serif heading
+ * it actually reads as.
+ *
+ * No kicker here, deliberately. The only candidate in this namespace is
+ * `gridLabel`, which Servicios.tsx already renders as the kicker of the grid
+ * immediately below; reusing it would print the same label twice on one page,
+ * and "Áreas de trabajo" labels the eight cards rather than this paragraph.
+ * Inventing new copy for the slot isn't ours to do, so it stays closed.
+ */
 export function ServiciosIntro() {
   const t = useTranslations("serviciosHub.intro");
-  const reduce = useReducedMotion();
-  const body = t.raw("body") as string[];
-  const container = staggerContainer(reduce);
-  const item = fadeUp(reduce, { y: 20, duration: 0.7 });
 
   return (
     <Section className="border-line border-b-1">
-      <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
-        className="max-w-[65ch]"
-      >
-        <motion.div variants={item}>
-          <Kicker id="about-kicker">{t("title")}</Kicker>
-        </motion.div>
-
-        <motion.div variants={item} className="mt-5">
-          {body.map((paragraph, i) => (
-            <motion.p
-              key={i}
-              variants={item}
-              className={`text-deep/85 ${i > 0 ? "mt-2" : ""}`}
-            >
-              {paragraph}
-            </motion.p>
-          ))}
-        </motion.div>
-      </motion.div>
+      <PageIntro heading={t("title")} body={t.raw("body") as string[]} />
     </Section>
   );
 }
