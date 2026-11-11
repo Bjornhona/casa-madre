@@ -54,40 +54,38 @@ html {
 
 /* Services overview — "Áreas de trabajo" bordered grid: one continuous divided
    rectangle (shared hairline borders between cells), mirroring the approved
-   concept. Cells share borders rather than floating as separate cards. */
+   concept. Cells share borders rather than floating as separate cards.
+
+   The column count comes from `--services-cols`, which Servicios.tsx sets from
+   the length of the SERVICES array — this stylesheet never assumes how many
+   services there are.
+
+   Internal rules are drawn with box-shadow rather than borders, for the same
+   reason. Shadows take no space, and the container's `overflow:hidden` clips
+   the ones on the final column and final row exactly at its own border — so
+   there is never a doubled line at the edge nor a missing separator between
+   rows, whatever the item count. The previous nth-child border rules were
+   written for exactly six cells and broke silently at eight. A partly filled
+   last row simply shows the panel tint. */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(var(--services-cols, 4), 1fr);
   border: 1px solid var(--color-line);
   background: color-mix(in srgb, var(--color-cream) 55%, transparent);
 }
 .services-grid > * {
-  border-right: 1px solid var(--color-line);
-}
-.services-grid > *:last-child {
-  border-right: 0;
+  box-shadow:
+    1px 0 0 var(--color-line),
+    0 1px 0 var(--color-line);
 }
 @media (max-width: 1100px) {
   .services-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .services-grid > *:nth-child(3) {
-    border-right: 0;
-  }
-  .services-grid > *:nth-child(n + 4) {
-    border-top: 1px solid var(--color-line);
+    grid-template-columns: repeat(var(--services-cols-md, 2), 1fr);
   }
 }
 @media (max-width: 720px) {
   .services-grid {
     grid-template-columns: 1fr;
-  }
-  .services-grid > * {
-    border-right: 0;
-    border-bottom: 1px solid var(--color-line);
-  }
-  .services-grid > *:last-child {
-    border-bottom: 0;
   }
 }
 

@@ -25,6 +25,8 @@ export const SERVICE_IMAGES: Record<string, string> = {
   "renovation-home-staging": UNSPLASH("1583422409516-2895a77efded"),
   investment: UNSPLASH("1607706189992-eae578626c86"),
   "legal-financial": UNSPLASH("1539037116277-4db20889f2d4"),
+  relocation: UNSPLASH("1436491865332-7a61a109cc05"),
+  concierge: UNSPLASH("1566073771259-6a8506099945"),
 };
 
 // Overview page banner. Swap to "/services/overview.jpg" when ready.

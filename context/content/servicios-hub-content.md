@@ -31,7 +31,7 @@ We work with judgement and with calm: few transactions, a great deal of attentio
 ---
 
 ## SECCIÓN 3 — Cuadrícula "Áreas de trabajo"
-*(Ya construida — los seis servicios enlazan a sus páginas de detalle)*
+*(Ya construida — los ocho servicios enlazan a sus páginas de detalle)*
 
 **Etiqueta de sección (opcional, encima de la cuadrícula):**
 ES: Áreas de trabajo

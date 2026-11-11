@@ -15,6 +15,7 @@ import { AgentCards } from "@/components/AgentCards";
 import { ContactDetails } from "@/components/ContactDetails";
 import { EASE, fadeUp } from "@/lib/motion";
 import { contactSchema, type ContactFormValues } from "@/lib/contact-schema";
+import { SERVICES } from "@/lib/services";
 import type { AGENTS_QUERY_RESULT } from "@/sanity/types.gen";
 
 // Functional microcopy that has no entry in the message catalog yet.
@@ -49,16 +50,13 @@ type Status = "idle" | "submitting" | "success" | "error";
 const INTERESTS = ["buy", "sell", "rent", "invest"] as const;
 type Interest = (typeof INTERESTS)[number];
 
-// Service slug (from CTA params) → index in the `servicios.items` catalog, so
-// the reference pill reuses the approved service labels per locale.
-const SERVICE_SLUG_TO_INDEX: Record<string, number> = {
-  compraventa: 0,
-  alquileres: 1,
-  "personal-shopper": 2,
-  reformas: 3,
-  inversion: 4,
-  juridico: 5,
-};
+// Service key (from CTA params) → index in the `servicios.items` catalog, so
+// the reference pill reuses the approved service labels per locale. Derived
+// from SERVICES rather than restated: a hardcoded copy silently dropped the
+// pill for any service added later.
+const SERVICE_SLUG_TO_INDEX: Record<string, number> = Object.fromEntries(
+  SERVICES.map((s) => [s.key, s.index]),
+);
 
 export function Contacto({ agents = [] }: { agents?: AGENTS_QUERY_RESULT }) {
   const t = useTranslations("contacto");

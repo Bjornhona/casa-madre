@@ -19,7 +19,8 @@ type ServiceItem = { title: string; tagline: string[] };
 // descriptions are a single string — flatten to one sentence run.
 const toDescription = (tagline: string[]) => tagline.join(" ");
 
-// The six services are a fixed set — pre-render each in both locales.
+// The services are a fixed set defined in @/lib/services — pre-render each in
+// both locales.
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
     SERVICES.map((s) => ({ locale, slug: s.slug })),

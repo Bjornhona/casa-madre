@@ -1,7 +1,9 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
+import { filled, splitLabel } from "@/lib/content";
 import { Section } from "@/components/ui/Section";
 import { Kicker } from "@/components/ui/Kicker";
 import { SerifHeading } from "@/components/ui/SerifHeading";
@@ -17,7 +19,8 @@ type ServiceDetailItem = {
   description: string;
   cta: string;
   tagline: string[];
-  intro: string;
+  /** One entry per paragraph, same shape as `tagline`. */
+  intro: string[];
   forWho: string;
   includes: string[];
   process: string[];
@@ -44,6 +47,141 @@ export function ServiceDetailView({ slug }: { slug: string }) {
   // Editorial hero image for this service. When none is set, PageHero falls back
   // to its plain dark band — no broken image.
   const heroSrc = serviceImage(slug);
+
+  /**
+   * Body sections, in order, skipping any the client hasn't written yet —
+   * heading, wrapper and spacing all go together, so an unwritten section
+   * leaves no trace at all. `filled` is the single place that decides what
+   * counts as written (see @/lib/content).
+   *
+   * Collected into a list rather than inlined so the divider rule can be drawn
+   * *between* blocks instead of above each one: whichever section happens to
+   * come first must not open with an orphan rule, and the vertical rhythm
+   * comes from the flex gap, which only applies between surviving children.
+   */
+  const sections: { key: string; content: ReactNode }[] = [];
+
+  const intro = filled(item.intro);
+  if (intro.length) {
+    sections.push({
+      key: "intro",
+      content: intro.map((paragraph, i) => (
+        <p
+          key={i}
+          className={`max-w-[65ch] text-[19px] font-light leading-[1.75] text-deep/85 sm:text-[21px] ${
+            i > 0 ? "mt-6" : ""
+          }`}
+        >
+          {paragraph}
+        </p>
+      )),
+    });
+  }
+
+  const forWho = filled(item.forWho);
+  if (forWho.length) {
+    sections.push({
+      key: "forWho",
+      content: (
+        <>
+          <Kicker>{t("detail.forWhoLabel")}</Kicker>
+          {forWho.map((paragraph, i) => (
+            <p
+              key={i}
+              className={`max-w-[60ch] text-[17px] font-light leading-[1.7] text-deep/85 ${
+                i === 0 ? "mt-5" : "mt-4"
+              }`}
+            >
+              {paragraph}
+            </p>
+          ))}
+        </>
+      ),
+    });
+  }
+
+  const includes = filled(item.includes);
+  if (includes.length) {
+    sections.push({
+      key: "includes",
+      content: (
+        <>
+          <Kicker>{t("detail.includesLabel")}</Kicker>
+          <ul className="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-2">
+            {includes.map((line, i) => {
+              // "Label — items, items" renders the label as a small-caps lead
+              // so a long bullet can be scanned; anything else renders whole.
+              const { label, rest } = splitLabel(line);
+              return (
+                <li key={i} className="flex items-baseline gap-3">
+                  <span
+                    aria-hidden
+                    className="mt-[0.1em] h-px w-5 shrink-0 bg-clay"
+                  />
+                  <span className="text-[16px] leading-[1.6] text-deep/85">
+                    {label && (
+                      <span className="mb-1 block text-[12px] font-semibold uppercase tracking-[0.15em] text-brown">
+                        {label}
+                      </span>
+                    )}
+                    {rest}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      ),
+    });
+  }
+
+  const process = filled(item.process);
+  if (process.length) {
+    sections.push({
+      key: "process",
+      content: (
+        <>
+          <Kicker>{t("detail.processLabel")}</Kicker>
+          {/* Numbered, echoing the Método treatment. Numbering follows the
+              surviving steps, so a blank entry can't leave a gap in the count. */}
+          <ol className="mt-8 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {process.map((step, i) => (
+              <li key={i}>
+                <span className="block font-serif text-[40px] leading-none text-clay">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className="mt-4 text-[16px] leading-[1.6] text-deep/85">
+                  {step}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </>
+      ),
+    });
+  }
+
+  const difference = filled(item.difference);
+  if (difference.length) {
+    sections.push({
+      key: "difference",
+      content: (
+        <>
+          <Kicker>{t("detail.differenceLabel")}</Kicker>
+          {difference.map((paragraph, i) => (
+            <p
+              key={i}
+              className={`max-w-[60ch] font-serif text-[24px] italic leading-[1.4] text-brown sm:text-[28px] ${
+                i === 0 ? "mt-5" : "mt-4"
+              }`}
+            >
+              {paragraph}
+            </p>
+          ))}
+        </>
+      ),
+    });
+  }
 
   return (
     <article>
@@ -76,72 +214,26 @@ export function ServiceDetailView({ slug }: { slug: string }) {
           {t("detail.backLink")}
         </a>
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.15 }}
-          className="mt-10 flex flex-col gap-16"
-        >
-          {/* Intro */}
-          <motion.p
-            variants={reveal}
-            className="max-w-[65ch] text-[19px] font-light leading-[1.75] text-deep/85 sm:text-[21px]"
+        {sections.length > 0 && (
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.15 }}
+            className="mt-10 flex flex-col gap-16"
           >
-            {item.intro}
-          </motion.p>
-
-          {/* Para quién es / Who it's for */}
-          <motion.div variants={reveal} className="border-t border-line pt-10">
-            <Kicker>{t("detail.forWhoLabel")}</Kicker>
-            <p className="mt-5 max-w-[60ch] text-[17px] font-light leading-[1.7] text-deep/85">
-              {item.forWho}
-            </p>
+            {sections.map(({ key, content }, i) => (
+              <motion.p
+                key={key}
+                variants={reveal}
+                // Rule between blocks, never above the first one.
+                className={i > 0 ? "border-t border-line pt-10" : undefined}
+              >
+                {content}
+              </motion.p>
+            ))}
           </motion.div>
-
-          {/* Qué incluye / What's included */}
-          <motion.div variants={reveal} className="border-t border-line pt-10">
-            <Kicker>{t("detail.includesLabel")}</Kicker>
-            <ul className="mt-6 grid gap-x-10 gap-y-4 sm:grid-cols-2">
-              {item.includes.map((line, i) => (
-                <li key={i} className="flex items-baseline gap-3">
-                  <span
-                    aria-hidden
-                    className="mt-[0.1em] h-px w-5 shrink-0 bg-clay"
-                  />
-                  <span className="text-[16px] leading-[1.6] text-deep/85">
-                    {line}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Cómo trabajamos / How we work — numbered, echoing the Método treatment */}
-          <motion.div variants={reveal} className="border-t border-line pt-10">
-            <Kicker>{t("detail.processLabel")}</Kicker>
-            <ol className="mt-8 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-              {item.process.map((step, i) => (
-                <li key={i}>
-                  <span className="block font-serif text-[40px] leading-none text-clay">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <p className="mt-4 text-[16px] leading-[1.6] text-deep/85">
-                    {step}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </motion.div>
-
-          {/* Qué nos diferencia / What sets us apart */}
-          <motion.div variants={reveal} className="border-t border-line pt-10">
-            <Kicker>{t("detail.differenceLabel")}</Kicker>
-            <p className="mt-5 max-w-[60ch] font-serif text-[24px] italic leading-[1.4] text-brown sm:text-[28px]">
-              {item.difference}
-            </p>
-          </motion.div>
-        </motion.div>
+        )}
       </Section>
 
       {/* CONTACT CTA — dark band, preserving the existing contact pre-fill params. */}
